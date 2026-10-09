@@ -8,71 +8,74 @@ from scipy.sparse import save_npz
 
 
 # Project paths
-DATA_DIR = Path("data")
-FEATURES_FILE = DATA_DIR / "processed" / "item_features.csv"
-
+ROOT_DIR = Path(__file__).resolve().parents[3]
+DATA_DIR = ROOT_DIR / "data"
 OUTPUT_DIR = DATA_DIR / "processed"
-MATRIX_FILE = OUTPUT_DIR / "item_tfidf_matrix.npz"
-VECTORIZER_FILE = OUTPUT_DIR / "item_tfidf_vectorizer.joblib"
-ITEM_IDS_FILE = OUTPUT_DIR / "item_tfidf_ids.csv"
+
+# Use the enhanced features without overwriting the original model
+FEATURES_FILE = OUTPUT_DIR / "item_features_enhanced.csv"
+
+MATRIX_FILE = OUTPUT_DIR / "item_tfidf_matrix_enhanced.npz"
+VECTORIZER_FILE = OUTPUT_DIR / "item_tfidf_vectorizer_enhanced.joblib"
+ITEM_IDS_FILE = OUTPUT_DIR / "item_tfidf_ids_enhanced.csv"
 
 
 def main():
-    print("=== PASAL CONTENT-BASED MODEL ===")
+    print("=== PASAL ENHANCED CONTENT-BASED MODEL ===")
 
-    # 1. Load prepared item features.
-    print("Loading item features...")
-    items = pd.read_csv(FEATURES_FILE)
-
-    required_columns = {"itemid", "content"}
-    if not required_columns.issubset(items.columns):
-        missing = required_columns - set(items.columns)
-        raise ValueError(f"Missing required columns: {missing}")
+    # 1. Load enhanced item features
+    print("\nLoading enhanced item features...")
+    items = pd.read_csv(
+        FEATURES_FILE,
+        usecols=["itemid", "content"],
+        dtype={"itemid": "int64", "content": "string"},
+    )
 
     items = items.dropna(subset=["itemid", "content"])
     items = items.drop_duplicates(subset=["itemid"])
     items["content"] = items["content"].astype(str)
-
-    # Remove rows without usable content.
     items = items[items["content"].str.strip() != ""]
 
     if items.empty:
-        raise ValueError("No usable item features were found.")
+        raise ValueError("No usable enhanced item features were found.")
 
     print(f"Items with usable features: {len(items):,}")
 
-    # 2. Convert category tokens into TF-IDF vectors.
-    print("Building TF-IDF vectors...")
+    # 2. Build TF-IDF vectors
+    print("\nBuilding enhanced TF-IDF vectors...")
     vectorizer = TfidfVectorizer(
         lowercase=False,
         token_pattern=r"(?u)\b\w+\b",
         norm="l2",
         dtype="float32",
+        min_df=2,
+        max_features=100_000,
     )
 
     tfidf_matrix = vectorizer.fit_transform(items["content"])
 
-    # 3. Save the model artifacts for later use.
+    # 3. Save separate enhanced model artifacts
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    print("Saving TF-IDF matrix...")
+    print("\nSaving enhanced TF-IDF matrix...")
     save_npz(MATRIX_FILE, tfidf_matrix)
 
-    print("Saving TF-IDF vectorizer...")
+    print("Saving enhanced TF-IDF vectorizer...")
     joblib.dump(vectorizer, VECTORIZER_FILE)
 
-    print("Saving item ID mapping...")
+    print("Saving enhanced item ID mapping...")
     items[["itemid"]].to_csv(ITEM_IDS_FILE, index=False)
 
-    # 4. Report model details.
-    print("\n=== CONTENT MODEL SUMMARY ===")
+    # 4. Report model details
+    print("\n=== ENHANCED CONTENT MODEL SUMMARY ===")
     print(f"Items indexed: {tfidf_matrix.shape[0]:,}")
     print(f"TF-IDF features: {tfidf_matrix.shape[1]:,}")
     print(f"Non-zero values: {tfidf_matrix.nnz:,}")
+    print(f"Matrix density: {tfidf_matrix.nnz / (tfidf_matrix.shape[0] * tfidf_matrix.shape[1]):.6%}")
     print(f"Matrix file: {MATRIX_FILE}")
     print(f"Vectorizer file: {VECTORIZER_FILE}")
     print(f"Item IDs file: {ITEM_IDS_FILE}")
-    print("Content-based model preparation complete.")
+    print("\nEnhanced content-based model preparation complete.")
 
 
 if __name__ == "__main__":
