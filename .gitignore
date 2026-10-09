@@ -1,0 +1,55 @@
+# ─────────────────────────────────────────────
+# Pasal – Generative AI Hybrid Recommender System
+# ─────────────────────────────────────────────
+
+# Python virtual environment
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Node.js dependencies
+node_modules/
+
+# Build outputs
+dist/
+.next/
+build/
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Generated model artifacts
+*.pkl
+*.joblib
+*.npz
+
+# Retail Rocket dataset (large CSV files kept locally)
+data/raw/
+data/processed/
+data/enriched/
+data/splits/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Byte-compiled
+*.egg-info/
+*.egg
