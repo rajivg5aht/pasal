@@ -2,6 +2,7 @@
 from pathlib import Path
 
 import joblib
+import numpy as np
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from scipy.sparse import save_npz
@@ -47,7 +48,7 @@ def main():
         lowercase=False,
         token_pattern=r"(?u)\b\w+\b",
         norm="l2",
-        dtype="float32",
+        dtype=np.float32,
         min_df=2,
         max_features=100_000,
     )

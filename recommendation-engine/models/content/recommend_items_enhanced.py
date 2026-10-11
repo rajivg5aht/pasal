@@ -1,9 +1,13 @@
 
 from pathlib import Path
+import sys
 
 import numpy as np
 import pandas as pd
 from scipy.sparse import load_npz
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from research_utils import build_user_histories, top_positive_indices
 
 
 ROOT_DIR = Path(__file__).resolve().parents[3]
@@ -40,24 +44,14 @@ def main():
     print("\nLoading training interactions...")
     train = pd.read_csv(
         TRAIN_FILE,
-        usecols=["visitorid", "itemid"],
+        usecols=["timestamp", "visitorid", "itemid"],
     ).dropna(subset=["visitorid", "itemid"])
 
     train["visitorid"] = train["visitorid"].astype("int64")
     train["itemid"] = train["itemid"].astype("int64")
 
-    # Keep up to 20 most recent unique items per user.
-    # The split is chronological, so the original row order is preserved.
-    user_histories = (
-        train.groupby("visitorid", sort=False)["itemid"]
-        .apply(lambda items: list(dict.fromkeys(items))[-MAX_HISTORY_ITEMS:])
-    )
-
-    seen_by_user = (
-        train.groupby("visitorid", sort=False)["itemid"]
-        .apply(set)
-        .to_dict()
-    )
+    histories, seen_by_user = build_user_histories(train, MAX_HISTORY_ITEMS)
+    user_histories = pd.Series(histories)
 
     eligible_users = user_histories[
         user_histories.apply(
@@ -100,7 +94,7 @@ def main():
         scores[seen_indices] = -1.0
 
         # Select the highest-scoring unseen items.
-        candidate_indices = np.argsort(scores)[::-1][:TOP_K]
+        candidate_indices = top_positive_indices(scores, item_ids, TOP_K)
 
         rank = 0
         for index in candidate_indices:

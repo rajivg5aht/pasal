@@ -1,9 +1,13 @@
 
 from pathlib import Path
+import sys
 
 import numpy as np
 import pandas as pd
 from scipy.sparse import load_npz
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from research_utils import select_profile_history, top_positive_indices, validate_matrix_ids
 
 # ============================================================
 # 1. PROJECT PATHS AND CONFIGURATION
@@ -118,6 +122,10 @@ def main():
 
     cf_matrix = load_npz(CF_MATRIX_PATH)
     cf_ids = pd.read_csv(CF_IDS_PATH)["itemid"].to_numpy()
+    validate_matrix_ids(content_matrix, content_ids)
+    validate_matrix_ids(cf_matrix, cf_ids, "collaborative")
+    if cf_matrix.shape != (len(cf_ids), len(cf_ids)):
+        raise ValueError("Collaborative similarity matrix must be square and match IDs")
 
     print(f"Training events: {len(train):,}")
     print(f"Content items: {len(content_ids):,}")
@@ -226,11 +234,7 @@ def main():
             "Could not find a user with sufficient model coverage."
         )
 
-    history = history.head(MAX_HISTORY_ITEMS)
-
-    seen_items = set(
-        history["itemid"].astype(int).tolist()
-    )
+    history, seen_items = select_profile_history(history, MAX_HISTORY_ITEMS)
 
     print(f"\nSelected development user: {selected_user}")
     print(f"Recent history items: {len(history)}")
@@ -341,11 +345,9 @@ def main():
             "No eligible items remain after excluding seen items."
         )
 
-    top_indices = eligible_indices[
-        np.argsort(
-            hybrid_scores[eligible_indices]
-        )[-TOP_N:][::-1]
-    ]
+    top_indices = eligible_indices[top_positive_indices(
+        hybrid_scores[eligible_indices], content_ids[eligible_indices], TOP_N
+    )]
 
     recommendations = pd.DataFrame(
         {

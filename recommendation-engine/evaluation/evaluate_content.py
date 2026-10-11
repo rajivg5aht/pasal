@@ -1,13 +1,17 @@
 
 import math
 from pathlib import Path
+import sys
 
 import numpy as np
 import pandas as pd
 from scipy.sparse import load_npz
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from research_utils import build_user_histories, top_positive_indices
 
-DATA_DIR = Path("data")
+
+DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 PROCESSED_DIR = DATA_DIR / "processed"
 
 TRAIN_FILE = DATA_DIR / "splits" / "train.csv"
@@ -69,21 +73,10 @@ def main():
     print("Loading training data...")
     train = pd.read_csv(
         TRAIN_FILE,
-        usecols=["visitorid", "itemid"]
+        usecols=["timestamp", "visitorid", "itemid"]
     ).dropna(subset=["visitorid", "itemid"])
 
-    seen_by_user = (
-        train.groupby("visitorid")["itemid"]
-        .apply(set)
-        .to_dict()
-    )
-
-    # Preserve training order when choosing a user's recent history.
-    histories = (
-        train.groupby("visitorid", sort=False)["itemid"]
-        .apply(lambda values: list(dict.fromkeys(values))[-20:])
-        .to_dict()
-    )
+    histories, seen_by_user = build_user_histories(train, 20)
 
     # 3. Load validation interactions and remove training-seen items
     # from the relevant set.
@@ -179,14 +172,7 @@ def main():
             scores[seen_indices] = -np.inf
 
             # Find the highest-scoring candidates efficiently.
-            candidate_count = min(K, len(scores))
-            candidate_indices = np.argpartition(
-                scores, -candidate_count
-            )[-candidate_count:]
-
-            candidate_indices = candidate_indices[
-                np.argsort(scores[candidate_indices])[::-1]
-            ]
+            candidate_indices = top_positive_indices(scores, item_ids, K)
 
             for index in candidate_indices:
                 if scores[index] <= 0:

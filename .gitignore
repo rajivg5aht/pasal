@@ -53,3 +53,6 @@ data/splits/
 # Byte-compiled
 *.egg-info/
 *.egg
+
+# Local audit rendering and scratch files
+/tmp/

@@ -1,12 +1,16 @@
 
 from pathlib import Path
+import sys
 
 import numpy as np
 import pandas as pd
 from scipy.sparse import load_npz
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from research_utils import build_user_histories, top_positive_indices
 
-DATA_DIR = Path("data")
+
+DATA_DIR = Path(__file__).resolve().parents[3] / "data"
 PROCESSED_DIR = DATA_DIR / "processed"
 
 TRAIN_FILE = DATA_DIR / "splits" / "train.csv"
@@ -38,21 +42,12 @@ def main():
     print("Loading training interactions...")
     train = pd.read_csv(
         TRAIN_FILE,
-        usecols=["visitorid", "itemid"]
+        usecols=["timestamp", "visitorid", "itemid"]
     ).dropna(subset=["visitorid", "itemid"])
 
     # Keep each user's most recent unique training items.
-    user_histories = (
-        train.groupby("visitorid")["itemid"]
-        .apply(lambda items: list(dict.fromkeys(items))[-MAX_HISTORY_ITEMS:])
-    )
-
-    # Store all previously seen items for exclusion.
-    seen_by_user = (
-        train.groupby("visitorid")["itemid"]
-        .apply(set)
-        .to_dict()
-    )
+    histories, seen_by_user = build_user_histories(train, MAX_HISTORY_ITEMS)
+    user_histories = pd.Series(histories)
 
     # Use a small smoke-test sample for now.
     eligible_users = user_histories[
@@ -95,7 +90,7 @@ def main():
         scores[seen_indices] = -1.0
 
         # Rank items by their similarity scores.
-        candidate_indices = np.argsort(scores)[::-1][:TOP_K]
+        candidate_indices = top_positive_indices(scores, item_ids, TOP_K)
 
         for rank, index in enumerate(candidate_indices, start=1):
             if scores[index] <= 0:

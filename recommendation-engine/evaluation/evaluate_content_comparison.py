@@ -1,11 +1,17 @@
 
-import math
+import argparse
+import hashlib
+import json
+import sys
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 from scipy.sparse import load_npz
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from research_utils import (binary_ranking_metrics, build_user_histories,
+                            top_positive_indices, validate_matrix_ids)
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 DATA_DIR = ROOT_DIR / "data"
@@ -31,32 +37,7 @@ MAX_HISTORY_ITEMS = 20
 
 
 def calculate_metrics(recommendations, relevant_items):
-    hits = [
-        1 if item in relevant_items else 0
-        for item in recommendations
-    ]
-
-    precision = sum(hits) / K
-    recall = (
-        sum(hits) / len(relevant_items)
-        if relevant_items
-        else 0.0
-    )
-
-    dcg = sum(
-        hit / math.log2(position + 2)
-        for position, hit in enumerate(hits)
-    )
-
-    ideal_hits = min(len(relevant_items), K)
-    idcg = sum(
-        1 / math.log2(position + 2)
-        for position in range(ideal_hits)
-    )
-
-    ndcg = dcg / idcg if idcg else 0.0
-
-    return precision, recall, ndcg
+    return binary_ranking_metrics(recommendations, relevant_items, K)
 
 
 def load_content_model(matrix_file, ids_file, model_name):
@@ -65,10 +46,7 @@ def load_content_model(matrix_file, ids_file, model_name):
     matrix = load_npz(matrix_file).tocsr()
     item_ids = pd.read_csv(ids_file)["itemid"].astype("int64").tolist()
 
-    if matrix.shape[0] != len(item_ids):
-        raise ValueError(
-            f"{model_name}: matrix rows do not match item IDs."
-        )
+    validate_matrix_ids(matrix, item_ids, model_name)
 
     item_to_index = {
         item_id: index
@@ -114,14 +92,7 @@ def recommend_content(
     ]
     scores[seen_indices] = -np.inf
 
-    candidate_count = min(K, len(scores))
-    candidate_indices = np.argpartition(
-        scores, -candidate_count
-    )[-candidate_count:]
-
-    candidate_indices = candidate_indices[
-        np.argsort(scores[candidate_indices])[::-1]
-    ]
+    candidate_indices = top_positive_indices(scores, item_ids, K)
 
     recommendations = []
 
@@ -150,7 +121,10 @@ def recommend_popularity(ranked_items, seen_items):
     return recommendations
 
 
-def main():
+def main(output_dir, max_users=MAX_USERS):
+    # Never overwrite historical research outputs.
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=False)
     print("=== PASAL CONTENT MODEL COMPARISON ===")
 
     # 1. Load both content models.
@@ -185,27 +159,14 @@ def main():
     print("Loading training interactions...")
     train = pd.read_csv(
         TRAIN_FILE,
-        usecols=["visitorid", "itemid"],
+        usecols=["timestamp", "visitorid", "itemid"],
     ).dropna(subset=["visitorid", "itemid"])
 
     train["visitorid"] = train["visitorid"].astype("int64")
     train["itemid"] = train["itemid"].astype("int64")
 
-    seen_by_user = (
-        train.groupby("visitorid", sort=False)["itemid"]
-        .apply(set)
-        .to_dict()
-    )
-
-    histories = (
-        train.groupby("visitorid", sort=False)["itemid"]
-        .apply(
-            lambda values: list(
-                dict.fromkeys(values)
-            )[-MAX_HISTORY_ITEMS:]
-        )
-        .to_dict()
-    )
+    histories, seen_by_user = build_user_histories(train, MAX_HISTORY_ITEMS)
+    interaction_counts = train.groupby("visitorid").size().to_dict()
 
     # 4. Identify users with relevant validation items and usable
     # histories in BOTH content models.
@@ -244,7 +205,7 @@ def main():
 
     # 5. Select one reproducible sample for all three models.
     eligible_ids = np.array(list(relevant_by_user.keys()))
-    sample_size = min(MAX_USERS, len(eligible_ids))
+    sample_size = min(max_users, len(eligible_ids))
 
     rng = np.random.default_rng(RANDOM_STATE)
     sampled_users = rng.choice(
@@ -269,6 +230,7 @@ def main():
     }
     recommended_items = {name: set() for name in model_names}
     detail_rows = []
+    user_rows = []
 
     # 6. Evaluate each model on exactly the same users.
     for count, user_id in enumerate(sampled_users, start=1):
@@ -307,6 +269,14 @@ def main():
             metric_values[model_name]["recall"].append(recall)
             metric_values[model_name]["ndcg"].append(ndcg)
             recommended_items[model_name].update(recommendations)
+            user_rows.append({
+                "visitorid": user_id, "model": model_name,
+                "training_interactions": int(interaction_counts.get(user_id, 0)),
+                "relevant_items": len(relevant),
+                "relevant_items_outside_catalog": len(relevant - shared_catalog),
+                "recommendations_count": len(recommendations),
+                "precision_at_10": precision, "recall_at_10": recall, "ndcg_at_10": ndcg,
+            })
 
             for rank, item_id in enumerate(recommendations, start=1):
                 detail_rows.append({
@@ -331,6 +301,10 @@ def main():
             "model": model_name,
             "k": K,
             "users_evaluated": sample_size,
+            "users_with_recommendations": sum(
+                row["recommendations_count"] > 0 for row in user_rows if row["model"] == model_name
+            ),
+            "catalog_size": catalog_size,
             "precision_at_10": np.mean(values["precision"]),
             "mean_recall_at_10": np.mean(values["recall"]),
             "ndcg_at_10": np.mean(values["ndcg"]),
@@ -344,16 +318,47 @@ def main():
 
     metrics = pd.DataFrame(rows)
 
-    PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
-    metrics.to_csv(METRICS_FILE, index=False)
-    pd.DataFrame(detail_rows).to_csv(DETAILS_FILE, index=False)
+    metrics_file = output_dir / "metrics.csv"
+    details_file = output_dir / "recommendations.csv"
+    metrics.to_csv(metrics_file, index=False)
+    pd.DataFrame(detail_rows, columns=["visitorid", "model", "rank", "itemid", "relevant"]).to_csv(details_file, index=False)
+    pd.DataFrame(user_rows).to_csv(output_dir / "per_user_metrics.csv", index=False)
+    inputs = [TRAIN_FILE, VALIDATION_FILE, RANKING_FILE, ORIGINAL_MATRIX_FILE,
+              ORIGINAL_IDS_FILE, ENHANCED_MATRIX_FILE, ENHANCED_IDS_FILE]
+    hashes = {}
+    for path in inputs:
+        digest = hashlib.sha256()
+        with path.open("rb") as stream:
+            for block in iter(lambda: stream.read(1024 * 1024), b""):
+                digest.update(block)
+        hashes[str(path.relative_to(ROOT_DIR))] = digest.hexdigest()
+    manifest = {
+        "status": "development_diagnostic_not_final_thesis_evidence",
+        "k": K, "seed": RANDOM_STATE, "max_history_items": MAX_HISTORY_ITEMS,
+        "eligible_users": len(eligible_ids), "sampled_users": sampled_users.tolist(),
+        "user_policy": "unseen validation targets and history covered by BOTH content models; excludes zero-history users",
+        "relevance": "all recorded validation event types; unseen training items only",
+        "candidate_policy": "each existing model's catalog; union denominator; temporal availability NOT verified",
+        "catalog_size": catalog_size, "tie_break": "score descending, itemid ascending",
+        "limitations": ["legacy time-duration split", "metadata timestamps lost during preprocessing",
+                        "not a cold-start cohort evaluation", "property enhancement is not GenAI"],
+        "input_sha256": hashes,
+    }
+    (output_dir / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
 
     print("\n=== COMPARISON RESULTS ===")
     print(metrics.round(6).to_string(index=False))
-    print(f"\nMetrics saved to: {METRICS_FILE}")
-    print(f"Recommendation details saved to: {DETAILS_FILE}")
+    print(f"\nMetrics saved to: {metrics_file}")
+    print(f"Recommendation details saved to: {details_file}")
+    print("Development diagnostic only: see manifest.json for limitations.")
     print("\nComparison complete.")
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Development content comparison; preserves existing artifacts")
+    parser.add_argument("--output-dir", type=Path, required=True, help="New directory; must not exist")
+    parser.add_argument("--max-users", type=int, default=MAX_USERS)
+    args = parser.parse_args()
+    if args.max_users < 1:
+        parser.error("--max-users must be positive")
+    main(args.output_dir, args.max_users)

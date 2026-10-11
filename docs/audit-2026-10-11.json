@@ -1,0 +1,222 @@
+{
+  "scope": "Existing development artifacts; no final test file read or model training",
+  "versions": {
+    "python": "3.12.0",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scipy": "1.18.1",
+    "scikit_learn": "1.9.1"
+  },
+  "raw_event_count": 2756101,
+  "splits": {
+    "train": {
+      "rows": 2024042,
+      "event_percentage": 73.43860039962252,
+      "min_timestamp": 1430622004384,
+      "max_timestamp": 1438968231027,
+      "timestamp_sorted": false,
+      "adjacent_timestamp_reversals": 1012222,
+      "unique_users": 1027985,
+      "unique_items": 205106
+    },
+    "validation": {
+      "rows": 365683,
+      "event_percentage": 13.26812769198226,
+      "min_timestamp": 1438968241201,
+      "max_timestamp": 1440756695565,
+      "timestamp_sorted": false,
+      "adjacent_timestamp_reversals": 182307,
+      "unique_users": 208377,
+      "unique_items": 91507
+    }
+  },
+  "content_models": {
+    "original": {
+      "shape": [
+        417053,
+        1546
+      ],
+      "nnz": 881250,
+      "dtype": "float32",
+      "unique_ids": 417053,
+      "duplicate_ids": 0,
+      "rows_match_ids": true,
+      "finite": true,
+      "zero_rows": 0,
+      "reconstruction_rows_checked": 32,
+      "reconstruction_max_error": 0.0,
+      "reconstruction_matches_tolerance_1e_6": true
+    },
+    "_enhanced": {
+      "shape": [
+        417053,
+        100000
+      ],
+      "nnz": 6595215,
+      "dtype": "float32",
+      "unique_ids": 417053,
+      "duplicate_ids": 0,
+      "rows_match_ids": true,
+      "finite": true,
+      "zero_rows": 0,
+      "reconstruction_rows_checked": 32,
+      "reconstruction_max_error": 0.0,
+      "reconstruction_matches_tolerance_1e_6": true
+    }
+  },
+  "fingerprints": {
+    "data\\splits\\train.csv": {
+      "bytes": 119836035,
+      "sha256": "063024280da362d3b39d284e055e70786575ea86d4c2542ba09aab6d94f2664c"
+    },
+    "data\\splits\\validation.csv": {
+      "bytes": 21655901,
+      "sha256": "aaa0ca754fc1c3abbbecc22e443d254c977d96bd27e89c449ce21103b07dd8e9"
+    },
+    "data\\processed\\item_tfidf_matrix.npz": {
+      "bytes": 2368674,
+      "sha256": "07e49727001fde9c7ce72e44bfed538d64dc156a0d3321e1b2216c2aec8c91a6"
+    },
+    "data\\processed\\item_tfidf_ids.csv": {
+      "bytes": 3237091,
+      "sha256": "aa355dfc88bd312e6f67b6dbc0383b3f0bc9fd542b2b452cc6271a711adbe96d"
+    },
+    "data\\processed\\item_tfidf_vectorizer.joblib": {
+      "bytes": 34485,
+      "sha256": "73c7ad0d0ae116e926ab8688ff06cd6fceb0e03daf2bf1ea662e2116d1c556d0"
+    },
+    "data\\processed\\item_tfidf_matrix_enhanced.npz": {
+      "bytes": 27508428,
+      "sha256": "7406a5937ea48090f99c8fc6bb4151c0a4fe6e32860c79d186db2456190073ef"
+    },
+    "data\\processed\\item_tfidf_ids_enhanced.csv": {
+      "bytes": 3237091,
+      "sha256": "aa355dfc88bd312e6f67b6dbc0383b3f0bc9fd542b2b452cc6271a711adbe96d"
+    },
+    "data\\processed\\item_tfidf_vectorizer_enhanced.joblib": {
+      "bytes": 5802509,
+      "sha256": "f1029670be9b845ff6d835d23227d6c46a39d77b819199d0bbbf1933b107d458"
+    },
+    "data\\processed\\popularity_ranking.csv": {
+      "bytes": 3830129,
+      "sha256": "99a11c70e3f9e1890cf0a4042990ebe81cba32820b94e90b56e156968ac6cfb3"
+    }
+  },
+  "train_strictly_before_validation": true,
+  "popularity": {
+    "items": 205106,
+    "training_item_ids_match": true,
+    "training_scores_match": true,
+    "items_without_content": 41424
+  },
+  "catalog_union_size": 458477,
+  "content_id_sets_equal": true,
+  "collaborative_sample": {
+    "shape": [
+      48023,
+      48023
+    ],
+    "unique_ids": 48023,
+    "shape_matches_ids": true,
+    "finite": true,
+    "nonnegative": true,
+    "diagonal_zero": true,
+    "max_neighbors": 50,
+    "training_item_coverage": 0.23413747038116875
+  },
+  "saved_metrics": {
+    "collaborative_validation_metrics.csv": [
+      {
+        "model": "collaborative_sample",
+        "k": 10,
+        "users_evaluated": 500,
+        "precision_at_10": 0.003,
+        "mean_recall_at_10": 0.0161766917293233,
+        "ndcg_at_10": 0.0097452572081664,
+        "unique_items_recommended": 3444,
+        "users_with_recommendations": 498
+      }
+    ],
+    "content_model_comparison_metrics.csv": [
+      {
+        "model": "popularity",
+        "k": 10,
+        "users_evaluated": 100,
+        "precision_at_10": 0.001,
+        "mean_recall_at_10": 0.0001923076923076,
+        "ndcg_at_10": 0.0007839826897867,
+        "unique_items_recommended": 11,
+        "catalog_coverage_pct": 0.002399247944826
+      },
+      {
+        "model": "content_original",
+        "k": 10,
+        "users_evaluated": 100,
+        "precision_at_10": 0.0,
+        "mean_recall_at_10": 0.0,
+        "ndcg_at_10": 0.0,
+        "unique_items_recommended": 979,
+        "catalog_coverage_pct": 0.2135330670895159
+      },
+      {
+        "model": "content_enhanced",
+        "k": 10,
+        "users_evaluated": 100,
+        "precision_at_10": 0.002,
+        "mean_recall_at_10": 0.015,
+        "ndcg_at_10": 0.0065092092980713,
+        "unique_items_recommended": 987,
+        "catalog_coverage_pct": 0.215277974685753
+      }
+    ],
+    "content_validation_metrics.csv": [
+      {
+        "model": "content",
+        "k": 10,
+        "users_evaluated": 500,
+        "precision_at_10": 0.0004,
+        "mean_recall_at_10": 0.0025,
+        "ndcg_at_10": 0.0008277502740258,
+        "unique_items_recommended": 4423
+      },
+      {
+        "model": "popularity",
+        "k": 10,
+        "users_evaluated": 500,
+        "precision_at_10": 0.0002,
+        "mean_recall_at_10": 0.002,
+        "ndcg_at_10": 0.0005781296526357,
+        "unique_items_recommended": 11
+      }
+    ],
+    "popularity_validation_metrics.csv": [
+      {
+        "model": "popularity",
+        "k": 10,
+        "users_evaluated": 205712,
+        "precision_at_10": 0.0005284086489849,
+        "mean_recall_at_10": 0.0040836358885287,
+        "ndcg_at_10": 0.0023727309929931
+      }
+    ]
+  },
+  "property_columns": [
+    "itemid",
+    "property",
+    "value"
+  ],
+  "metadata_temporal_audit": {
+    "cutoff_exclusive": 1438968241201,
+    "files": {
+      "item_properties_part1.csv": {
+        "rows": 10999999,
+        "rows_at_or_after_validation_start": 2324889
+      },
+      "item_properties_part2.csv": {
+        "rows": 9275903,
+        "rows_at_or_after_validation_start": 1959259
+      }
+    },
+    "content_items_first_observed_after_cutoff": 5320
+  }
+}
