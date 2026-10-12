@@ -1,5 +1,47 @@
 # Pasal status and continuation handover
 
+## Current checkpoint — 12 October 2026
+
+Latest instruction: execute continuously in dependency order, without waiting for
+calendar weeks or deadlines. Make short substantive commits and push verified
+chunks frequently. Aim for 60 meaningful commits over the project, without padding.
+The approved proposal and seven configurations remain authoritative.
+
+Completed in the current continuation:
+- Research ambiguities resolved and recorded in `docs/RESEARCH_DECISIONS.md`.
+- Free-only Groq GPT-OSS 20B adapter, persistent quota guard, reviewed generated
+  descriptions and truthful local explanation composition; offline tests pass.
+- Shared evaluator retains cold-start users and failures, with P/R/NDCG/MAP/HitRate.
+- Real 1,000-user validation diagnostic: 926 zero-history users retained; no final
+  test evaluation. Results and limitations recorded in `docs/EXPERIMENT_LOG.md`.
+- New event-count training (1,929,270) and validation (413,415) files created in
+  `data/splits/event-count-v1`; legacy files preserved. Final test remains deferred.
+- Switching policy implemented with explicit branches, confidence gate and trace;
+  validation tuning and full model integration still required.
+- Dissertation methodology draft started in `docs/DISSERTATION_DRAFT.md`.
+- Versioned historical TF-IDF trainer added; corrected-cutoff metadata rebuild
+  completed: 411,732 items, zero future facts. Content model trained with 100,000
+  features, 4,903,232 nonzeros and 24 empty rows recorded for fallback.
+
+45 offline tests pass. The user configured and confirmed a Groq Free account. One sandbox network
+attempt failed before producing output. Escalated external transfer was rejected
+by automatic approval review; explicit catalogue-transfer approval is pending.
+No generated outputs or paid usage exist. A credential placed in `.env.example`
+was moved to ignored `.env` before any subsequent commit or push.
+Frontend, service integration, final experiments and the finished dissertation
+remain outstanding; these are not implied complete by passing unit tests.
+
+A three-baseline corrected-cutoff diagnostic completed on 1,000 shared users.
+It is recorded as D10 and is not final hypothesis evidence.
+
+Next: train full temporal item-CF,
+integrate all seven models into the common evaluator, tune on validation, and
+build service/UI contracts alongside dissertation work. Keep full 15% test
+exposure disclosed and the independent untouched subset separately reported.
+
+## Historical checkpoint retained for audit (11 October)
+
+
 Updated 11 October 2026. Baseline commit `dacd4d3`, branch `main`. Commit `4d58fb6`
 appeared during this session containing earlier changes; the assistant did not
 create it. Subsequent additions remain in the working tree. Reuse the existing

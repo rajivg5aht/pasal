@@ -1,0 +1,26 @@
+{
+  "kind": "historical_property_tfidf_not_genai",
+  "cutoff_exclusive_ms": 1438558255147,
+  "catalogue_sha256": "5ce8af2b34cc1524cb4b9339c5375c7d624b4e89e250fadc48f032ec0e8b65bd",
+  "source_sha256": "a3fadaf0cf37fa69ab94a6a7456df965008931196af9888743c99ce5238f7511",
+  "rows": 411732,
+  "features": 100000,
+  "nonzeros": 4903232,
+  "zero_vector_rows": 24,
+  "min_df": 2,
+  "max_features": 100000,
+  "availability_counts": {
+    "available": 58189,
+    "unavailable": 351820,
+    "unknown": 1723
+  },
+  "limitations": [
+    "Property identifiers have no inferred semantic meanings",
+    "No ranking evaluation or GenAI benefit is established by training"
+  ],
+  "artifacts_sha256": {
+    "matrix.npz": "d51bb05b87660b24735f7ed6d861c9280bac1a6b07d3a92a3cd6b11af1aa810b",
+    "vectorizer.joblib": "512849f32599d7527b5fa40715b72fe2d72c4fb4377127cea6ea33099fe2e932",
+    "items.csv": "9eae3b1662762fce009140e0a47503c0aa2cab66edb3a4c84942b9670e72200c"
+  }
+}

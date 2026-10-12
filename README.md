@@ -8,13 +8,13 @@ Undergraduate thesis research prototype by **Rajiv Ganeju**. Pasal studies valid
 
 Existing work includes preprocessing, global popularity, original and property-enhanced TF-IDF models, sampled item-CF, an untuned fixed-hybrid demonstration and preliminary evaluations. **Property-enhanced features are not GenAI.** The current pass adds an artifact audit, correctness repairs, regression tests, timestamp-preserving metadata preparation and a real API-backed GenAI integration with reviewed feature export. Live GenAI runs await API access.
 
-The full switching system, final experiments and integrated website are not complete. Existing split/metadata issues prevent treating preliminary scores as final thesis evidence.
+The switching policy and shared cohort evaluator are implemented and tested; model integration/tuning, final experiments and the integrated website are not complete. Existing split/metadata issues prevent treating preliminary scores as final thesis evidence.
 
 - [Project status and handover](PROJECT_STATUS.md)
 - [Detailed audit](docs/PROJECT_AUDIT.md)
 - [Approved-requirement traceability](REQUIREMENTS_TRACEABILITY.md)
-- [Four-week, 224-hour plan](IMPLEMENTATION_PLAN.md)
-- [Supervisor clarification note](docs/PROPOSAL_CLARIFICATIONS.md)
+- [Continuous execution backlog and original capacity plan](IMPLEMENTATION_PLAN.md)
+- [Resolved research decisions](docs/RESEARCH_DECISIONS.md)
 - [GenAI integration and safeguards](recommendation-engine/genai/README.md)
 
 ## Existing environment and checks
@@ -48,7 +48,7 @@ The existing raw data, processed artifacts and splits are stored under `data/` a
 
 The approved stack is React/TypeScript/Vite/Tailwind, Node/Express, Python/FastAPI and MongoDB. Frontend/backend directories remain placeholders. `.env.example` reserves settings; the GenAI CLI reads its key from the local process environment, not automatically from `.env`.
 
-Seven intended configurations: global popularity, category popularity, TF-IDF, item-CF, tuned fixed hybrid, switching without GenAI, switching with GenAI. Use validation for tuning and freeze decisions before final testing. Do not move previously exposed validation data into a supposedly pristine test set without a documented supervisor decision.
+Seven intended configurations: global popularity, category popularity, TF-IDF, item-CF, tuned fixed hybrid, switching without GenAI, switching with GenAI. Use validation for tuning and freeze decisions before final testing. The versioned event-count protocol explicitly marks historical test exposure and reserves the untouched subset for separate confirmatory reporting; see the research decision record.
 
 Keep credentials, raw datasets, large generated artifacts and environments outside tracked source. Report measured, implemented and planned work separately. This is an academic research prototype, not a production retail system.
 

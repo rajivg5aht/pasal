@@ -105,3 +105,54 @@ are local in the named directory; final test data was not opened.
 Verification: 37 unittest checks passed, including five new common-evaluator
 checks and five free-provider/explanation checks. All generation calls in those
 tests are mocked; no actual GenAI output exists yet.
+
+## D07 — versioned event-count development split
+
+`build_event_count_development.py --output data/splits/event-count-v1` completed.
+Actual counts: training 1,929,270; validation 413,415; planned test 413,416.
+No boundary ties changed event proportions. Training and validation are sorted.
+The 47,040 previously exposed test events are recorded. Test outcomes were not
+materialized or evaluated. Original split hashes match the earlier audit.
+A tracked copy of the provenance is `docs/event-count-development-manifest.json`.
+
+## Implementation verification checkpoint
+
+44 unit tests pass after adding temporal content training and switching policy
+checks. Switching thresholds in fixtures are examples, not tuned parameters.
+Dissertation methods drafting is underway. Local scoring diagnostics do not
+measure server load or end-to-end API latency. No paid usage or live generation.
+
+## D08 — full historical metadata and content rebuild
+
+`build_metadata_snapshot.py --cutoff-ms 1438558255147 --output-dir data/processed/metadata-event-count-v1`
+completed over 20,275,902 source rows: 411,732 exported items, zero latest-value
+conflicts and zero schema exclusions. SQL verification found zero facts at/after
+the cutoff. The maximum stored timestamp was 1438484400000.
+`models/content/train_snapshot.py --catalogue data/processed/metadata-event-count-v1/catalogue.jsonl --output data/processed/content-event-count-v1 --cutoff-ms 1438558255147`
+completed: 411,732 rows, 100,000 features, 4,903,232 nonzeros, 24 empty rows.
+Availability: 58,189 available, 351,820 unavailable, 1,723 unknown.
+Availability must be applied consistently to ALL algorithms at evaluation time;
+empty vectors must be retained in coverage/fallback reporting. These are ordinary
+property features, not GenAI. Tracked manifests hold exact hashes.
+
+## D09 — genuine generation pilot attempt, no successful generation
+
+A one-item pilot was selected by reservoir sampling (Python Random seed 42) from
+all snapshot items before examining outcomes: item 460256. The sample is for
+integration only, not a representative effectiveness experiment. The user
+configured a Groq Free account locally. The first attempt failed with a network
+ConnectionError, produced no text, and is retained in the cache/quota ledger.
+Automatic approval review rejected an escalated external metadata transfer;
+explicit approval was requested. No bypass or successful generation occurred.
+The pilot item is marked unavailable, which does not prevent a catalogue-only
+integration test but excludes it from available-item recommendations.
+
+## D10 — corrected temporal baseline diagnostic
+
+Run: `run_popularity_diagnostic.py --train data/splits/event-count-v1/train.csv --validation data/splits/event-count-v1/validation.csv --content-dir data/processed/content-event-count-v1 --output data/processed/temporal-baselines-2026-10-12 --max-users 1000`.
+All three models share 1,000 users (917/63/17/3 in the four cohorts), candidate availability and seen exclusions. Twelve targetless users retained; zero model failures.
+- category_popularity: served 1000; Precision@10=0.00090000; Recall@10=0.00733333; NDCG@10=0.00508460.
+- global_popularity: served 1000; Precision@10=0.00050000; Recall@10=0.00450000; NDCG@10=0.00299127.
+- tfidf: served 76; Precision@10=0.00080000; Recall@10=0.00269048; NDCG@10=0.00127745.
+
+This is development-only, with very small warm cohorts; not hypothesis testing. Unknown availability is admitted, explicit unavailable items excluded. TF-IDF has no zero-history fallback by design; switching will provide the appropriate route. Final test untouched. All 45 tests pass.
