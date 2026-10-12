@@ -1,6 +1,49 @@
 # Pasal: accelerated four-week execution plan
 
-Updated 11 October 2026. Capacity confirmed by the user: 8 hours/day, 56
+## Execution policy — latest user instruction
+
+Work continuously in dependency order. Week/date allocations below are historical
+capacity estimates, not start gates or waiting periods. Start the next ready task
+immediately after verification; complete the project as quickly as practical.
+The user has superseded deadline-driven scheduling. Preserve the required scope
+and research checks. Use short, meaningful commits and frequent small pushes
+(approximately every 4-5 minutes when a verified chunk is ready). Aim for at least
+60 substantive commits across the project; never pad history or split changes
+into broken intermediate states to satisfy a counter. Do not publish credentials,
+raw datasets, generated model binaries or unreviewed private files.
+
+Updated 12 October 2026. **Final submission: 8 November 2026 (confirmed).**
+Completion target: **5-6 November**; **7 November** is reserved for final
+verification, corrections and submission packaging. November 4 is superseded.
+
+## Remaining calendar and capacity
+
+The original four-week sequence below is retained. Its original 224-hour budget
+included 11 October; from 12 October through 7 November there are **216 hours**
+at 8 hours/day. These are available student hours, not elapsed agent work or
+guaranteed compute capacity. Use the following remaining allocations:
+
+| Dates | Hours | Required outcome |
+|---|---:|---|
+| Oct 12-17 | 48 | Document protocol decisions; temporal rebuild; common evaluator; verified baselines; free GenAI integration/pilot; methods draft |
+| Oct 18-24 | 56 | Tune fixed hybrid/switching on validation; reviewed GenAI ablation; FastAPI/Express/MongoDB; implementation chapter |
+| Oct 25-31 | 56 | Integrated responsive website, privacy controls; seven-configuration/density rehearsal; quality/load tests; results draft |
+| Nov 1-4 | 32 | Freeze configurations; final experiments and paired analysis; complete dissertation with actual results |
+| Nov 5-6 | 16 | Reproduction, dissertation/reference checks, demonstration and release; resolve defects |
+| Nov 7 | 8 | Final verification, corrections, backups and submission preparation |
+| Nov 8 | — | Confirmed submission deadline; do not plan development here |
+
+Within each development day, reserve at least one hour for dissertation and
+evidence recording. If a milestone slips, reduce cosmetic scope and the declared
+representative GenAI subset before cutting required comparisons or validation.
+Do not postpone writing until experiments finish. API spend is strictly **$0**.
+Free account setup is the only live-generation dependency; unrelated work proceeds.
+Research ambiguities are resolved under delegated authority in
+`docs/RESEARCH_DECISIONS.md`, which supersedes pending-approval wording below.
+
+## Original allocation retained for planning history
+
+Capacity confirmed by the user: 8 hours/day, 56
 hours/week, approximately 224 hours over 28 days. Planning horizon: 11 October
 through 7 November; approximate submission date 8 November 2026, to be confirmed
 against the university's exact deadline. Aim for a submission-ready release by

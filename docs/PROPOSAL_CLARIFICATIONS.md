@@ -1,5 +1,9 @@
 # Supervisor clarification note
 
+**Superseded on 12 October 2026:** implementation decisions are now delegated by
+the supervisor through the user. See `RESEARCH_DECISIONS.md` for the selected
+interpretations. The options below are retained as historical documentation.
+
 Prepared 11 October 2026. Page references are printed pages (PDF page = +1).
 The user confirmed the seven configurations on 11 October. Figure 11's extra
 user-user CF/BERT4Rec references will not expand the approved methodology.
