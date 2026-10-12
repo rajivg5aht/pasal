@@ -2,45 +2,58 @@
 
 ## Current checkpoint — 12 October 2026
 
-Latest instruction: execute continuously in dependency order, without waiting for
-calendar weeks or deadlines. Make short substantive commits and push verified
-chunks frequently. Aim for 60 meaningful commits over the project, without padding.
-The approved proposal and seven configurations remain authoritative.
+Execute continuously in dependency order, without waiting for calendar weeks.
+Preserve the approved seven configurations. Push small verified commits; the
+60-commit goal must reflect substantive work, not artificial splitting.
 
-Completed in the current continuation:
-- Research ambiguities resolved and recorded in `docs/RESEARCH_DECISIONS.md`.
-- Free-only Groq GPT-OSS 20B adapter, persistent quota guard, reviewed generated
-  descriptions and truthful local explanation composition; offline tests pass.
-- Shared evaluator retains cold-start users and failures, with P/R/NDCG/MAP/HitRate.
-- Real 1,000-user validation diagnostic: 926 zero-history users retained; no final
-  test evaluation. Results and limitations recorded in `docs/EXPERIMENT_LOG.md`.
-- New event-count training (1,929,270) and validation (413,415) files created in
-  `data/splits/event-count-v1`; legacy files preserved. Final test remains deferred.
-- Switching policy implemented with explicit branches, confidence gate and trace;
-  validation tuning and full model integration still required.
-- Dissertation methodology draft started in `docs/DISSERTATION_DRAFT.md`.
-- Versioned historical TF-IDF trainer added; corrected-cutoff metadata rebuild
-  completed: 411,732 items, zero future facts. Content model trained with 100,000
-  features, 4,903,232 nonzeros and 24 empty rows recorded for fallback.
+### Verified work
 
-45 offline tests pass. The user configured a Groq Free account and explicitly approved catalogue-only
-transfer. The genuine one-item pilot succeeded: 553 input tokens, 454 output
-tokens, 1,168 ms observed latency. Source comparison and an assistant review were
-recorded; paired feature export contains one actual generated description.
-This is integration evidence, not independent human quality or ranking evidence.
-See `docs/genai-pilot-evidence.json`. No paid usage was enabled. Credentials are
-stored only in ignored `.env`; the tracked template has placeholders.
+- Approved-methodology ambiguities and holdout exposure decisions documented.
+- Event-count train/validation split rebuilt; final test remains deferred.
+- Historical metadata: 411,732 items, zero future facts; TF-IDF trained on this
+  snapshot with 100,000 features. Original artifacts preserved.
+- Full item-CF: 978,921 training users, 200,975 items and 2,589,203 retained
+  neighbours. Training hash/cutoff checks protect artifact loading.
+- Shared engine serves six non-GenAI configurations with common eligibility,
+  complete seen-item exclusion and explicit switching reasons.
+- Validation tuning completed on 200 users, assessed on 200 disjoint users,
+  stratified equally by history cohort. This is a development diagnostic.
+  Category popularity outperformed switching on assessment NDCG@10; no
+  superiority claim is justified. See the experiment log and tuning evidence.
+- Genuine Groq Free one-item pilot succeeded (553 input / 454 output tokens).
+  It is integration evidence, not independent quality or ranking evidence.
+- FastAPI, Express sessions, MongoDB catalogue and React storefront connected.
+  Imported 411,732 historical catalogue records; browsing shows available items.
+  Accounts, optional personalization, history reset, wishlist and research basket
+  implemented. No payments, actual orders or current stock claims.
+- Tests: 54 Python tests (previous checkpoint), four backend tests including real
+  MongoDB concurrent updates/opt-out, three frontend tests; frontend production
+  build passed. Browser verified real search, details, guest sign-in transition
+  and responsive desktop/mobile layout. See frontend/README.md.
 
-Frontend, service integration, final experiments and the finished dissertation
-remain outstanding; these are not implied complete by passing unit tests.
+### Running locally
 
-A three-baseline corrected-cutoff diagnostic completed on 1,000 shared users.
-It is recorded as D10 and is not final hypothesis evidence.
+The existing Windows MongoDB service owns port 27017 and is reused. Docker is
+running, but a second MongoDB container cannot bind that occupied port; do not
+stop the existing database. Recommender: 127.0.0.1:8000; backend: 127.0.0.1:3000;
+storefront: http://127.0.0.1:5173. See component READMEs for restart instructions.
+Secrets remain in ignored .env. Catalogue-only transfer to Groq Free is approved.
 
-Next: train full temporal item-CF,
-integrate all seven models into the common evaluator, tune on validation, and
-build service/UI contracts alongside dissertation work. Keep full 15% test
-exposure disclosed and the independent untouched subset separately reported.
+### Next priorities and remaining work
+
+1. Prespecify a representative eligible GenAI enrichment sample, generate within
+   Free limits, document grounding review and uncertainty, and train the paired
+   seventh condition. Current online reasons are local templates, not GenAI text.
+2. Complete cohort/density/sensitivity experiments and paired confidence intervals;
+   freeze configuration before final testing, disclose prior validation exposure
+   and report the independent untouched intersection separately.
+3. Extend end-to-end authentication/privacy, accessibility, usability and system
+   performance checks. Production deployment configuration is not yet verified.
+4. Continue dissertation implementation/results sections from measured evidence;
+   verify literature, independent quality ratings and final limitations.
+
+The project and dissertation are not complete. No final-test effectiveness result
+or representative GenAI improvement has been established.
 
 ## Historical checkpoint retained for audit (11 October)
 

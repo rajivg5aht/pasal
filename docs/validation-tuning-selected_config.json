@@ -1,0 +1,19 @@
+{
+  "status": "validation_selected_not_final_test_freeze",
+  "cutoff_ms": 1438558255147,
+  "fixed_weights": {
+    "content": 0.75,
+    "item_cf": 0.25,
+    "global_popularity": 0.0
+  },
+  "switching": {
+    "low_history_threshold": 2,
+    "high_history_threshold": 10,
+    "cf_confidence_threshold": 0.25,
+    "cf_weight": 0.25
+  },
+  "objective": "equal mean NDCG@10 across nonzero-history tuning strata",
+  "tie_policy": "first configuration in predeclared grid",
+  "genai_condition": "not_evaluated",
+  "seed": 42
+}

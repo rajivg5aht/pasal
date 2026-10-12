@@ -176,3 +176,41 @@ benefit is asserted. Evidence summary: `docs/genai-pilot-evidence.json`.
 The original network failure remains archived. The successful API response,
 review and paired features remain under ignored local data paths. No credentials,
 raw catalogue payload or generated full response were committed to GitHub.
+
+## D12 — full collaborative model and development tuning
+
+The temporal CF model uses all 978,921 training users, 1,496,559 unique user-item
+pairs and 200,975 items. Binary distinct-user cosine, top 50 neighbours, excludes
+the diagonal and resolves ties by item ID. The retained graph has 2,589,203 edges;
+72,423 items have no neighbours. See cf-event-count-manifest.json for provenance.
+
+Validation sampling uses seed 42 and 100 users per history cohort. Half of each
+cohort is assigned to tuning and half to disjoint assessment (200 each). Fixed
+hybrid searches a 0.25-step simplex; switching searches prespecified history,
+confidence and CF-blend grids. Objective: equal mean NDCG@10 across nonzero-history
+tuning cohorts. Selection and summary are tracked in validation-tuning-*.json.
+Selected fixed weights: content .75, CF .25, popularity 0. Switching thresholds:
+2/10 events, confidence .25 and CF blend .25. These are not a final test freeze.
+
+Assessment NDCG@10: category popularity .0169822; fixed hybrid .0150444;
+switching .0138460; TF-IDF .0126633; global popularity .0081102; CF .0045403.
+The category baseline exceeds switching. Equal stratification is not population
+weighting; this diagnostic cannot establish hypothesis support. GenAI was not
+included. The final test remains unopened for evaluation.
+
+## D13 — connected application and MongoDB verification
+
+On October 12 the existing local MongoDB was reused because it already owned
+port 27017. Import completed for 411,732 historical catalogue records. FastAPI,
+Express and React were run together. Browser checks retrieved item 16 (category
+333), verified details and guest basket-to-login transition, and inspected desktop
+and 390x844 mobile layouts; mobile DOM width did not exceed viewport width.
+Screenshot: screenshots/storefront-desktop.jpg.
+
+Four backend tests passed, including 20 concurrent consented event updates,
+opt-out rejecting further updates and clearing history, and preserving a wishlist
+through reset. The integration test used its own UUID-named database and removed
+only that database. Three frontend tests passed and TypeScript/production build
+passed. These are engineering checks, not a complete usability, accessibility,
+security or performance study. Browser authentication was not exercised with an
+account; authentication was verified through backend HTTP tests.

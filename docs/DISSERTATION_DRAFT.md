@@ -124,3 +124,23 @@ overinterpreting this smoke sample.
   figures; describe only implemented behavior.
 - Write results, discussion, limitations, conclusions and abstract from measured
   evidence, including negative or inconclusive outcomes.
+
+## Implemented prototype and development assessment
+
+The prototype now connects a React/Vite interface to an Express API with MongoDB
+sessions and a local FastAPI recommendation service. Personalization is opt-in;
+turning it off atomically clears recommendation history and preferred categories.
+Operational wishlist and basket data remain separate. User identity and history
+are not sent to the generative provider. The interface describes anonymized items
+and historical availability without inventing product names, prices or orders.
+Displayed strategy explanations currently use local templates; genuine generated
+explanation integration remains to be completed.
+
+The full training-data item collaborative model contains 200,975 items and
+2,589,203 retained neighbour links. Development tuning used 200 validation users
+and disjoint assessment used 200 more, with equal history-cohort allocation.
+Category popularity achieved assessment NDCG@10 of 0.0169822, compared with
+0.0138460 for the selected switching model. This preliminary outcome does not
+support superiority of switching. It is neither a population-weighted estimate
+nor final hypothesis evidence. The GenAI condition and final holdout experiments
+are still pending, and these limitations must remain explicit in the final thesis.
