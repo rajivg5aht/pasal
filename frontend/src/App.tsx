@@ -59,6 +59,7 @@ function Modal({
 function Card({
   product,
   reason,
+  description,
   user,
   busy,
   openProduct,
@@ -66,6 +67,7 @@ function Card({
 }: {
   product: Product;
   reason?: string;
+  description?: string;
   user: User | null;
   busy: boolean;
   openProduct: (product: Product) => void;
@@ -118,6 +120,16 @@ function Card({
             <Sparkles size={13} />
             {reason}
           </p>
+        )}
+        {description && (
+          <details className="generated-description">
+            <summary>AI catalogue summary</summary>
+            <p>{description}</p>
+            <small>
+              Generated from the historical snapshot and reviewed for grounding.
+              This is not current stock information.
+            </small>
+          </details>
         )}
         <div className="card-foot">
           <span>Research catalogue</span>
@@ -464,6 +476,11 @@ export default function App() {
                   key={r.itemid}
                   product={r.product}
                   reason={r.reason}
+                  description={
+                    r.description_source === "reviewed_generative_api"
+                      ? (r.catalogue_description ?? undefined)
+                      : undefined
+                  }
                 />
               ))}
             </div>

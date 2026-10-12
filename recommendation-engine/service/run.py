@@ -10,7 +10,7 @@ if __name__=='__main__':
     path=ROOT/'.env'
     if path.exists():
         for line in path.read_text().splitlines():
-            if line.startswith('RECOMMENDATION_SERVICE_TOKEN='):
+            if line.partition('=')[0] in {'RECOMMENDATION_SERVICE_TOKEN', 'PASAL_ENRICHED_ARTIFACT_DIR'}:
                 key,value=line.split('=',1)
                 os.environ.setdefault(key,value.strip())
     import uvicorn

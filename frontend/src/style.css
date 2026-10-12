@@ -921,3 +921,18 @@ dialog > .primary {
     transition: none !important;
   }
 }
+
+.generated-description {
+  margin: 12px 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #456157;
+}
+.generated-description summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.generated-description small {
+  display: block;
+  color: #737c76;
+}

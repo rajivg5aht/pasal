@@ -47,8 +47,18 @@ def load_runtime():
     config_path=ROOT/'data/processed/validation-tuning-v1/selected_config.json'
     config=json.loads(config_path.read_text())
     train_path=ROOT/'data/splits/event-count-v1/train.csv'
+    enriched_path = os.environ.get('PASAL_ENRICHED_ARTIFACT_DIR')
+    content_path = Path(enriched_path).resolve() if enriched_path else ROOT/'data/processed/content-event-count-v1'
     engine=RecommendationEngine(pd.read_csv(train_path),config['cutoff_ms'],
-        ROOT/'data/processed/content-event-count-v1',ROOT/'data/processed/cf-event-count-v1')
+        content_path,ROOT/'data/processed/cf-event-count-v1')
+    config['serving_configuration'] = 'switching_without_genai'
+    if enriched_path:
+        if engine.content_manifest.get('kind') != 'historical_properties_plus_reviewed_generative_text':
+            raise ValueError('Enriched serving requires a verified GenAI artifact')
+        if engine.content_manifest['base_manifest_sha256'] != fingerprint(ROOT/'data/processed/content-event-count-v1/manifest.json'):
+            raise ValueError('Enriched model does not extend the serving baseline')
+        config['reviewed_descriptions'] = json.loads((content_path/'reviewed_descriptions.json').read_text())
+        config['serving_configuration'] = 'switching_with_genai' 
     if engine.cf_manifest['train_sha256'] != fingerprint(train_path):
         raise ValueError('Training/model fingerprint mismatch')
     return engine,config
@@ -90,11 +100,23 @@ def create_app(runtime=None, token=None):
                       frozenset(profile.seen_items) if profile.personalization else frozenset(),frozenset())
             categories=profile.selected_categories if profile.personalization else []
             signals,confidence,selected=engine.signals(case,selected_categories=categories)
-            items,strategy=engine.predict(case,signals,confidence,selected,'switching_without_genai',
+            configuration = config.get('serving_configuration', 'switching_without_genai')
+            items,strategy=engine.predict(case,signals,confidence,selected,configuration,
                                          PolicyConfig(**config['switching']),config['fixed_weights'],profile.k)
-            return {'items':[explain(item,strategy) for item in items],
+            descriptions = config.get('reviewed_descriptions', {})
+            explained = []
+            for item in items:
+                entry = descriptions.get(str(item))
+                explained.append(explain(item, strategy, entry['generation'], entry['review']) if entry else explain(item, strategy))
+            description_count = sum(item['description_source'] == 'reviewed_generative_api' for item in explained)
+            generated_ranking_used = configuration == 'switching_with_genai' and strategy == 'content'
+            return {'items':explained,
                     'strategy':strategy,'personalized':profile.personalization,
-                    'model_cutoff_ms':config['cutoff_ms'],'genai_used':False,
+                    'model_cutoff_ms':config['cutoff_ms'],
+                    'genai_used':generated_ranking_used or description_count > 0,
+                    'genai_ranking_used':generated_ranking_used,
+                    'genai_description_count':description_count,
+                    'configuration':configuration,
                     'configuration_status':config['status'],
                     'latency_ms':round((time.perf_counter()-started)*1000,3)}
         finally:

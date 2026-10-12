@@ -56,7 +56,6 @@ describe("research storefront", () => {
     fireEvent.click(
       await screen.findByRole("button", {
         name: "Catalogue item 7",
-        exact: true,
       }),
     );
     expect(

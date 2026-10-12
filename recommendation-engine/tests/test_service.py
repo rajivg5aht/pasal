@@ -7,6 +7,7 @@ from fastapi.testclient import TestClient
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from service.app import create_app
+from genai.enrichment import sha
 
 
 class ServiceTests(unittest.TestCase):
@@ -39,6 +40,27 @@ class ServiceTests(unittest.TestCase):
 
     def test_missing_service_token_fails_closed(self):
         with self.assertRaises(ValueError):create_app(token='')
+
+    def test_reviewed_description_is_separate_from_the_local_route_reason(self):
+        identity = {'provider': 'groq_free', 'model': 'openai/gpt-oss-20b',
+                    'catalogue': {'itemid': 7, 'properties': {'categoryid': '9'}}}
+        output = {'description': 'Category ID 9.', 'source_properties': ['categoryid'],
+                  'limitations': 'Anonymous codes.'}
+        generated = {'identity': identity, 'cache_key': sha(identity), 'output': output,
+                     'source_kind': 'generative_api', 'status': 'generated_pending_review'}
+        review = {'cache_key': sha(identity), 'output_sha256': sha(output), 'approved': True,
+                  'reviewer': 'fixture', 'rationale': 'Temporary fixture only'}
+        self.config['serving_configuration'] = 'switching_with_genai'
+        self.config['reviewed_descriptions'] = {'7': {'generation': generated, 'review': review}}
+        with TestClient(create_app((self.engine,self.config),self.token)) as client:
+            response = client.post('/recommendations', json={}, headers={'X-Service-Token': self.token})
+            self.assertEqual(response.status_code, 200)
+            body = response.json()
+            self.assertTrue(body['genai_used'])
+            self.assertFalse(body['genai_ranking_used'])  # Global popularity did not use text features.
+            self.assertEqual(body['genai_description_count'], 1)
+            self.assertEqual(body['items'][0]['catalogue_description'], 'Category ID 9.')
+            self.assertEqual(body['items'][0]['reason'], 'Popular in the historical catalogue.')
 
 
 if __name__=='__main__': unittest.main()

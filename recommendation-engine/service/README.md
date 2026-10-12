@@ -31,3 +31,12 @@ The website must keep demo product claims separate from anonymous research IDs.
 Tests use [FastAPI's in-process test client](https://fastapi.tiangolo.com/tutorial/testing/).
 On this Windows host, asyncio requires loopback access even for in-process tests;
 a restricted sandbox may block its socketpair before requests run.
+
+
+Optional reviewed GenAI serving: set `PASAL_ENRICHED_ARTIFACT_DIR` to a locally
+built `train_enriched.py` output and restart the service. Startup checks the base
+manifest and all artifact hashes. The default remains the verified property-only
+model. Generated summaries are served only with their exact grounding review;
+missing summaries fall back to the local strategy reason. The API separately
+reports whether the content ranking used the enriched model and how many served
+items have generated descriptions. No live provider call occurs while browsing.
