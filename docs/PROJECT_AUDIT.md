@@ -41,7 +41,7 @@ research questions and hypotheses are retained.
 Machine-readable evidence: `docs/audit-2026-10-11.json`. The audit records hashes
 for existing training/validation files, TF-IDF artifacts and popularity ranking.
 
-## Findings, in priority order
+## Findings at the start of this pass, in priority order
 
 ### A01: split proportions differ from the approved event split (high, unresolved)
 
@@ -135,9 +135,9 @@ in a new output directory. Existing result files are never overwritten by it.
 Other standalone legacy scripts still write their historic default filenames;
 use the documented comparison command for new diagnostic work.
 
-### A08: core approved contributions are missing (high, outstanding)
+### A08: core approved contributions were missing at audit baseline (high)
 
-There is no category-popularity implementation, validated fixed-hybrid training
+At the audit baseline there was no category-popularity implementation, validated fixed-hybrid training
 and tuning, switching controller, GenAI enrichment/explanation implementation,
 cohort/density experiments, threshold sensitivity analysis, ablation runner,
 confidence intervals or hypothesis tests. `genai`, `experiments`, `switching`,
@@ -191,7 +191,7 @@ been externally verified by this repository audit. Figures contain terminology
 and copyediting issues; preserve the approved research meaning while clarifying
 them with the supervisor. No final dissertation beyond the proposal was present.
 
-## Verification and results of this improvement pass
+## Verification and results of the initial repair pass
 
 - Ten regression tests pass, covering timestamp recency, repeated items,
   independent user histories, older seen-item exclusion, ties, invalid scores,
@@ -206,7 +206,34 @@ them with the supervisor. No final dissertation beyond the proposal was present.
   only, not evidence that H1 or H2 is satisfied. User eligibility can change with
   corrected histories, so this is not a controlled before/after quality study.
 - No model retraining, split regeneration, external API call, public deployment,
-  Git commit/push or participant data collection occurred.
+  or participant data collection occurred. The assistant did not run a Git
+  commit/push; commit `4d58fb6` appeared during the session and was preserved.
+
+## Subsequent unblocked implementation in this session
+
+The user confirmed the seven configurations, requested both holdout options for
+supervisor review, provided 224 hours over four weeks, and confirmed no API access
+yet. The four-week plan includes 16 hours of contingency.
+
+Added a category-conditioned popularity baseline with deterministic ties,
+eligibility/seen filtering and an explicit configurable global fallback. Added a
+SQLite-backed metadata snapshot builder that keeps timestamps, excludes future
+facts and flags conflicting latest values. It processed all 20,275,902 raw
+property rows and exported a reproducible 50-item development subset. The
+snapshot retained facts strictly before 1438968231028 ms, the legacy training
+cutoff plus one millisecond. This does not select a final split protocol.
+
+Added an actual OpenAI Responses API adapter, strict catalogue-only payloads,
+versioned caches, usage/latency records, conservative budget reservations and
+output-grounding checks. A separate exact-output review is required before
+generated descriptions enter matched with/without-GenAI feature tables. API
+contract tests use mocked responses, not research generations. No live model
+call, actual GenAI-quality result or H2 evaluation is claimed.
+
+The expanded suite passes **27 tests**, including temporal snapshots, category
+popularity, privacy payload rejection, cache reuse, refusal handling, budget
+blocking, reviewed feature export and unchanged fallback features. Original
+audited inputs were rehashed: all nine remain byte-for-byte unchanged.
 
 ## Order of improvement
 

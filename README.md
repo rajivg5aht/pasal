@@ -1,135 +1,55 @@
-# Pasal — Generative AI-Enhanced Hybrid Recommender System
+# Pasal
 
-A thesis project that builds a **hybrid recommendation engine** combining popularity-based, content-based, collaborative filtering, and Generative AI enrichment techniques. Evaluated on the [Retail Rocket](https://www.kaggle.com/datasets/retailrocket/ecommerce-dataset) e-commerce dataset.
+**Generative Artificial Intelligence-Enhanced Hybrid Recommender System for Cold-Start Mitigation in Online Retail**
 
----
+Undergraduate thesis research prototype by **Rajiv Ganeju**. Pasal studies validation-tuned switching among traditional recommenders, with Generative AI limited to grounded catalogue enrichment and explanations. Retailrocket is the research dataset; Kathmandu is the intended demonstration context.
 
-## Project Structure
+## Current state
 
-```
-pasal/
-├── frontend/               # React / Next.js frontend (coming soon)
-├── backend/                 # API server (coming soon)
-├── recommendation-engine/   # Core recommendation algorithms
-│   ├── models/
-│   │   ├── popularity/      # Weighted popularity recommender
-│   │   ├── content/         # TF-IDF content-based recommender
-│   │   ├── collaborative/   # Collaborative filtering (WIP)
-│   │   ├── hybrid/          # Hybrid ensemble (WIP)
-│   │   └── switching/       # Switching strategy (WIP)
-│   ├── preprocessing/       # Data cleaning and feature engineering
-│   ├── evaluation/          # Offline evaluation scripts
-│   ├── genai/               # Generative AI enrichment module
-│   └── requirements.txt     # Python dependencies
-├── data/                    # Dataset directory (NOT committed — see below)
-├── docs/                    # Thesis documents and diagrams
-├── .gitignore
-├── .env.example             # Environment variable template
-└── README.md                # ← You are here
-```
+Existing work includes preprocessing, global popularity, original and property-enhanced TF-IDF models, sampled item-CF, an untuned fixed-hybrid demonstration and preliminary evaluations. **Property-enhanced features are not GenAI.** The current pass adds an artifact audit, correctness repairs, regression tests, timestamp-preserving metadata preparation and a real API-backed GenAI integration with reviewed feature export. Live GenAI runs await API access.
 
-## Prerequisites
+The full switching system, final experiments and integrated website are not complete. Existing split/metadata issues prevent treating preliminary scores as final thesis evidence.
 
-- **Python 3.12+**
-- **Node.js 18+** (for the frontend, when ready)
-- **Git**
+- [Project status and handover](PROJECT_STATUS.md)
+- [Detailed audit](docs/PROJECT_AUDIT.md)
+- [Approved-requirement traceability](REQUIREMENTS_TRACEABILITY.md)
+- [Four-week, 224-hour plan](IMPLEMENTATION_PLAN.md)
+- [Supervisor clarification note](docs/PROPOSAL_CLARIFICATIONS.md)
+- [GenAI integration and safeguards](recommendation-engine/genai/README.md)
 
-## Getting Started
+## Existing environment and checks
 
-### 1. Clone the repository
+Reuse the existing Python 3.12 virtual environment. From the project root:
 
-```bash
-git clone https://github.com/rajivg5aht/pasal.git
-cd pasal
+```powershell
+.\.venv\Scripts\python.exe -m pip check
+.\.venv\Scripts\python.exe -m unittest discover -s recommendation-engine/tests -v
+.\.venv\Scripts\python.exe -m compileall -q recommendation-engine
 ```
 
-### 2. Set up a Python virtual environment
+The dependency pins describe the existing development environment. A fresh installation has not yet been verified. The standard-library tests are also compatible with Pytest discovery when that planned test tool is installed.
 
-```bash
-python -m venv .venv
+## Safe diagnostic commands
 
-# Windows
-.venv\Scripts\activate
+Choose new output paths; historical outputs are preserved:
 
-# macOS / Linux
-source .venv/bin/activate
+```powershell
+.\.venv\Scripts\python.exe recommendation-engine/evaluation/audit_existing_artifacts.py --output docs/audit-next.json
+.\.venv\Scripts\python.exe recommendation-engine/evaluation/evaluate_content_comparison.py --output-dir data/processed/content-check-next --max-users 100
 ```
 
-### 3. Install Python dependencies
+The content comparison uses one shared validation sample and saves aggregate/per-user metrics, recommendations and a manifest. It excludes zero-history users and uses legacy artifacts. It is a representation diagnostic, **not** the final cold-start or seven-configuration experiment. Neither command reads the final test CSV.
 
-```bash
-pip install -r recommendation-engine/requirements.txt
-```
+Avoid rerunning legacy preprocessing/training over existing files: split and metadata repairs require a versioned protocol. Other legacy smoke/evaluation scripts still overwrite their default CSV output paths.
 
-### 4. Obtain the Retail Rocket dataset
+## Data and approved architecture
 
-Download the dataset from [Kaggle](https://www.kaggle.com/datasets/retailrocket/ecommerce-dataset) and place the CSV files in:
+The existing raw data, processed artifacts and splits are stored under `data/` and ignored by Git. Dataset source: [Retailrocket on Kaggle](https://www.kaggle.com/datasets/retailrocket/ecommerce-dataset). No redownload is needed on the current machine.
 
-```
-data/raw/
-├── category_tree.csv
-├── events.csv
-├── item_properties_part1.csv
-└── item_properties_part2.csv
-```
+The approved stack is React/TypeScript/Vite/Tailwind, Node/Express, Python/FastAPI and MongoDB. Frontend/backend directories remain placeholders. `.env.example` reserves settings; the GenAI CLI reads its key from the local process environment, not automatically from `.env`.
 
-### 5. Configure environment variables
+Seven intended configurations: global popularity, category popularity, TF-IDF, item-CF, tuned fixed hybrid, switching without GenAI, switching with GenAI. Use validation for tuning and freeze decisions before final testing. Do not move previously exposed validation data into a supposedly pristine test set without a documented supervisor decision.
 
-```bash
-cp .env.example .env
-# Edit .env and add your API keys
-```
+Keep credentials, raw datasets, large generated artifacts and environments outside tracked source. Report measured, implemented and planned work separately. This is an academic research prototype, not a production retail system.
 
-### 6. Run preprocessing
-
-```bash
-python recommendation-engine/preprocessing/inspect_data.py
-python recommendation-engine/preprocessing/preprocess_item_properties.py
-python recommendation-engine/preprocessing/preprocess_categories.py
-python recommendation-engine/preprocessing/build_item_features.py
-python recommendation-engine/preprocessing/create_splits.py
-```
-
-### 7. Train models
-
-```bash
-# Popularity-based
-python recommendation-engine/models/popularity/popularity.py
-
-# Content-based (TF-IDF)
-python recommendation-engine/models/content/content_based.py
-```
-
-### 8. Evaluate
-
-```bash
-python recommendation-engine/evaluation/evaluate_popularity.py
-```
-
-## Models
-
-| Model | Status | Description |
-|-------|--------|-------------|
-| Popularity | ✅ Done | Weighted interaction scoring (view=1, cart=3, buy=5) |
-| Content-Based | ✅ Done | TF-IDF on category-tree tokens |
-| Collaborative | 🔧 WIP | User-item collaborative filtering |
-| Hybrid | 🔧 WIP | Ensemble of all models |
-| GenAI Enriched | 🔧 WIP | LLM-enhanced item representations |
-
-## Tech Stack
-
-- **Python** — pandas, scikit-learn, scipy, joblib
-- **React / Next.js** — frontend (planned)
-- **Node.js** — backend API (planned)
-
-## Dataset
-
-This project uses the **Retail Rocket** e-commerce dataset (~1 GB). The raw data files are **not included** in the repository. See step 4 above for download instructions.
-
-## Author
-
-**Rajiv Ganesh** — Thesis project
-
-## License
-
-This project is part of an academic thesis. All rights reserved.
+All rights reserved.

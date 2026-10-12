@@ -10,11 +10,11 @@ The user's current instruction confirms the seven methodology configurations.
 | DSRM, CRISP-DM, Agile | p. 10 | Requirement-driven build/test/evidence cycles | Retained in plan |
 | Retailrocket interactions/properties/categories | p. 11, Fig. 4 | Raw files, preprocessing, provenance | Present; audited; temporal repair required |
 | 70/15/15 chronological event split | p. 11 | Split manifest, disjointness/time checks | Mismatch; supervisor holdout decision pending |
-| GenAI metadata before splitting; cached/versioned; no future behavior | p. 11, Fig. 4 | Catalogue-only generation, point-in-time features, cache | Existing property enhancement is non-generative |
+| GenAI metadata before splitting; cached/versioned; no future behavior | p. 11, Fig. 4 | Catalogue-only generation, point-in-time features, cache | Adapter/cache/reviewed export implemented and fixture-tested; no API access or live generation |
 | Cohorts 0 / 1-4 / 5-19 / 20+ | p. 11 | Raw event-count cohorts independent of model coverage | Not yet evaluated |
 | Densities 10 / 25 / 50 / 100 percent | p. 11 | Reproducible train-only samples and manifests | Not implemented |
 | Global popularity | p. 15 | Exact training-score reconstruction | Implemented; current scores verified |
-| Category popularity | p. 15 | Category rankings and onboarding tests | Missing at audit baseline |
+| Category popularity | p. 15 | Category rankings and fallback/eligibility tests | Implemented in this pass; fixture-tested; full evaluation pending |
 | TF-IDF content | p. 15 | Models, unique IDs, sampled vector reconstruction | Implemented; temporal validity unresolved |
 | Item-CF | p. 15 | Similarities, common-cohort results | Sample prototype only |
 | Tuned fixed hybrid | p. 15 | Normalization, candidate alignment, validation tuning | One-user untuned prototype; seen filtering repaired |

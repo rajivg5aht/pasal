@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import json
+import platform
 import sys
 from pathlib import Path
 
@@ -26,9 +27,6 @@ ORIGINAL_IDS_FILE = PROCESSED_DIR / "item_tfidf_ids.csv"
 
 ENHANCED_MATRIX_FILE = PROCESSED_DIR / "item_tfidf_matrix_enhanced.npz"
 ENHANCED_IDS_FILE = PROCESSED_DIR / "item_tfidf_ids_enhanced.csv"
-
-METRICS_FILE = PROCESSED_DIR / "content_model_comparison_metrics.csv"
-DETAILS_FILE = PROCESSED_DIR / "content_model_comparison_details.csv"
 
 K = 10
 MAX_USERS = 100
@@ -324,7 +322,8 @@ def main(output_dir, max_users=MAX_USERS):
     pd.DataFrame(detail_rows, columns=["visitorid", "model", "rank", "itemid", "relevant"]).to_csv(details_file, index=False)
     pd.DataFrame(user_rows).to_csv(output_dir / "per_user_metrics.csv", index=False)
     inputs = [TRAIN_FILE, VALIDATION_FILE, RANKING_FILE, ORIGINAL_MATRIX_FILE,
-              ORIGINAL_IDS_FILE, ENHANCED_MATRIX_FILE, ENHANCED_IDS_FILE]
+              ORIGINAL_IDS_FILE, ENHANCED_MATRIX_FILE, ENHANCED_IDS_FILE,
+              Path(__file__), Path(__file__).resolve().parents[1] / "research_utils.py"]
     hashes = {}
     for path in inputs:
         digest = hashlib.sha256()
@@ -334,6 +333,7 @@ def main(output_dir, max_users=MAX_USERS):
         hashes[str(path.relative_to(ROOT_DIR))] = digest.hexdigest()
     manifest = {
         "status": "development_diagnostic_not_final_thesis_evidence",
+        "versions": {"python": platform.python_version(), "numpy": np.__version__, "pandas": pd.__version__},
         "k": K, "seed": RANDOM_STATE, "max_history_items": MAX_HISTORY_ITEMS,
         "eligible_users": len(eligible_ids), "sampled_users": sampled_users.tolist(),
         "user_policy": "unseen validation targets and history covered by BOTH content models; excludes zero-history users",
