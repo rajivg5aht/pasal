@@ -214,3 +214,26 @@ only that database. Three frontend tests passed and TypeScript/production build
 passed. These are engineering checks, not a complete usability, accessibility,
 security or performance study. Browser authentication was not exercised with an
 account; authentication was verified through backend HTTP tests.
+
+## D14 — local service load diagnostic and scoring optimization
+
+Two bounded runs used identical synthetic anonymous/one-event/25-event profiles,
+three warm-ups and 30 requests at each concurrency (1, 2, 4). The endpoint is
+localhost FastAPI only; no accounts or database writes. Baseline successful P95
+was 353.6/670.6/660.2 ms. Scoring was changed to calculate only components needed
+by the chosen switching route; fixtures verify identical ranks across all routes
+and fallback cases. The repeat measured 187.3/313.7/413.1 ms successful P95.
+At concurrency 1, successful throughput rose from 4.06 to 10.63 requests/second.
+
+Both runs served 30/30 at concurrency 1 and 2. At concurrency 4, capacity admission
+returned HTTP 503 for 19/30 before and 12/30 after. These are reported failures,
+not hidden from denominators or counted as successful throughput. Sampled service
+RSS peaked around 417 MB before and 411 MB after (decimal units). Full phase data
+are in service-load-diagnostic-v1.json and v2.json.
+
+These small sequential development measurements ran alongside background work;
+they are not controlled final performance evidence or proof of the proposal's
+latency target under load. Browser, Express and database latency are excluded.
+The interrupted prior service processes were restarted; the existing MongoDB and
+its catalogue were preserved. Requirements encoding was also repaired: 122 pins
+now use UTF-8, parse correctly, match installed packages and pass pip check.

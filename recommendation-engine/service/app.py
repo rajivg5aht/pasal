@@ -99,7 +99,7 @@ def create_app(runtime=None, token=None):
                       tuple(profile.recent_items) if profile.personalization else (),
                       frozenset(profile.seen_items) if profile.personalization else frozenset(),frozenset())
             categories=profile.selected_categories if profile.personalization else []
-            signals,confidence,selected=engine.signals(case,selected_categories=categories)
+            signals,confidence,selected=engine.signals(case,selected_categories=categories, policy=PolicyConfig(**config['switching']))
             configuration = config.get('serving_configuration', 'switching_without_genai')
             items,strategy=engine.predict(case,signals,confidence,selected,configuration,
                                          PolicyConfig(**config['switching']),config['fixed_weights'],profile.k)

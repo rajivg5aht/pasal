@@ -48,15 +48,25 @@ class RecommendationEngine:
         self.popularity = {i: v for i, v in self.popularity.items() if i in self.eligible}
         self.content_eligible = np.array([i in self.eligible for i in self.content_ids])
 
-    def signals(self, case, selected_categories=None):
+    def signals(self, case, selected_categories=None, policy=None):
         candidates = self.eligible if not case.seen else self.eligible - case.seen
         selected = (set(selected_categories) if selected_categories is not None else
                     {self.categories[i] for i in case.history if i in self.categories})
-        pop = normalize(self.popularity, candidates)
-        cat = normalize({i: v for i, v in self.popularity.items() if self.categories.get(i) in selected}, candidates)
+        cf_rows = [self.cf_rows[i] for i in case.history if i in self.cf_rows]
+        usable = sum(self.cf.indptr[i + 1] > self.cf.indptr[i] for i in cf_rows)
+        confidence = usable / len(case.history) if case.history else 0.0
+        required = {'global_popularity', 'category_popularity', 'content', 'item_cf'}
+        if policy is not None:
+            strategy = route(case.event_count, confidence, selected if case.event_count == 0 else [], policy)
+            required = ({'item_cf', 'global_popularity'} if strategy in {'cf_popularity_hybrid', 'hybrid_fallback'}
+                        else {'category_popularity', 'global_popularity'} if strategy == 'category_popularity'
+                        else {strategy})
+        pop = normalize(self.popularity, candidates) if 'global_popularity' in required else {}
+        cat = (normalize({i: v for i, v in self.popularity.items() if self.categories.get(i) in selected}, candidates)
+               if 'category_popularity' in required else {})
         content = {}
         history_rows = [self.content_rows[i] for i in case.history if i in self.content_rows]
-        if history_rows:
+        if history_rows and 'content' in required:
             profile = np.asarray(self.content[history_rows].mean(axis=0)).ravel()
             norm = np.linalg.norm(profile)
             if norm:
@@ -67,11 +77,8 @@ class RecommendationEngine:
                         values[self.content_rows[item]] = 0
                 positive = np.flatnonzero(values > 0)
                 content = normalize({int(self.content_ids[i]): values[i] for i in positive}, candidates)
-        cf_rows = [self.cf_rows[i] for i in case.history if i in self.cf_rows]
-        usable = sum(self.cf.indptr[i + 1] > self.cf.indptr[i] for i in cf_rows)
-        confidence = usable / len(case.history) if case.history else 0.0
         cf = {}
-        if cf_rows:
+        if cf_rows and 'item_cf' in required:
             values = np.asarray(self.cf[cf_rows].sum(axis=0)).ravel()
             positive = np.flatnonzero(values > 0)
             cf = normalize({int(self.cf_ids[i]): values[i] for i in positive}, candidates)

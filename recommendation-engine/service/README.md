@@ -40,3 +40,11 @@ model. Generated summaries are served only with their exact grounding review;
 missing summaries fall back to the local strategy reason. The API separately
 reports whether the content ranking used the enriched model and how many served
 items have generated descriptions. No live provider call occurs while browsing.
+
+
+`evaluation/benchmark_service.py` performs a bounded localhost-only synthetic
+profile diagnostic. It reports successful and attempted throughput separately,
+all HTTP outcomes, successful latency percentiles and optional sampled process
+RSS/CPU. See the experiment log for development measurements and limitations.
+Serving computes only the components needed by the selected switching route;
+the offline comparison path still prepares all signals for consistent comparisons.

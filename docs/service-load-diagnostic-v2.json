@@ -1,0 +1,834 @@
+{
+  "status": "development_local_service_diagnostic",
+  "warmup_requests": 3,
+  "host": {
+    "os": "Windows",
+    "logical_cpus": 24,
+    "ram_bytes": 16886128640
+  },
+  "phases": [
+    {
+      "concurrency": 1,
+      "requests": 30,
+      "successes": 30,
+      "status_counts": {
+        "200": 30
+      },
+      "successful_requests_per_second": 10.633170572572054,
+      "attempted_requests_per_second": 10.633170572572054,
+      "wall_seconds": 2.8213598000002094,
+      "success_p50_ms": 90.8166500084917,
+      "success_p95_ms": 187.28900500282177,
+      "all_attempt_p95_ms": 187.28900500282177,
+      "service_peak_sampled_rss_bytes": 403808256,
+      "service_cpu_seconds": 2.515625,
+      "rows": [
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 86.53999998932704
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 153.1243000063114
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 13.946599996415898
+        },
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 84.60659999400377
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 151.13880000717472
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 24.28919999510981
+        },
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 92.20130000903737
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 183.4769000124652
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 19.222699993406422
+        },
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 98.39319999446161
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 192.5970000011148
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 19.096199990599416
+        },
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 88.36019999580458
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 148.72129999275785
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 17.285499998251908
+        },
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 87.16650000133086
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 157.86300000036135
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 16.93169999634847
+        },
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 92.75529999285936
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 157.63970000261907
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 16.942699992796406
+        },
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 134.2129999975441
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 152.31889999995474
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 14.744500003871508
+        },
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 96.57090000109747
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 172.78389999410138
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 41.99040000094101
+        },
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 89.43200000794604
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 190.40799999493174
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 16.20899999397807
+        }
+      ]
+    },
+    {
+      "concurrency": 2,
+      "requests": 30,
+      "successes": 30,
+      "status_counts": {
+        "200": 30
+      },
+      "successful_requests_per_second": 11.201488872048305,
+      "attempted_requests_per_second": 11.201488872048305,
+      "wall_seconds": 2.678215399995679,
+      "success_p50_ms": 209.113349999825,
+      "success_p95_ms": 313.6638400021183,
+      "all_attempt_p95_ms": 313.6638400021183,
+      "service_peak_sampled_rss_bytes": 407052288,
+      "service_cpu_seconds": 2.6875,
+      "rows": [
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 137.2615999862319
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 287.08710000501014
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 145.96300000266638
+        },
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 105.72170000523329
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 329.0419999975711
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 19.0024000039557
+        },
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 213.58969999710098
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 251.93250000302214
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 22.84259999578353
+        },
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 218.89350000128616
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 295.4068999970332
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 28.665199992246926
+        },
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 203.608499999973
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 303.6627999972552
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 23.40419999381993
+        },
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 219.92420000606216
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 239.62269999901764
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 25.470400010817684
+        },
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 204.63700000254903
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 253.01139999646693
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 24.164400005247444
+        },
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 216.81030000036117
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 321.599500006414
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 33.94520000438206
+        },
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 288.2396999921184
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 303.96469999686815
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 42.196900001727045
+        },
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 247.8963999892585
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 171.65430000750348
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 26.99199999915436
+        }
+      ]
+    },
+    {
+      "concurrency": 4,
+      "requests": 30,
+      "successes": 18,
+      "status_counts": {
+        "200": 18,
+        "503": 12
+      },
+      "successful_requests_per_second": 11.13501496392112,
+      "attempted_requests_per_second": 18.55835827320187,
+      "wall_seconds": 1.6165222999989055,
+      "success_p50_ms": 253.5409999982221,
+      "success_p95_ms": 413.07288499956485,
+      "all_attempt_p95_ms": 401.84718499731383,
+      "service_peak_sampled_rss_bytes": 411279360,
+      "service_cpu_seconds": 1.75,
+      "rows": [
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 244.48120000306517
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 263.44589999644086
+        },
+        {
+          "profile": "warm_history",
+          "status": 503,
+          "latency_ms": 180.8807000052184
+        },
+        {
+          "profile": "anonymous",
+          "status": 503,
+          "latency_ms": 163.0874000111362
+        },
+        {
+          "profile": "low_history",
+          "status": 503,
+          "latency_ms": 95.65410000504926
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 83.29910000611562
+        },
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 154.65609999955632
+        },
+        {
+          "profile": "low_history",
+          "status": 503,
+          "latency_ms": 141.1355000018375
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 209.36670000082813
+        },
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 211.95449998776894
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 351.4234000031138
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 97.69749999395572
+        },
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 271.8023999914294
+        },
+        {
+          "profile": "low_history",
+          "status": 503,
+          "latency_ms": 125.50859998736996
+        },
+        {
+          "profile": "warm_history",
+          "status": 503,
+          "latency_ms": 118.92039999656845
+        },
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 262.60079999337904
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 388.39599999482743
+        },
+        {
+          "profile": "warm_history",
+          "status": 503,
+          "latency_ms": 98.11469999840483
+        },
+        {
+          "profile": "anonymous",
+          "status": 503,
+          "latency_ms": 96.11320000840351
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 414.3206000007922
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 238.74699999578297
+        },
+        {
+          "profile": "anonymous",
+          "status": 200,
+          "strategy": "global_popularity",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 329.88219999242574
+        },
+        {
+          "profile": "low_history",
+          "status": 503,
+          "latency_ms": 78.27779999934137
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 168.55679999571294
+        },
+        {
+          "profile": "anonymous",
+          "status": 503,
+          "latency_ms": 165.58519999671262
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 412.85269999934826
+        },
+        {
+          "profile": "warm_history",
+          "status": 200,
+          "strategy": "item_cf",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 26.074199995491654
+        },
+        {
+          "profile": "anonymous",
+          "status": 503,
+          "latency_ms": 25.401100007002242
+        },
+        {
+          "profile": "low_history",
+          "status": 200,
+          "strategy": "content",
+          "items": 10,
+          "cutoff_ms": 1438558255147,
+          "genai_used": false,
+          "latency_ms": 355.2239999989979
+        },
+        {
+          "profile": "warm_history",
+          "status": 503,
+          "latency_ms": 105.80759998993017
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Synthetic profiles, not user behavior or ranking-quality evidence",
+    "FastAPI only; excludes browser, Express and database latency",
+    "Concurrent background work may affect timings; not final controlled performance results",
+    "RSS is sampled and may miss brief peaks; no GPU usage measured"
+  ]
+}

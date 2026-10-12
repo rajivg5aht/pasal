@@ -41,6 +41,16 @@ class EngineTests(unittest.TestCase):
             self.assertTrue(recs)
             with self.assertRaises(ValueError):
                 engine.predict(cold,s,c,p,'switching_with_genai',PolicyConfig(5,20,.5,.5),{})
+            policy = PolicyConfig(2, 10, .5, .5)
+            for count, history, categories in [(0, (), []), (0, (), ['9']), (0, (), ['missing']),
+                                                (1, (10,), []), (3, (10,), []), (20, (10,), []),
+                                                (20, (999,), [])]:
+                current = Case(1, count, history, frozenset(history), frozenset({30}))
+                full = engine.signals(current, selected_categories=categories)
+                lazy = engine.signals(current, selected_categories=categories, policy=policy)
+                expected = engine.predict(current, *full, 'switching_without_genai', policy, {})
+                actual = engine.predict(current, *lazy, 'switching_without_genai', policy, {})
+                self.assertEqual(actual, expected)
 
     def test_rank_ties_are_stable_at_selection_boundary(self):
         self.assertEqual(RecommendationEngine.rank({i:1 for i in range(100,0,-1)},3),[1,2,3])
