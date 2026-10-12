@@ -89,3 +89,19 @@ Common seven-configuration cohort/density evaluation; validation tuning and
 sensitivity; genuine GenAI grounding/quality/cost assessment; equivalent
 switching ablation; uncertainty and statistical comparisons; service load/latency;
 privacy/fairness audit; final frozen-test evaluation after supervisor decisions.
+
+## D06 — common evaluator development diagnostic (12 October 2026)
+
+Command: `.venv/Scripts/python.exe recommendation-engine/evaluation/run_popularity_diagnostic.py --output data/processed/common-popularity-2026-10-12`.
+Seed 42; 1,000 users selected independently of model coverage. Cohorts:
+926 zero-history, 57 with 1-4 events, 14 with 5-19, 3 with 20+.
+All served; zero failures; 9 users have no novel-item targets and remain in the
+headline denominator. Popularity Precision@10 0.0003, Recall@10 0.00183333,
+NDCG@10 0.00132908, MAP@10 0.00109583, HitRate@10 0.003.
+These are legacy-split smoke results, not final H1/H2 evidence. Training-observed
+candidates only; no metadata availability filter. In-process scorer latency
+excludes candidate preparation and is NOT API/system latency. Outputs and hashes
+are local in the named directory; final test data was not opened.
+Verification: 37 unittest checks passed, including five new common-evaluator
+checks and five free-provider/explanation checks. All generation calls in those
+tests are mocked; no actual GenAI output exists yet.
