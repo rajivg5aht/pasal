@@ -57,6 +57,12 @@ class GroqFreeProvider:
                             if k.lower().startswith("x-ratelimit-")}}
 
 
+class QuotaPaused(RuntimeError):
+    def __init__(self, reason, retry_after=None):
+        super().__init__(reason)
+        self.retry_after = retry_after
+
+
 class FreeQuota:
     """Persistent conservative reservations; caller holds the shared cache lock.
 
@@ -73,11 +79,14 @@ class FreeQuota:
         recent = [r for r in rows if r["time"] > now - 86400]
         minute = [r for r in recent if r["time"] > now - 60]
         tokens = len(canonical(self.provider.payload(record)).encode()) + 1024 + self.provider.max_output_tokens
-        # Safety margins below published 30 RPM / 1000 RPD / 8000 TPM / 200000 TPD.
-        if (len(minute) >= 20 or len(recent) >= 900 or
-                sum(r["tokens"] for r in minute) + tokens > 7000 or
-                sum(r["tokens"] for r in recent) + tokens > 180000):
-            raise RuntimeError("Local free quota exhausted; resume later without changing tier")
+        # Reserve before sending. Daily exhaustion and oversized records never wait.
+        if tokens > 7000:
+            raise QuotaPaused("Record exceeds the conservative minute token allowance")
+        if len(recent) >= 900 or sum(r["tokens"] for r in recent) + tokens > 180000:
+            raise QuotaPaused("Local daily free quota exhausted; resume another day")
+        if len(minute) >= 20 or sum(r["tokens"] for r in minute) + tokens > 7000:
+            retry_after = max(0.1, min(r["time"] for r in minute) + 60 - now + 0.1)
+            raise QuotaPaused("Local minute quota paused before any API call", retry_after)
         self.path.parent.mkdir(parents=True, exist_ok=True)
         with self.path.open("a", encoding="utf-8") as stream:
             stream.write(canonical({"time": now, "tokens": tokens, "cache_key": key}) + "\n")

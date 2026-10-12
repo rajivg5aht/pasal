@@ -1,0 +1,58 @@
+{
+  "design": "uniform reservoir without replacement; no events or outcomes read",
+  "seed": 42,
+  "size": 32,
+  "eligible_population": 59912,
+  "eligibility": "historical available != 0; unknown retained",
+  "cutoff_ms": 1438558255147,
+  "population_availability": {
+    "1": 58189,
+    "unknown": 1723
+  },
+  "sample_availability": {
+    "1": 29,
+    "unknown": 3
+  },
+  "sample_categories": 23,
+  "source_sha256": "5ce8af2b34cc1524cb4b9339c5375c7d624b4e89e250fadc48f032ec0e8b65bd",
+  "sample_sha256": "910db727c0a632dae934cab5fa6906b2d0c078fc7e740b1478dd31fafa72243d",
+  "itemids": [
+    4130,
+    43055,
+    53983,
+    55076,
+    92924,
+    105201,
+    132129,
+    142218,
+    143546,
+    172605,
+    172942,
+    178539,
+    198220,
+    198506,
+    218046,
+    221349,
+    227667,
+    230860,
+    248636,
+    316830,
+    323120,
+    337566,
+    347100,
+    384508,
+    393165,
+    416502,
+    420813,
+    432394,
+    440923,
+    458712,
+    465838,
+    465854
+  ],
+  "limitations": [
+    "Small quality/feasibility sample; no category-level precision guarantee",
+    "No inference of ranking benefit from generation success",
+    "Failed and rejected records are retained; no replacements"
+  ]
+}
