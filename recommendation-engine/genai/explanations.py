@@ -7,6 +7,7 @@ REASONS = {
     "content": "Selected using similarity to your previous item interactions.",
     "item_cf": "Selected using historical item co-interaction patterns.",
     "fixed_hybrid": "Selected using the configured combination of recommendation signals.",
+    "cf_popularity_hybrid": "Selected using collaborative and popularity evidence.",
     "hybrid_fallback": "Selected using the hybrid fallback because collaborative evidence was insufficient.",
 }
 
