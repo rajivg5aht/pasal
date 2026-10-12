@@ -165,6 +165,7 @@ export default function App() {
     >(null),
     [detail, setDetail] = useState<Product | null>(null);
   const [refresh, setRefresh] = useState(0);
+  const [historyVersion, setHistoryVersion] = useState(0);
   const catalog = useRef<HTMLElement>(null);
   const filterKey = JSON.stringify([query, category, refresh]);
   const currentFilter = useRef(filterKey);
@@ -228,7 +229,7 @@ export default function App() {
           );
       });
     return () => controller.abort();
-  }, [user, refresh]);
+  }, [user, refresh, historyVersion]);
   async function act(action: () => Promise<void>) {
     setBusy(true);
     setNotice("");
@@ -280,17 +281,22 @@ export default function App() {
           : "Item removed.",
       );
       if (add && list === "cart" && user.personalization)
-        await api("/events", "POST", { itemid: id, type: "addtocart" }).catch(
-          () => {},
-        );
+        await recordActivity(id, "addtocart");
     });
+  }
+  async function recordActivity(itemid: number, type: "view" | "addtocart") {
+    try {
+      await api("/events", "POST", { itemid, type });
+      setHistoryVersion((value) => value + 1);
+    } catch {
+      setNotice(
+        "Your item is still available to browse, but recommendation history could not update. Check your preferences or try again later.",
+      );
+    }
   }
   function openProduct(product: Product) {
     setDetail(product);
-    if (user?.personalization)
-      void api("/events", "POST", { itemid: product._id, type: "view" }).catch(
-        () => {},
-      );
+    if (user?.personalization) void recordActivity(product._id, "view");
   }
   async function savePrivacy(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();

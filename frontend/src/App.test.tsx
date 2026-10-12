@@ -51,6 +51,78 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 describe("research storefront", () => {
+  it("refreshes recommendations after a consented view is stored", async () => {
+    let eventStored = false;
+    const fetchMock = vi.fn(async (input: string) => {
+      if (input === "/api/me")
+        return {
+          ok: true,
+          status: 200,
+          json: async () => ({
+            user: {
+              id: "fixture",
+              name: "Fixture",
+              email: "fixture@example.test",
+              personalization: true,
+              selectedCategories: [],
+              wishlist: [],
+              cart: [],
+            },
+          }),
+        };
+      if (input === "/api/categories")
+        return {
+          ok: true,
+          status: 200,
+          json: async () => ({ categories: [] }),
+        };
+      if (input === "/api/events") {
+        eventStored = true;
+        return { ok: true, status: 204 };
+      }
+      if (input === "/api/recommendations")
+        return {
+          ok: true,
+          status: 200,
+          json: async () => ({
+            items: eventStored
+              ? []
+              : [
+                  {
+                    itemid: 7,
+                    product,
+                    reason: "Fixture recommendation",
+                    description_source: "unavailable",
+                    catalogue_description: null,
+                  },
+                ],
+          }),
+        };
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({ products: [product], nextCursor: null }),
+      };
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    render(<App />);
+    await screen.findByRole("button", { name: "Fixture" });
+    expect(
+      await screen.findByText("Fixture recommendation"),
+    ).toBeInTheDocument();
+    fireEvent.click(
+      screen.getAllByRole("button", { name: "Catalogue item 7" })[0],
+    );
+    await waitFor(() =>
+      expect(
+        screen.queryByText("Fixture recommendation"),
+      ).not.toBeInTheDocument(),
+    );
+    expect(eventStored).toBe(true);
+    expect(
+      fetchMock.mock.calls.filter(([path]) => path === "/api/events"),
+    ).toHaveLength(1);
+  });
   it("closes item details when a guest starts basket sign-in", async () => {
     render(<App />);
     fireEvent.click(
