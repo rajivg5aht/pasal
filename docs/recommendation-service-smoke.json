@@ -1,0 +1,8 @@
+{
+  "type": "in_process_real_artifact_smoke_not_load_test",
+  "status_code": 200,
+  "returned_items": 10,
+  "strategy": "global_popularity",
+  "genai_used": false,
+  "scoring_latency_ms": 28.233
+}
