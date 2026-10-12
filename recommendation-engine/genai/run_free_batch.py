@@ -15,7 +15,7 @@ from genai.free_provider import FreeQuota, GroqFreeProvider, QuotaPaused
 from models.content.train_snapshot import fingerprint
 
 
-def run(sample, cache, max_new_requests):
+def run(sample, cache, max_new_requests, skip_recorded_failures=False):
     sample, cache = Path(sample), Path(cache)
     manifest = json.loads((sample/'manifest.json').read_text())
     source = sample/'catalogue.jsonl'
@@ -45,7 +45,9 @@ def run(sample, cache, max_new_requests):
                     time.sleep(min(60, pause.retry_after))
             new += not hit
             print(f"item={record['itemid']} status={result['status']} cache_hit={hit}", flush=True)
-            if result['status'] != 'generated_pending_review' and not result.get('provider_metadata'):
+            if (result['status'] != 'generated_pending_review' and result.get('output') is None
+                    and result.get('provider_metadata', {}).get('error_code') != 'json_validate_failed'
+                    and not (hit and skip_recorded_failures)):
                 print('Stopped on provider failure; no automatic retry', flush=True)
                 return
     print(f'Batch stopped/completed with {new} new requests; review required', flush=True)
@@ -56,6 +58,7 @@ if __name__ == '__main__':
     parser.add_argument('--sample', type=Path, required=True)
     parser.add_argument('--cache', type=Path, required=True)
     parser.add_argument('--max-new-requests', type=int, default=32)
+    parser.add_argument('--skip-recorded-failures', action='store_true', help='Leave earlier failed items unchanged and proceed to unsent items')
     parser.add_argument('--live', action='store_true', required=True)
     args = parser.parse_args()
     # Only the two authorized provider settings are loaded; never print values.
@@ -67,4 +70,4 @@ if __name__ == '__main__':
                 os.environ.setdefault(key, value.strip().strip('\"').strip("'"))
     if os.environ.get('GROQ_ACCOUNT_TIER') != 'free' or not os.environ.get('GROQ_API_KEY'):
         raise ValueError('Configure a verified Free account locally')
-    run(args.sample, args.cache, args.max_new_requests)
+    run(args.sample, args.cache, args.max_new_requests, args.skip_recorded_failures)

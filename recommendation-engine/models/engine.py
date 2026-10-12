@@ -109,7 +109,11 @@ class RecommendationEngine:
     def predict(self, case, signals, confidence, selected, configuration, policy, weights, k=10):
         if configuration == "fixed_hybrid":
             return self.rank(self.blend(signals, weights), k), "fixed_hybrid"
-        if configuration == "switching_without_genai":
+        if configuration == "switching_with_genai":
+            if (self.content_manifest.get('kind') != 'historical_properties_plus_reviewed_generative_text'
+                    or self.content_manifest.get('approved_items', 0) < 1):
+                raise ValueError('GenAI configuration requires a verified enriched artifact')
+        if configuration in {"switching_without_genai", "switching_with_genai"}:
             strategy = route(case.event_count, confidence, selected if case.event_count == 0 else [], policy)
             if strategy in {"cf_popularity_hybrid", "hybrid_fallback"}:
                 mixed = self.blend(signals, {"item_cf": policy.cf_weight, "global_popularity": 1-policy.cf_weight})

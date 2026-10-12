@@ -11,6 +11,12 @@ from .enrichment import PROMPT, SCHEMA, canonical, validate_catalogue
 MODEL = "openai/gpt-oss-20b"
 
 
+class ProviderFailure(RuntimeError):
+    def __init__(self, reason, metadata):
+        super().__init__(reason)
+        self.safe_metadata = metadata
+
+
 class GroqFreeProvider:
     name = "groq_free"
 
@@ -38,7 +44,17 @@ class GroqFreeProvider:
                                  json=self.payload(record), timeout=(10, 45),
                                  headers={"Authorization": f"Bearer {key}"}, allow_redirects=False)
         if response.status_code != 200:
-            raise RuntimeError(f"Groq HTTP {response.status_code}; no retry or paid fallback")
+            try:
+                error = response.json().get("error", {})
+                code = error.get("code")
+            except (ValueError, AttributeError):
+                code = None
+            # Never retain message/failed_generation: those can contain response text.
+            safe_code = code if code in {"json_validate_failed", "rate_limit_exceeded",
+                "invalid_api_key", "model_not_found", "context_length_exceeded"} else "unclassified"
+            raise ProviderFailure(f"Groq HTTP {response.status_code}; no retry or paid fallback",
+                                  {"http_status": response.status_code, "error_code": safe_code,
+                                   "usage_unavailable": True})
         data = response.json()
         choices = data.get("choices", [])
         if len(choices) != 1 or choices[0].get("finish_reason") != "stop":

@@ -168,6 +168,8 @@ def cached_enrichment(record, provider, directory, reserve=None):
         result["status"] = "rejected_or_failed"
         # Exception class is enough for logs; provider payloads/keys are never logged.
         result["error_type"] = type(exc).__name__
+        if hasattr(exc, "safe_metadata"):
+            result["provider_metadata"] = exc.safe_metadata
     result["latency_ms"] = (time.perf_counter() - started) * 1000
     with path.open("x", encoding="utf-8") as stream:
         stream.write(json.dumps(result, indent=2, allow_nan=False))
