@@ -1,0 +1,22 @@
+{
+  "kind": "full_training_binary_item_cosine",
+  "cutoff_exclusive_ms": 1438558255147,
+  "top_k": 50,
+  "block_size": 128,
+  "training_users": 978921,
+  "unique_user_item_pairs": 1496559,
+  "training_events": 1929270,
+  "items": 200975,
+  "isolated_items": 72423,
+  "nonzeros": 2589203,
+  "train_sha256": "47fe12bbec8a8512b314ed0e28d053f4cf0253efc8e8559d1917f76388e07080",
+  "source_sha256": "237638461d7be7fe200f79700006a9f5c0d1266bdadd19700b82748fa4e3456f",
+  "user_sampling": null,
+  "weighting": "binary distinct user-item incidence; repeats and event type do not increase cosine weight",
+  "tie_break": "ascending item ID",
+  "self_similarity": "removed",
+  "artifacts_sha256": {
+    "matrix.npz": "0ccb73d8148bf6ee255b0e5e927acca02a3a9d66b951d100694aee5ce3262572",
+    "items.csv": "95d22067e33ec84a733ba547c12e7bdef170db66b65cee144f791749d05dd854"
+  }
+}
