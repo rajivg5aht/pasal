@@ -1,14 +1,27 @@
 # Genuine GenAI integration
 
-`enrichment.py` contains a real OpenAI Responses API adapter. It makes no calls
-unless invoked with `--live`, an explicit model, local credentials, request/token
-limits, current prices and an authorized budget. Dry runs only validate inputs;
-they do not produce pretend model outputs. The user currently has no API access.
+The active CLI uses **Groq Free / openai/gpt-oss-20b**. It requires `--live`,
+local credentials and explicit Free-tier attestation. Paid CLI usage is disabled.
+The historical OpenAI adapter remains for reproducible contract tests only.
+No actual API generation has been performed yet; offline tests are not results.
 
-The adapter follows the official [structured-output API guide](https://developers.openai.com/api/docs/guides/structured-outputs?api-mode=responses).
-Requests use strict JSON schema; refusals/incomplete responses are rejected.
-Schema conformance does not establish factual accuracy. `store: false` is set;
-this does not claim that all provider retention is disabled.
+Official documentation checked on 12 October 2026:
+- [Free limits](https://console.groq.com/docs/rate-limits): 30 requests/minute,
+  1,000/day, 8,000 tokens/minute and 200,000/day for this model. Organization
+  settings may differ; inspect actual Console limits before running.
+- [Structured outputs](https://console.groq.com/docs/structured-outputs): this
+  model supports strict JSON schema. Semantic grounding still requires review.
+- [Models](https://console.groq.com/docs/models): the chosen model is a production
+  model, avoiding dependence on a preview model.
+- [Billing](https://console.groq.com/docs/billing-faqs): upgrading requires a
+  payment method. Keep a Free organization, without upgrading or adding payment.
+
+The client cannot independently verify account billing tier from a key. The local
+attestation is a guard, not a billing guarantee. No automatic paid fallback,
+redirect following, upgrades or retries are implemented. Local rolling quota
+reservations use conservative margins and stop before dispatch when exhausted.
+Use the same cache/quota directory for every run; other organization clients can
+consume quota too. Resume later with the same command to reuse cached responses.
 
 ## Data path
 
@@ -36,22 +49,24 @@ this does not claim that all provider retention is disabled.
 
 ```powershell
 # Input validation only; no API key, network or spend required.
-.\.venv\Scripts\python.exe recommendation-engine/genai/enrichment.py --input data/processed/metadata-snapshot-development-2026-10-11/catalogue.jsonl --cache data/enriched/development-cache --model pending-provider-selection --max-requests 50
+.\.venv\Scripts\python.exe recommendation-engine/genai/enrichment.py --input data/processed/metadata-snapshot-development-2026-10-11/catalogue.jsonl --cache data/enriched/development-cache --model openai/gpt-oss-20b --max-requests 50
 ```
 
-When access is available, configure `GENAI_API_KEY` in the local process
-environment and choose a model supporting the contract. The script does not
-automatically load `.env`. Never paste a key into chat or commit it. A live run
-also needs `--live --budget-usd ... --input-usd-per-million ...
---output-usd-per-million ...`, using current provider prices and the authorized
-budget. No paid run has been performed by this project pass.
+Configure `GROQ_API_KEY` in the local process environment and
+`GROQ_ACCOUNT_TIER=free` only after checking the account. The CLI does not load
+`.env` automatically. Never paste a key into chat or commit it. Use the pinned
+`--model openai/gpt-oss-20b` and add `--live --budget-usd 0` for real requests.
+The example's development snapshot is not the final research dataset.
 
-Budget reservations are written before dispatch, remain charged against the
-local allowance even on failure, and prevent automatic retries. This conservative
-guard is not a provider-enforced billing cap; reconcile real usage/billing before
-reporting monetary cost. Separate account/project limits should enforce the
-actual provider budget. A cache lock prevents simultaneous writers. After an
-interrupted process, verify it has exited before removing its `.writer.lock`.
+`explanations.py` combines the actual local strategy reason with a reviewed
+model-generated catalogue description. It labels the two separately, rejects
+mismatched item provenance, and falls back honestly when generated prose is
+missing. No user profile is sent to the provider. Website integration remains
+outstanding.
+
+A cache lock prevents simultaneous writers. If interrupted, verify the process
+has exited before removing its `.writer.lock`. Quota reservations remain after
+failures; cached failed calls are not automatically retried.
 
 Review JSONL record format (actual keys/hashes must come from the cached output):
 

@@ -1,0 +1,83 @@
+"""Groq Free integration. Account tier is attested locally, not inferred from a key."""
+import os
+import json
+import time
+from pathlib import Path
+
+import requests
+
+from .enrichment import PROMPT, SCHEMA, canonical, validate_catalogue
+
+MODEL = "openai/gpt-oss-20b"
+
+
+class GroqFreeProvider:
+    name = "groq_free"
+
+    def __init__(self, model=MODEL, max_output_tokens=800):
+        if model != MODEL or not 1 <= max_output_tokens <= 2000:
+            raise ValueError("Free research adapter requires the pinned model and 1-2000 output tokens")
+        self.model, self.max_output_tokens = model, max_output_tokens
+
+    def payload(self, record):
+        validate_catalogue(record)
+        return {"model": self.model, "temperature": 0,
+                "max_completion_tokens": self.max_output_tokens,
+                "messages": [{"role": "system", "content": PROMPT},
+                             {"role": "user", "content": canonical({"properties": record["properties"]})}],
+                "response_format": {"type": "json_schema", "json_schema": {
+                    "name": "catalogue_enrichment", "strict": True, "schema": SCHEMA}}}
+
+    def generate(self, record):
+        if os.environ.get("GROQ_ACCOUNT_TIER") != "free":
+            raise ValueError("Verify the organization is Free and set GROQ_ACCOUNT_TIER=free locally")
+        key = os.environ.get("GROQ_API_KEY", "")
+        if not key or key == "your_api_key_here":
+            raise ValueError("Set GROQ_API_KEY locally")
+        response = requests.post("https://api.groq.com/openai/v1/chat/completions",
+                                 json=self.payload(record), timeout=(10, 45),
+                                 headers={"Authorization": f"Bearer {key}"}, allow_redirects=False)
+        if response.status_code != 200:
+            raise RuntimeError(f"Groq HTTP {response.status_code}; no retry or paid fallback")
+        data = response.json()
+        choices = data.get("choices", [])
+        if len(choices) != 1 or choices[0].get("finish_reason") != "stop":
+            raise ValueError("Incomplete or ambiguous generation")
+        message = choices[0]["message"]
+        if message.get("refusal") or message.get("tool_calls"):
+            raise ValueError("Refusal or unexpected tool request")
+        usage = data.get("usage", {})
+        normalized = {k: usage[v] for k, v in [("input_tokens", "prompt_tokens"),
+                                               ("output_tokens", "completion_tokens")] if v in usage}
+        return json.loads(message["content"]), {
+            "response_id": data.get("id"), "model_returned": data.get("model"),
+            "usage": normalized, "raw_usage": usage, "account_tier_attested": "free",
+            "billing_usd_assumed_free_tier": 0,
+            "rate_limits": {k: v for k, v in response.headers.items()
+                            if k.lower().startswith("x-ratelimit-")}}
+
+
+class FreeQuota:
+    """Persistent conservative reservations; caller holds the shared cache lock.
+
+    Rolling windows avoid timezone/reset guesses. Stop instead of sleeping or
+    retrying; rerun later reuses successful caches. Other org clients can still
+    consume quota, so provider 429 remains authoritative.
+    """
+    def __init__(self, path, provider, clock=time.time):
+        self.path, self.provider, self.clock = Path(path), provider, clock
+
+    def __call__(self, record, key):
+        now = self.clock()
+        rows = [json.loads(s) for s in self.path.read_text().splitlines()] if self.path.exists() else []
+        recent = [r for r in rows if r["time"] > now - 86400]
+        minute = [r for r in recent if r["time"] > now - 60]
+        tokens = len(canonical(self.provider.payload(record)).encode()) + 1024 + self.provider.max_output_tokens
+        # Safety margins below published 30 RPM / 1000 RPD / 8000 TPM / 200000 TPD.
+        if (len(minute) >= 20 or len(recent) >= 900 or
+                sum(r["tokens"] for r in minute) + tokens > 7000 or
+                sum(r["tokens"] for r in recent) + tokens > 180000):
+            raise RuntimeError("Local free quota exhausted; resume later without changing tier")
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        with self.path.open("a", encoding="utf-8") as stream:
+            stream.write(canonical({"time": now, "tokens": tokens, "cache_key": key}) + "\n")

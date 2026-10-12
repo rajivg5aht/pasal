@@ -213,30 +213,20 @@ def main():
     if not args.live:
         print(f"Validated {len(records)} catalogue records. Dry run: no API calls, no generated data.")
         return
-    prices = [args.budget_usd, args.input_usd_per_million, args.output_usd_per_million]
-    if any(x is None or not math.isfinite(x) or x <= 0 for x in prices):
-        parser.error("Live mode requires positive authorized budget and current input/output prices")
-    if not os.environ.get("GENAI_API_KEY") or os.environ["GENAI_API_KEY"] == "your_api_key_here":
-        parser.error("Set GENAI_API_KEY in the local process environment")
-    provider = OpenAIProvider(args.model, args.max_output_tokens)
+    if args.budget_usd not in (None, 0) or any(
+            x not in (None, 0) for x in [args.input_usd_per_million, args.output_usd_per_million]):
+        parser.error("Pasal has a $0 budget; paid usage is disabled")
+    try:
+        from genai.free_provider import GroqFreeProvider, FreeQuota
+    except ImportError:
+        import sys
+        sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+        from genai.free_provider import GroqFreeProvider, FreeQuota
+    if os.environ.get("GROQ_ACCOUNT_TIER") != "free" or not os.environ.get("GROQ_API_KEY"):
+        parser.error("Configure GROQ_API_KEY and verify GROQ_ACCOUNT_TIER=free locally")
+    provider = GroqFreeProvider(args.model, args.max_output_tokens)
     with cache_lock(args.cache):
-        ledger = args.cache / "budget_reservations.jsonl"
-        prior = [json.loads(line) for line in ledger.read_text().splitlines()] if ledger.exists() else []
-        reserved = sum(row["reserved_usd"] for row in prior)
-
-        def reserve(record, key):
-            nonlocal reserved
-            # Conservative byte-based input allowance plus protocol overhead.
-            # This is a local guard, not a provider-enforced billing guarantee.
-            input_allowance = len(canonical(request_payload(record, args.model, args.max_output_tokens)).encode()) + 1024
-            amount = (input_allowance * args.input_usd_per_million
-                      + args.max_output_tokens * args.output_usd_per_million) / 1_000_000
-            if reserved + amount > args.budget_usd:
-                raise RuntimeError("Configured budget exhausted before API dispatch")
-            with ledger.open("a", encoding="utf-8") as stream:
-                stream.write(canonical({"cache_key": key, "reserved_usd": amount,
-                                        "pricing": prices[1:], "model": args.model}) + "\n")
-            reserved += amount
+        reserve = FreeQuota(args.cache / "free_quota_reservations.jsonl", provider)
 
         for record in records:
             result, hit = cached_enrichment(record, provider, args.cache, reserve)

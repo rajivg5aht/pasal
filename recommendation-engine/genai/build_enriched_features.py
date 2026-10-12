@@ -51,7 +51,7 @@ def export_features(catalogue_path, cache_dir, reviews_path, output_dir, model):
         record = identity["catalogue"]
         if identity["model"] != model or by_id.get(record["itemid"]) != record:
             continue
-        if identity["provider"] != "openai_responses" or cached.get("source_kind") != "generative_api":
+        if identity["provider"] not in {"openai_responses", "groq_free"} or cached.get("source_kind") != "generative_api":
             raise ValueError("Test/simulated outputs cannot be used as actual GenAI evidence")
         if sha(identity) != cached["cache_key"] or path.stem != cached["cache_key"]:
             raise ValueError("Cache fingerprint mismatch")
