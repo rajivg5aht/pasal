@@ -1,6 +1,5 @@
 """Model-independent chronological evaluation; no outcome-driven user eligibility."""
 from dataclasses import dataclass
-import math
 import time
 
 import numpy as np
@@ -70,7 +69,7 @@ def evaluate(cases, recommenders, eligible_items, k=10):
     eligible = frozenset(eligible_items)
     rows = []
     for case in cases:
-        candidates = eligible - case.seen
+        candidates = eligible if not case.seen else eligible - case.seen
         for name, recommender in recommenders.items():
             started = time.perf_counter()
             failure = None
