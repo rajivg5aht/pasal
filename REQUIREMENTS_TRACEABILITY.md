@@ -10,7 +10,7 @@ The user's current instruction confirms the seven methodology configurations.
 | DSRM, CRISP-DM, Agile | p. 10 | Requirement-driven build/test/evidence cycles | Retained in plan |
 | Retailrocket interactions/properties/categories | p. 11, Fig. 4 | Raw files, preprocessing, provenance | Present; audited; temporal repair required |
 | 70/15/15 chronological event split | p. 11 | Split manifest, disjointness/time checks | Versioned event-count development split built; historical exposure documented; final test deferred |
-| GenAI metadata before splitting; cached/versioned; no future behavior | p. 11, Fig. 4 | Catalogue-only generation, point-in-time features, cache | Free Groq adapter/cache/reviewed export tested; Free key configured; external catalogue-transfer approval pending |
+| GenAI metadata before splitting; cached/versioned; no future behavior | p. 11, Fig. 4 | Catalogue-only generation, point-in-time features, cache | Free Groq adapter/cache/reviewed export tested; One genuine Free API pilot completed with assistant grounding review; representative evaluation pending |
 | Cohorts 0 / 1-4 / 5-19 / 20+ | p. 11 | Raw event-count cohorts independent of model coverage | Common evaluator implemented; 1,000-user development diagnostic covers all cohorts |
 | Densities 10 / 25 / 50 / 100 percent | p. 11 | Reproducible train-only samples and manifests | Not implemented |
 | Global popularity | p. 15 | Exact training-score reconstruction | Implemented; current scores verified |

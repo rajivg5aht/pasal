@@ -3,7 +3,8 @@
 The active CLI uses **Groq Free / openai/gpt-oss-20b**. It requires `--live`,
 local credentials and explicit Free-tier attestation. Paid CLI usage is disabled.
 The historical OpenAI adapter remains for reproducible contract tests only.
-No actual API generation has been performed yet; offline tests are not results.
+One actual Groq Free pilot has completed (see `docs/genai-pilot-evidence.json`).
+It has an assistant grounding review; it is not independent quality or ranking evidence.
 
 Official documentation checked on 12 October 2026:
 - [Free limits](https://console.groq.com/docs/rate-limits): 30 requests/minute,

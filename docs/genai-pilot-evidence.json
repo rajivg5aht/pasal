@@ -1,0 +1,34 @@
+{
+  "status": "one_actual_generation_and_assistant_grounding_review_completed",
+  "model": "openai/gpt-oss-20b",
+  "provider": "groq_free",
+  "itemid": 460256,
+  "cache_key": "0109b90de67939ac845ff602c2a4beda640d5b27d8ce09f7908b18e6139f8659",
+  "output_sha256": "defbfcd0460677d075f92b8e5a6a21c758865ab85d152fa5876eff5f0d8cd7a4",
+  "usage": {
+    "input_tokens": 553,
+    "output_tokens": 454
+  },
+  "latency_ms": 1168.1221000035293,
+  "account_tier": "free_confirmed_by_user",
+  "cost_note": "Zero paid usage under user-confirmed Free tier; no independent billing export collected",
+  "reviewer_type": "assistant_not_independent_human",
+  "paired_feature_counts": {
+    "matching_api_records": 1,
+    "failed_or_rejected": 0,
+    "generated_pending_review": 0,
+    "approved_items": 1,
+    "input_tokens_reported": 553,
+    "output_tokens_reported": 454,
+    "records_without_token_usage": 0,
+    "catalogue_items": 1,
+    "fallback_items": 0
+  },
+  "limitations": [
+    "Single integration sample, not quality or ranking evidence",
+    "Sample item unavailable: not eligible for available-item recommendation",
+    "Generated text restates anonymized evidence; no semantic product knowledge recovered",
+    "Human quality assessment and H2 ranking experiment remain outstanding"
+  ],
+  "prior_attempt": "Sandbox ConnectionError retained in failed-attempts; successful transfer explicitly approved by user"
+}

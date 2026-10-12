@@ -156,3 +156,23 @@ All three models share 1,000 users (917/63/17/3 in the four cohorts), candidate 
 - tfidf: served 76; Precision@10=0.00080000; Recall@10=0.00269048; NDCG@10=0.00127745.
 
 This is development-only, with very small warm cohorts; not hypothesis testing. Unknown availability is admitted, explicit unavailable items excluded. TF-IDF has no zero-history fallback by design; switching will provide the appropriate route. Final test untouched. All 45 tests pass.
+
+## D11 — approved genuine Groq Free pilot succeeds
+
+After explicit user authorization of the external catalogue-only transfer, the
+failed sandbox attempt was archived and one request succeeded. Model:
+`openai/gpt-oss-20b`; 553 input / 454 output tokens, including 349 reported
+reasoning tokens. Observed client latency: 1,168.122 ms. Provider headers report
+1,000 requests/day and 8,000 tokens/minute limits. No paid tier or fallback used.
+
+The description preserves category 1244 and available=0 and states semantic
+product details are unavailable. The assistant performed a source comparison;
+this is NOT independent human rating or evidence of the proposal's quality targets.
+One review tied to the exact output hash was recorded locally. The paired feature
+export reports one genuine approved item, zero fallback items. The sample item
+is unavailable and is not served as an available recommendation. No ranking
+benefit is asserted. Evidence summary: `docs/genai-pilot-evidence.json`.
+
+The original network failure remains archived. The successful API response,
+review and paired features remain under ignored local data paths. No credentials,
+raw catalogue payload or generated full response were committed to GitHub.

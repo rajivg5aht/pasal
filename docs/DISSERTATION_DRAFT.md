@@ -89,10 +89,16 @@ Explanations combine a locally recorded strategy reason with an optional reviewe
 generated catalogue description. This distinction prevents generated language
 from being presented as evidence of a personalized causal explanation.
 
-No real generation has been completed at the time of this draft. Provider
-integration tests use mocked responses; they demonstrate contract handling, not
-generation quality, ranking improvement or measured production cost. The live
-pilot, grounding assessment and paired recommendation experiment remain pending.
+A single genuine Groq Free generation has now completed. The request consumed
+553 input tokens and 454 output tokens, with 1,168 ms client-observed latency.
+An assistant compared the description against the source and recorded a grounded
+review tied to its output hash. This is not an independent human quality rating.
+The paired feature export contains one generated description. Because this was
+an integration pilot and the sampled item was unavailable, it establishes neither
+recommendation benefit nor representative generation quality. The larger
+prespecified sample, quality assessment and paired ranking experiment remain
+pending. Zero API spend follows the user-confirmed Free tier; no independent
+billing statement has yet been collected.
 
 ## Preliminary engineering evidence — not hypothesis results
 

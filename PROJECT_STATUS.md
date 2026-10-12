@@ -23,11 +23,14 @@ Completed in the current continuation:
   completed: 411,732 items, zero future facts. Content model trained with 100,000
   features, 4,903,232 nonzeros and 24 empty rows recorded for fallback.
 
-45 offline tests pass. The user configured and confirmed a Groq Free account. One sandbox network
-attempt failed before producing output. Escalated external transfer was rejected
-by automatic approval review; explicit catalogue-transfer approval is pending.
-No generated outputs or paid usage exist. A credential placed in `.env.example`
-was moved to ignored `.env` before any subsequent commit or push.
+45 offline tests pass. The user configured a Groq Free account and explicitly approved catalogue-only
+transfer. The genuine one-item pilot succeeded: 553 input tokens, 454 output
+tokens, 1,168 ms observed latency. Source comparison and an assistant review were
+recorded; paired feature export contains one actual generated description.
+This is integration evidence, not independent human quality or ranking evidence.
+See `docs/genai-pilot-evidence.json`. No paid usage was enabled. Credentials are
+stored only in ignored `.env`; the tracked template has placeholders.
+
 Frontend, service integration, final experiments and the finished dissertation
 remain outstanding; these are not implied complete by passing unit tests.
 
