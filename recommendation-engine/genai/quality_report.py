@@ -5,6 +5,7 @@ import json
 import math
 from pathlib import Path
 import sys
+import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from genai.enrichment import approved_text, sha
@@ -29,6 +30,8 @@ def report(sample, cache, reviews_path=None):
     if fingerprint(source) != declaration['sample_sha256']:
         raise ValueError('Declared sample changed')
     records = {r['itemid']: r for r in map(json.loads, source.read_text().splitlines())}
+    if len(records) != declaration['size'] or sorted(records) != declaration['itemids']:
+        raise ValueError('Declared sample identity mismatch')
     reviews = {}
     if reviews_path is not None:
         for line in Path(reviews_path).read_text().splitlines():
@@ -76,6 +79,8 @@ def report(sample, cache, reviews_path=None):
             'reported_input_tokens': sum((r['usage'] or {}).get('input_tokens', 0) for r in rows),
             'reported_output_tokens': sum((r['usage'] or {}).get('output_tokens', 0) for r in rows),
             'attempts_without_usage': sum(r['usage'] is None for r in rows),
+            'all_attempt_latency_ms': {'median': float(np.median([r['latency_ms'] for r in rows])),
+                'p95': float(np.quantile([r['latency_ms'] for r in rows], .95))} if rows else None,
             'http_status_counts': dict(Counter(str(r['http_status']) for r in rows if r['http_status'] is not None)),
             'sample_manifest_sha256': fingerprint(sample/'manifest.json'), 'attempts': rows,
             'cost': 'Free account attested; no paid fallback. No independent billing statement collected.',

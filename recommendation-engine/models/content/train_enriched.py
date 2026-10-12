@@ -31,6 +31,8 @@ def train(catalogue, base_dir, sample_dir, cache_dir, reviews_path, output, weig
     if fingerprint(sample_path) != sample_manifest['sample_sha256']:
         raise ValueError('Sample fingerprint mismatch')
     sample = {r['itemid']: r for r in map(json.loads, sample_path.read_text().splitlines())}
+    if len(sample) != sample_manifest['size'] or sorted(sample) != sample_manifest['itemids']:
+        raise ValueError('Declared sample identity mismatch')
     base, items, base_manifest = load_artifact(base_dir, sample_manifest['cutoff_ms'])
     if base_manifest['kind'] != 'historical_property_tfidf_not_genai':
         raise ValueError('Require unchanged non-GenAI property baseline')

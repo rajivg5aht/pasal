@@ -7,7 +7,7 @@ import unittest
 from unittest.mock import Mock, patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from genai.free_provider import FreeQuota, GroqFreeProvider
+from genai.free_provider import FreeQuota, GroqFreeProvider, ProviderFailure
 from genai.explanations import explain
 from genai.enrichment import cached_enrichment, cache_lock, sha
 
@@ -42,6 +42,27 @@ class FreeGenAITests(unittest.TestCase):
             with self.assertRaises(RuntimeError):
                 GroqFreeProvider().generate(RECORD)
             self.assertEqual(post.call_count, 1)
+
+    def test_incomplete_generation_retains_token_usage_without_accepting_text(self):
+        response = Mock(status_code=200, headers={})
+        response.json.return_value = {'id': 'fixture', 'model': 'openai/gpt-oss-20b',
+            'choices': [{'finish_reason': 'length', 'message': {'content': '{unfinished'}}],
+            'usage': {'prompt_tokens': 20, 'completion_tokens': 800}}
+        with patch.dict(os.environ, {'GROQ_API_KEY': 'fixture', 'GROQ_ACCOUNT_TIER': 'free'}), patch('genai.free_provider.requests.post', return_value=response):
+            with self.assertRaises(ProviderFailure) as failure:
+                GroqFreeProvider().generate(RECORD)
+        self.assertEqual(failure.exception.safe_metadata['usage']['output_tokens'], 800)
+        self.assertNotIn('content', failure.exception.safe_metadata)
+
+    def test_http_failure_records_only_allowlisted_code(self):
+        response = Mock(status_code=400, headers={})
+        response.json.return_value = {'error': {'code': 'json_validate_failed',
+            'message': 'private response text', 'failed_generation': 'do not log'}}
+        with patch.dict(os.environ, {'GROQ_API_KEY': 'fixture', 'GROQ_ACCOUNT_TIER': 'free'}), patch('genai.free_provider.requests.post', return_value=response):
+            with self.assertRaises(ProviderFailure) as failure:
+                GroqFreeProvider().generate(RECORD)
+        self.assertEqual(failure.exception.safe_metadata, {'http_status': 400,
+            'error_code': 'json_validate_failed', 'usage_unavailable': True})
 
     def test_quota_persists_and_resumes_after_window(self):
         with TemporaryDirectory() as directory:

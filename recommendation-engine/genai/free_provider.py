@@ -56,21 +56,25 @@ class GroqFreeProvider:
                                   {"http_status": response.status_code, "error_code": safe_code,
                                    "usage_unavailable": True})
         data = response.json()
-        choices = data.get("choices", [])
-        if len(choices) != 1 or choices[0].get("finish_reason") != "stop":
-            raise ValueError("Incomplete or ambiguous generation")
-        message = choices[0]["message"]
-        if message.get("refusal") or message.get("tool_calls"):
-            raise ValueError("Refusal or unexpected tool request")
         usage = data.get("usage", {})
         normalized = {k: usage[v] for k, v in [("input_tokens", "prompt_tokens"),
                                                ("output_tokens", "completion_tokens")] if v in usage}
-        return json.loads(message["content"]), {
-            "response_id": data.get("id"), "model_returned": data.get("model"),
-            "usage": normalized, "raw_usage": usage, "account_tier_attested": "free",
-            "billing_usd_assumed_free_tier": 0,
-            "rate_limits": {k: v for k, v in response.headers.items()
-                            if k.lower().startswith("x-ratelimit-")}}
+        metadata = {"response_id": data.get("id"), "model_returned": data.get("model"),
+                    "usage": normalized, "raw_usage": usage, "account_tier_attested": "free",
+                    "billing_usd_assumed_free_tier": 0,
+                    "rate_limits": {k: v for k, v in response.headers.items()
+                                    if k.lower().startswith("x-ratelimit-")}}
+        choices = data.get("choices", [])
+        if len(choices) != 1 or choices[0].get("finish_reason") != "stop":
+            raise ProviderFailure("Incomplete or ambiguous generation", {**metadata, "error_code": "incomplete_generation"})
+        message = choices[0]["message"]
+        if message.get("refusal") or message.get("tool_calls"):
+            raise ProviderFailure("Refusal or unexpected tool request", {**metadata, "error_code": "refusal_or_tool_request"})
+        try:
+            output = json.loads(message["content"])
+        except (ValueError, KeyError, TypeError):
+            raise ProviderFailure("Invalid JSON response", {**metadata, "error_code": "json_validate_failed"}) from None
+        return output, metadata
 
 
 class QuotaPaused(RuntimeError):

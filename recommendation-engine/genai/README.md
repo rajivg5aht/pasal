@@ -83,3 +83,30 @@ treat an automated schema pass or an approval count as those metrics.
 The existing property-enhanced CSV remains a **non-generative baseline**. The
 final experiment must include actual provider output before it can be described
 as GenAI-enhanced.
+
+
+## Declared sample and resumable Free batch
+
+`sample_catalogue.py` selects an outcome-blind uniform reservoir from historical
+available/unknown items. Its manifest is frozen before generation. Run
+`run_free_batch.py --sample <version-directory> --cache data/enriched/groq-free-v1
+--max-new-requests 32 --live` to process it. This entry point loads only the two
+Groq settings from ignored root `.env`. Local minute-quota pauses occur before
+sending; daily exhaustion, authentication and transport failures stop the batch.
+Provider `json_validate_failed` outcomes are retained and the next item is tried;
+there is no retry or replacement. `--skip-recorded-failures` acknowledges earlier
+failures and resumes at unsent items without deleting or modifying failed caches.
+Do not run concurrent writers or use separate ledgers to bypass account limits.
+
+`quality_report.py` reports attempted/unattempted items, schema outcomes, reviews,
+Wilson intervals and lower-bound token totals. Provider failure usage may be
+unavailable. It does not invent relevance, factuality or independent human scores.
+Record each source comparison in a separate review tied to the exact output hash.
+
+`models/content/train_enriched.py` appends a .25-weight generated-text TF-IDF block
+and normalizes treated rows. It preserves all original items and property columns;
+untreated rows remain exactly unchanged. No text is fabricated for failed or
+unreviewed items. This partial treatment must report its low catalogue/profile
+coverage. The paired validation diagnostic uses all seven configurations and the
+existing assessment users, selected settings and identical candidate sets. The
+small sample is feasibility evidence, not the final H2 experiment.
