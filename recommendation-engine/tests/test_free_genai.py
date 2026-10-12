@@ -66,6 +66,10 @@ class FreeGenAITests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 explain(8, "content", result, review)
             self.assertEqual(explain(7, "content")["description_source"], "unavailable")
+            with self.assertRaises(ValueError):
+                explain(7, "content", {**result, "source_kind": "fixture"}, review)
+            with self.assertRaises(ValueError):
+                explain(7, "content", {**result, "cache_key": "tampered"}, review)
 
 
 if __name__ == "__main__":

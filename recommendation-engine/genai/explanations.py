@@ -1,5 +1,5 @@
 """Truthful local routing reasons plus optional reviewed, genuinely generated text."""
-from .enrichment import approved_text
+from .enrichment import approved_text, sha
 
 REASONS = {
     "global_popularity": "Popular in the historical catalogue.",
@@ -18,6 +18,9 @@ def explain(itemid, strategy, generated=None, review=None):
     result = {"itemid": itemid, "strategy": strategy, "reason": REASONS[strategy],
               "catalogue_description": None, "description_source": "unavailable"}
     if generated is not None and review is not None:
+        if (generated.get("source_kind") != "generative_api" or
+                sha(generated["identity"]) != generated.get("cache_key")):
+            raise ValueError("Invalid generation provenance")
         if generated["identity"]["catalogue"]["itemid"] != itemid:
             raise ValueError("Explanation provenance belongs to a different item")
         if generated["identity"]["provider"] not in {"groq_free", "openai_responses"}:
