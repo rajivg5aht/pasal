@@ -105,7 +105,7 @@ def summarize(rows, eligible_items):
                 "targetless_users": int(subset.targetless.sum()),
                 "served_users": int(subset.recommendations.map(bool).sum()),
                 "catalogue_coverage": len(recommended) / len(eligible_items) if len(eligible_items) else 0.0,
-                "p95_latency_ms": float(subset.latency_ms.quantile(.95)) if len(subset) else None,
+                "p95_latency_ms": float(subset.latency_ms.dropna().quantile(.95)) if subset.latency_ms.notna().any() else None,
                 **{m: float(subset[m].mean()) if len(subset) else None
                    for m in ["precision", "recall", "ndcg", "map", "hit_rate"]}})
     return summaries
