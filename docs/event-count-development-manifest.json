@@ -1,0 +1,36 @@
+{
+  "total_events": 2756101,
+  "validation_start_ms": 1438558255147,
+  "test_start_ms": 1440541861629,
+  "nominal_counts": [
+    1929270,
+    413415,
+    413416
+  ],
+  "effective_counts": [
+    1929270,
+    413415,
+    413416
+  ],
+  "boundary_tie_policy": "entire_timestamp_moves_to_later_partition",
+  "status": "development_only_final_test_not_materialized",
+  "legacy_validation_end_ms": 1440756695565,
+  "previously_exposed_test_events": 47040,
+  "independent_test_rule": "timestamp > 1440756695565",
+  "metadata_cutoff_exclusive_ms": 1438558255147,
+  "source_sha256": {
+    "data\\raw\\events.csv": "3745aa83238b1e6d44d8fda209807899f420084398f94ddf745f3cbcfecbf9e7",
+    "data\\splits\\train.csv": "063024280da362d3b39d284e055e70786575ea86d4c2542ba09aab6d94f2664c",
+    "data\\splits\\validation.csv": "aaa0ca754fc1c3abbbecc22e443d254c977d96bd27e89c449ce21103b07dd8e9"
+  },
+  "implementation_sha256": "fdb8d57dcd1a92952aa349b8a0633a71b496030167b35040460f34c584b3cf34",
+  "limitations": [
+    "Full planned 15% test has historical validation exposure",
+    "Final confirmatory subset must exclude previously exposed events",
+    "Models and metadata require rebuilding at the new training cutoff"
+  ],
+  "output_sha256": {
+    "train.csv": "47fe12bbec8a8512b314ed0e28d053f4cf0253efc8e8559d1917f76388e07080",
+    "validation.csv": "75eac38290e1f27bd09068403627ae0ee7f29ab27c79c3f30ca578c5dc1af69a"
+  }
+}
