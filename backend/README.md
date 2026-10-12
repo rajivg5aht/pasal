@@ -25,7 +25,12 @@ History is capped at 100,000 unique items and lists at 100 items.
 
 The HTTP suite (`npm test`) uses an explicit in-memory test repository and session
 store. Production startup always uses MongoDB. Passing HTTP tests alone does not
-confirm database integration, which must be tested against a running MongoDB.
+confirm database integration. Set `RUN_MONGO_TESTS=1` and run `npm test` to also
+verify concurrent profile writes, consent withdrawal and catalogue reads against
+local MongoDB. This test creates and removes only its own uniquely named empty
+test database; it does not modify the Pasal database. All four tests passed on
+October 12, 2026. An existing local MongoDB service can be used instead of Docker;
+do not start a second database on the same port.
 
 Research recommendation eligibility admits unknown historical availability;
 the browsing/import layer is stricter and displays only available=1. The API
