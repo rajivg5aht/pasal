@@ -87,3 +87,25 @@ is positive; report unassessable counts and zero-denominator cases separately.
 Report missing ratings rather than treating them as zero. Report per-rater
 ratings and disagreements before any adjudicated totals; any agreement statistic
 must identify its scale, weighting and number of paired observations.
+
+## Returned-rating analysis (implemented 13 October 2026)
+
+After independent reviewers return their separate JSON copies, run:
+
+```powershell
+.venv\Scripts\python.exe recommendation-engine/genai/analyze_human_review.py --packet data/processed/genai-human-review-v1 --ratings PATH_TO_R1.json PATH_TO_R2.json --output docs/human-quality-results-v1.json
+```
+
+Use non-identifying reviewer codes and ISO review dates. The analyzer verifies the
+original template fingerprint and requires every original case exactly once. It
+rejects changes to source facts, generated prose, rubric or instructions, duplicate
+reviewer codes, invalid scales, negative counts and contradictory severity/counts.
+The output path must be new so existing analyses cannot be silently overwritten.
+
+Per-reviewer factual consistency includes only cases with both supported and
+unsupported counts. Cases with zero assessable assertions produce no proportion.
+Missing fields and unassessable assertions are reported separately. Ordinal ratings
+are shown as distributions. Pairwise exact matches and disagreement case IDs are
+descriptive comparisons, not chance-corrected agreement or adjudicated ratings.
+The analyzer cannot verify identity, independence, ethics or consent from a file.
+No actual human ratings or human-study results were generated during implementation.

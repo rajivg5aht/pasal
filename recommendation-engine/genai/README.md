@@ -110,3 +110,11 @@ unreviewed items. This partial treatment must report its low catalogue/profile
 coverage. The paired validation diagnostic uses all seven configurations and the
 existing assessment users, selected settings and identical candidate sets. The
 small sample is feasibility evidence, not the final H2 experiment.
+
+## Independent ratings analysis
+
+`analyze_human_review.py --packet <original-packet> --ratings <reviewer-copies...>
+--output <new-report.json>` validates immutable case content and summarizes actual
+returned fields without filling missing values. It reports per-reviewer assertion
+fractions, ordinal distributions and pairwise disagreements. Files cannot establish
+reviewer independence or ethics approval. See docs/GENAI_QUALITY_PROTOCOL.md.
