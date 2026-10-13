@@ -1,0 +1,47 @@
+{
+  "status": "actual_artifact_in_process_API_smoke",
+  "cases": [
+    {
+      "profile_kind": "anonymous",
+      "history_item": null,
+      "status": 200,
+      "strategy": "global_popularity",
+      "genai_ranking_used": false,
+      "genai_description_count": 0,
+      "items": 10
+    },
+    {
+      "profile_kind": "synthetic_one_event",
+      "history_item": 55076,
+      "status": 200,
+      "strategy": "content",
+      "genai_ranking_used": true,
+      "genai_description_count": 0,
+      "items": 10
+    },
+    {
+      "profile_kind": "synthetic_one_event",
+      "history_item": 323120,
+      "status": 200,
+      "strategy": "content",
+      "genai_ranking_used": true,
+      "genai_description_count": 0,
+      "items": 10
+    },
+    {
+      "profile_kind": "synthetic_one_event",
+      "history_item": 384508,
+      "status": 200,
+      "strategy": "content",
+      "genai_ranking_used": true,
+      "genai_description_count": 0,
+      "items": 10
+    }
+  ],
+  "reviewed_description_provenance_check": true,
+  "limitations": [
+    "Synthetic engineering profiles, not ranking-effectiveness evidence",
+    "Does not enable the enriched model in the running public-facing service",
+    "TestClient excludes network latency"
+  ]
+}

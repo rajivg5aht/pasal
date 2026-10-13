@@ -144,3 +144,29 @@ Category popularity achieved assessment NDCG@10 of 0.0169822, compared with
 support superiority of switching. It is neither a population-weighted estimate
 nor final hypothesis evidence. The GenAI condition and final holdout experiments
 are still pending, and these limitations must remain explicit in the final thesis.
+
+## Genuine generation feasibility and partial-treatment results
+
+A prespecified uniform sample of 32 eligible historical items produced 24
+schema-valid Groq Free outputs and eight failed/rejected requests. The schema
+success proportion was 75% (Wilson 95% interval 57.9–86.7%). This measures API
+reliability, not factual consistency or relevance. Assistant source comparison
+approved 21 outputs and rejected three descriptions that overstated historical
+availability as purchase availability. These reviews are not independent human
+ratings. Token reporting was unavailable for all eight failed requests; the
+observed 11,099 input and 11,785 output tokens are therefore lower bounds.
+
+A paired feature model retained all 411,732 catalogue rows and unchanged ordinary
+property features, adding a separate generated-text block for the 21 approved
+items. In the seven-condition development assessment of 200 users, only one
+profile contained an enriched item, no enriched items were recommended, and no
+switching recommendation lists changed. The resulting zero paired NDCG difference
+must be interpreted as inadequate exposure in a small partial-treatment diagnostic,
+not as a conclusive test of the GenAI hypothesis. Larger, justified treatment
+coverage and final frozen cohort/density experiments remain necessary.
+
+Local engineering load checks also motivated lazy component scoring. In small
+synthetic single-request diagnostics, successful-request P95 fell from 353.6 to
+187.3 ms while ranking-equivalence fixtures passed. Capacity rejections still
+occurred with four simultaneous requests. These measurements exclude the browser,
+Express and MongoDB path and do not establish final system performance targets.

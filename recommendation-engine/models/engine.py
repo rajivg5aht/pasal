@@ -44,6 +44,7 @@ class RecommendationEngine:
         self.cf_rows = {int(item): i for i, item in enumerate(self.cf_ids)}
         self.categories = items.dropna(subset=["categoryid"]).set_index("itemid").categoryid.to_dict()
         unavailable = set(items.loc[items.available == "0", "itemid"])
+        self.unavailable = frozenset(unavailable)
         self.eligible = frozenset((set(self.popularity) | set(self.content_ids)) - unavailable)
         self.popularity = {i: v for i, v in self.popularity.items() if i in self.eligible}
         self.content_eligible = np.array([i in self.eligible for i in self.content_ids])

@@ -237,3 +237,39 @@ latency target under load. Browser, Express and database latency are excluded.
 The interrupted prior service processes were restarted; the existing MongoDB and
 its catalogue were preserved. Requirements encoding was also repaired: 122 pins
 now use UTF-8, parse correctly, match installed packages and pass pip check.
+
+## D15 — complete 32-item genuine generation sample
+
+All 32 prespecified items were attempted on Groq Free without retries or
+replacements: 24 schema-valid outputs, eight failed/rejected requests. Schema
+success was 75%, Wilson 95% interval 57.9–86.7%; this is API reliability, not
+factual consistency. Seven failures have HTTP 400 recorded; six additionally
+identify json_validate_failed. The earliest failure retained exception class only.
+Reported usage totals 11,099 input and 11,785 output tokens; all eight failures
+lack usage, so these totals are lower bounds. Observed attempt median latency
+was 1,675.8 ms and P95 2,274.2 ms. No paid fallback or tier change was used.
+
+The assistant compared all 24 successful outputs against their exact sources:
+21 approved, three rejected for unsupported purchasing implications. These are
+engineering grounding reviews, not independent human quality ratings. Descriptions
+mostly restate anonymous identifiers, and groundedness does not establish usefulness.
+See genai-quality-sample-results.json and GENAI_QUALITY_PROTOCOL.md.
+
+## D16 — partial-coverage seventh configuration
+
+The versioned enriched model preserves 411,732 original item rows and 100,000
+property columns, appending 145 generated-text columns with fixed .25 weight.
+Only 21 rows are enriched (0.0051% of the complete historical catalogue); all
+other vectors remain unchanged. Source hashes and exact output-linked reviews
+are checked before use. The actual artifact passed four in-process API requests
+(anonymous and three synthetic one-event profiles), and reviewed-description
+provenance was checked. Those four requests recommended no generated-description
+items, which remains explicit in enriched-service-smoke.json.
+
+All seven configurations were evaluated on the same 200 existing validation
+assessment users with the previously selected settings. Only one user had a
+sample-enriched item in their profile; none received an enriched item and no
+switching rankings changed. The paired NDCG difference and bootstrap interval
+were zero. This is inadequate treatment exposure, not evidence that full-coverage
+GenAI is ineffective or that H2 has been tested conclusively. The final holdout
+remains untouched. See paired-genai-quality-results.json and GENAI_RUNBOOK.md.

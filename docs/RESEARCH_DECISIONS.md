@@ -71,3 +71,25 @@ only for a verified Free organization; record tokens, latency and failures as we
 Representativeness and subset size must be declared before inspecting outcomes.
 No simulated output counts as GenAI evidence. Quality ratings by the researcher
 are not represented as an independent human-subject study.
+
+
+## Development density intervention (13 October 2026)
+
+Use one seeded row permutation (42) of the chronological training partition.
+Retain its first floor(N*density) events for 10%, 25% and 50%, restoring original
+row order; 100% reuses the full partition. The subsets are nested and retain
+repeated actions as distinct events. Refit CF and popularity at each density;
+metadata and generated-text artifacts stay fixed because interaction loss does
+not remove catalogue knowledge. Freeze the candidate universe from the full
+pre-validation training IDs plus the historical catalogue, excluding explicit
+unavailability, for all densities and all algorithms.
+
+Keep the same 200 disjoint assessment users and full-density selected settings;
+this examines robustness without density-specific retuning. Recompute profiles,
+seen exclusions, novel targets and current event-count cohorts from retained
+training events. Also report original full-density cohorts and the migration
+matrix, because apparent cold-start membership changes with thinning. Target
+counts can change when previously observed items disappear from retained history;
+report this rather than treating it as a pure metric change on identical targets.
+All runs remain validation diagnostics, with the partial-GenAI coverage limitation.
+Final holdout experiments require a separate freeze and full protocol disclosure.

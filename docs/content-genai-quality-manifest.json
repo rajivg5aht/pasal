@@ -1,0 +1,27 @@
+{
+  "kind": "historical_properties_plus_reviewed_generative_text",
+  "cutoff_exclusive_ms": 1438558255147,
+  "catalogue_sha256": "5ce8af2b34cc1524cb4b9339c5375c7d624b4e89e250fadc48f032ec0e8b65bd",
+  "base_manifest_sha256": "61fafd3d0ddd07b750ed6778ad0b9c8beea84a615b98446709f36c44a83776f9",
+  "sample_manifest_sha256": "caacee64bca648fe4edfbea031d5eb945dc0da6c40947f093eff9fb601af95d5",
+  "reviews_sha256": "b7b8439272bae3dead53b7ddb8144341c23808627cbe7c1dc10557d70154e7ba",
+  "generated_weight": 0.25,
+  "rows": 411732,
+  "base_features": 100000,
+  "generated_features": 145,
+  "approved_items": 21,
+  "sample_size": 32,
+  "coverage_fraction": 5.100405117892221e-05,
+  "limitations": [
+    "Partial-catalogue treatment; report actual profile and candidate exposure",
+    "Assistant grounding review is not independent human quality assessment",
+    "Fixed .25 weight is a development choice, not a test-tuned optimum",
+    "Boilerplate similarity may harm ranking; no semantic recovery of anonymous codes"
+  ],
+  "artifacts_sha256": {
+    "matrix.npz": "ceeb38892593a0b3658484465a54be27bc3650d3968bb31592e07888d5ca42ba",
+    "items.csv": "9eae3b1662762fce009140e0a47503c0aa2cab66edb3a4c84942b9670e72200c",
+    "generated_vectorizer.joblib": "1fbee405de14b697381c06b94e95df876fded852c03ea4d23113cb99e1412194",
+    "reviewed_descriptions.json": "f897d8d6b7011c086751b8d5a2e228e4d88b491eab8c2ae9d0e844d6ee9ae995"
+  }
+}
