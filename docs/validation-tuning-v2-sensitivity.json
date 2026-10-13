@@ -1,0 +1,796 @@
+{
+  "status": "development_tuning_sensitivity_not_confirmatory",
+  "manifest_sha256": "1a3deb4a596f4cafe4b06cca448fe3110e16de77aa35219d54372fd425c13390",
+  "objective": "Equal mean NDCG@10 across four tuning cohorts",
+  "tie_tolerance_for_reporting": 1e-12,
+  "selection_rule": "First maximum in the declared grid; unchanged",
+  "grids": {
+    "weight_grid": {
+      "configurations": 15,
+      "maximum_objective": 0.007973955966430829,
+      "tied_maxima": 1,
+      "rows": [
+        {
+          "weights": {
+            "content": 0.0,
+            "item_cf": 0.0,
+            "global_popularity": 1.0
+          },
+          "objective": 0.00033127111727194515
+        },
+        {
+          "weights": {
+            "content": 0.0,
+            "item_cf": 0.25,
+            "global_popularity": 0.75
+          },
+          "objective": 0.0006625422345438903
+        },
+        {
+          "weights": {
+            "content": 0.0,
+            "item_cf": 0.5,
+            "global_popularity": 0.5
+          },
+          "objective": 0.0027441300582786146
+        },
+        {
+          "weights": {
+            "content": 0.0,
+            "item_cf": 0.75,
+            "global_popularity": 0.25
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "weights": {
+            "content": 0.0,
+            "item_cf": 1.0,
+            "global_popularity": 0.0
+          },
+          "objective": 0.004831729583743762
+        },
+        {
+          "weights": {
+            "content": 0.25,
+            "item_cf": 0.0,
+            "global_popularity": 0.75
+          },
+          "objective": 0.00033127111727194515
+        },
+        {
+          "weights": {
+            "content": 0.25,
+            "item_cf": 0.25,
+            "global_popularity": 0.5
+          },
+          "objective": 0.004525288493390757
+        },
+        {
+          "weights": {
+            "content": 0.25,
+            "item_cf": 0.5,
+            "global_popularity": 0.25
+          },
+          "objective": 0.006910567574312496
+        },
+        {
+          "weights": {
+            "content": 0.25,
+            "item_cf": 0.75,
+            "global_popularity": 0.0
+          },
+          "objective": 0.005543930985596347
+        },
+        {
+          "weights": {
+            "content": 0.5,
+            "item_cf": 0.0,
+            "global_popularity": 0.5
+          },
+          "objective": 0.006604564272178258
+        },
+        {
+          "weights": {
+            "content": 0.5,
+            "item_cf": 0.25,
+            "global_popularity": 0.25
+          },
+          "objective": 0.007973955966430829
+        },
+        {
+          "weights": {
+            "content": 0.5,
+            "item_cf": 0.5,
+            "global_popularity": 0.0
+          },
+          "objective": 0.007714565943769888
+        },
+        {
+          "weights": {
+            "content": 0.75,
+            "item_cf": 0.0,
+            "global_popularity": 0.25
+          },
+          "objective": 0.006656331365278758
+        },
+        {
+          "weights": {
+            "content": 0.75,
+            "item_cf": 0.25,
+            "global_popularity": 0.0
+          },
+          "objective": 0.007889778431203118
+        },
+        {
+          "weights": {
+            "content": 1.0,
+            "item_cf": 0.0,
+            "global_popularity": 0.0
+          },
+          "objective": 0.0046228077996074415
+        }
+      ]
+    },
+    "policy_grid": {
+      "configurations": 72,
+      "maximum_objective": 0.005163000701015707,
+      "tied_maxima": 54,
+      "rows": [
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 10,
+            "cf_confidence_threshold": 0.25,
+            "cf_weight": 0.25
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 10,
+            "cf_confidence_threshold": 0.25,
+            "cf_weight": 0.5
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 10,
+            "cf_confidence_threshold": 0.25,
+            "cf_weight": 0.75
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 10,
+            "cf_confidence_threshold": 0.5,
+            "cf_weight": 0.25
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 10,
+            "cf_confidence_threshold": 0.5,
+            "cf_weight": 0.5
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 10,
+            "cf_confidence_threshold": 0.5,
+            "cf_weight": 0.75
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 10,
+            "cf_confidence_threshold": 0.75,
+            "cf_weight": 0.25
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 10,
+            "cf_confidence_threshold": 0.75,
+            "cf_weight": 0.5
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 10,
+            "cf_confidence_threshold": 0.75,
+            "cf_weight": 0.75
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.25,
+            "cf_weight": 0.25
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.25,
+            "cf_weight": 0.5
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.25,
+            "cf_weight": 0.75
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.5,
+            "cf_weight": 0.25
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.5,
+            "cf_weight": 0.5
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.5,
+            "cf_weight": 0.75
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.75,
+            "cf_weight": 0.25
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.75,
+            "cf_weight": 0.5
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.75,
+            "cf_weight": 0.75
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.25,
+            "cf_weight": 0.25
+          },
+          "objective": 0.00248465390763891
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.25,
+            "cf_weight": 0.5
+          },
+          "objective": 0.003392362870325674
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.25,
+            "cf_weight": 0.75
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.5,
+            "cf_weight": 0.25
+          },
+          "objective": 0.00248465390763891
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.5,
+            "cf_weight": 0.5
+          },
+          "objective": 0.003392362870325674
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.5,
+            "cf_weight": 0.75
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.75,
+            "cf_weight": 0.25
+          },
+          "objective": 0.00248465390763891
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.75,
+            "cf_weight": 0.5
+          },
+          "objective": 0.003392362870325674
+        },
+        {
+          "policy": {
+            "low_history_threshold": 2,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.75,
+            "cf_weight": 0.75
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 10,
+            "cf_confidence_threshold": 0.25,
+            "cf_weight": 0.25
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 10,
+            "cf_confidence_threshold": 0.25,
+            "cf_weight": 0.5
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 10,
+            "cf_confidence_threshold": 0.25,
+            "cf_weight": 0.75
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 10,
+            "cf_confidence_threshold": 0.5,
+            "cf_weight": 0.25
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 10,
+            "cf_confidence_threshold": 0.5,
+            "cf_weight": 0.5
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 10,
+            "cf_confidence_threshold": 0.5,
+            "cf_weight": 0.75
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 10,
+            "cf_confidence_threshold": 0.75,
+            "cf_weight": 0.25
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 10,
+            "cf_confidence_threshold": 0.75,
+            "cf_weight": 0.5
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 10,
+            "cf_confidence_threshold": 0.75,
+            "cf_weight": 0.75
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.25,
+            "cf_weight": 0.25
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.25,
+            "cf_weight": 0.5
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.25,
+            "cf_weight": 0.75
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.5,
+            "cf_weight": 0.25
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.5,
+            "cf_weight": 0.5
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.5,
+            "cf_weight": 0.75
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.75,
+            "cf_weight": 0.25
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.75,
+            "cf_weight": 0.5
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.75,
+            "cf_weight": 0.75
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.25,
+            "cf_weight": 0.25
+          },
+          "objective": 0.00248465390763891
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.25,
+            "cf_weight": 0.5
+          },
+          "objective": 0.003392362870325674
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.25,
+            "cf_weight": 0.75
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.5,
+            "cf_weight": 0.25
+          },
+          "objective": 0.00248465390763891
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.5,
+            "cf_weight": 0.5
+          },
+          "objective": 0.003392362870325674
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.5,
+            "cf_weight": 0.75
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.75,
+            "cf_weight": 0.25
+          },
+          "objective": 0.00248465390763891
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.75,
+            "cf_weight": 0.5
+          },
+          "objective": 0.003392362870325674
+        },
+        {
+          "policy": {
+            "low_history_threshold": 5,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.75,
+            "cf_weight": 0.75
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 10,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.25,
+            "cf_weight": 0.25
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 10,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.25,
+            "cf_weight": 0.5
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 10,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.25,
+            "cf_weight": 0.75
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 10,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.5,
+            "cf_weight": 0.25
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 10,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.5,
+            "cf_weight": 0.5
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 10,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.5,
+            "cf_weight": 0.75
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 10,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.75,
+            "cf_weight": 0.25
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 10,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.75,
+            "cf_weight": 0.5
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 10,
+            "high_history_threshold": 20,
+            "cf_confidence_threshold": 0.75,
+            "cf_weight": 0.75
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 10,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.25,
+            "cf_weight": 0.25
+          },
+          "objective": 0.00248465390763891
+        },
+        {
+          "policy": {
+            "low_history_threshold": 10,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.25,
+            "cf_weight": 0.5
+          },
+          "objective": 0.003392362870325674
+        },
+        {
+          "policy": {
+            "low_history_threshold": 10,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.25,
+            "cf_weight": 0.75
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 10,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.5,
+            "cf_weight": 0.25
+          },
+          "objective": 0.00248465390763891
+        },
+        {
+          "policy": {
+            "low_history_threshold": 10,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.5,
+            "cf_weight": 0.5
+          },
+          "objective": 0.003392362870325674
+        },
+        {
+          "policy": {
+            "low_history_threshold": 10,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.5,
+            "cf_weight": 0.75
+          },
+          "objective": 0.005163000701015707
+        },
+        {
+          "policy": {
+            "low_history_threshold": 10,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.75,
+            "cf_weight": 0.25
+          },
+          "objective": 0.00248465390763891
+        },
+        {
+          "policy": {
+            "low_history_threshold": 10,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.75,
+            "cf_weight": 0.5
+          },
+          "objective": 0.003392362870325674
+        },
+        {
+          "policy": {
+            "low_history_threshold": 10,
+            "high_history_threshold": 40,
+            "cf_confidence_threshold": 0.75,
+            "cf_weight": 0.75
+          },
+          "objective": 0.005163000701015707
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "Only 50 tuning users per cohort; assessment outcomes not used to select settings",
+    "54 of 72 switching grid configurations tie for maximum: thresholds are weakly identified",
+    "No density-specific retuning; no final holdout evaluated"
+  ]
+}

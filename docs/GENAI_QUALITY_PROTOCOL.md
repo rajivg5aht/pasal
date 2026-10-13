@@ -61,3 +61,29 @@ items actually recommended and changed rankings. No exposure or an unchanged
 ranking is not evidence that useful full-coverage GenAI has been disproved. This
 small partial-treatment experiment cannot establish the proposal's final H2.
 Final test evaluation still requires a frozen, fully documented protocol.
+
+## Independent review packet prepared (13 October 2026)
+
+`genai/prepare_human_review.py` creates a local, unrated packet from the complete
+declared sample. The actual packet is in `data/processed/genai-human-review-v1`.
+All 24 schema-valid responses are included, including the three rejected by the
+assistant. Eight failed attempts remain in the generation denominator but have
+no valid output to rate. Seed 42 randomizes presentation order. The coordinator
+key links anonymous case labels to exact cache/output hashes; it is separate from
+the reviewer template. Assistant approval decisions are absent from the packet.
+This is decision masking, not full blinding to AI authorship.
+
+Before recruiting raters, document the university's applicable consent/ethics
+arrangements, reviewer qualifications and analysis plan. Have two reviewers work
+independently on separate copies using non-identifying reviewer codes; retain
+their initial ratings before adjudication. Do not send the coordinator key or
+assistant review file to raters. No invitations have been sent and no human
+ratings have been collected.
+
+The rubric separates supported, unsupported and unassessable assertions, claim
+severity, clarity and usefulness. Record assertion boundaries in notes. Factual
+consistency uses supported / (supported + unsupported) only when that denominator
+is positive; report unassessable counts and zero-denominator cases separately.
+Report missing ratings rather than treating them as zero. Report per-rater
+ratings and disagreements before any adjudicated totals; any agreement statistic
+must identify its scale, weighting and number of paired observations.

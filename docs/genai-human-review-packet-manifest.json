@@ -1,0 +1,11 @@
+{
+  "status": "prepared_no_human_ratings_collected",
+  "seed": 42,
+  "sample_manifest_sha256": "caacee64bca648fe4edfbea031d5eb945dc0da6c40947f093eff9fb601af95d5",
+  "successful_outputs_included": 24,
+  "failed_attempts_not_rateable": 8,
+  "selection": "Every schema-valid output, independent of assistant approval",
+  "template_sha256": "acbb857650925fbac81fb1f5deb6cb42b2e50f5ab27309bba0b23742876ac37a",
+  "key_sha256": "aab887cb5c09e75046417afdfc0640ebb4dfb198dacc40e47d097698129da8f0",
+  "source_sha256": "9cf7a7b9537786108386eda4e9c7c5170eb191dfea6b89365a41cbdcbc8905d2"
+}
