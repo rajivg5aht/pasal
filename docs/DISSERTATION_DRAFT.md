@@ -309,3 +309,28 @@ progress is 10/128 attempted, seven generated and assistant-approved, three fail
 unavailable failure usage. Independent human quality ratings remain outstanding.
 The incomplete sample and descriptions that restate anonymous identifiers cannot
 establish useful semantic enrichment or recommendation gains.
+
+## Targeted batch 3 and review-analysis tooling — 13 October 2026
+
+Eight further previously unattempted items were processed using the same frozen
+sample, prompt, model and quota ledger. Five returned schema-valid output; three
+returned provider JSON-validation failures. No failures were retried. The cumulative
+sample has 18 attempts, 12 valid generations and six provider/schema failures.
+Assistant grounding review approved nine and rejected three of the valid outputs.
+
+New rejection reasons were retained against exact output hashes: item 34853 made
+an unqualified present-tense availability claim; item 61303 likewise omitted the
+historical availability boundary; item 48997 inferred a complex data structure
+from anonymous codes. Approvals for 46156 and 62549 are source-bound, requiring the
+historical context in presentation. This subjective engineering screen is not an
+independent measure of hallucination, relevance or usefulness. Independent human
+review is still required and no ratings were fabricated.
+
+Reported cumulative tokens are 6,161 input and 6,623 output; six failures lack
+usage, so these remain lower bounds. The sample is incomplete (110 unattempted).
+A returned-rating analyzer now checks source/response integrity and summarizes
+per-reviewer supported/(supported+unsupported) fractions only for complete count
+pairs, alongside unassessable counts, missingness and ordinal distributions.
+It retains pairwise disagreements without adjudication or identity claims.
+All 73 Python regression tests pass. Final evaluation release gates are documented;
+the final execution manifest and held-out results remain unfinished.

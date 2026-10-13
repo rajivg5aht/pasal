@@ -2,6 +2,25 @@
 
 ## Current checkpoint — 13 October 2026
 
+### Latest research checkpoint
+
+Targeted GenAI batch 3 is complete: 18/128 attempted, 12 schema-valid outputs,
+six provider/schema failures, nine assistant-grounding approvals and three
+assistant rejections; 110 items remain unattempted. No failed item was retried.
+See `docs/genai-targeted-batch-3-results.json`. Earlier batch counts below are
+historical. Human ratings remain uncollected.
+
+The independent-rating analyzer validates packet fingerprints, immutable source
+facts, exact case membership, scales and reviewer codes. It reports missingness,
+per-reviewer factual consistency and disagreements without imputation. All 73
+Python tests pass (including three new analysis tests). Sandbox service fixtures
+stalled; the stopped run was repeated successfully with local service access.
+
+`docs/FINAL_EVALUATION_READINESS.md` records the remaining release gates. It is
+not a final protocol freeze. No holdout outcomes were opened. Next: continue the
+approved sample within free quotas, retain exact grounding reviews, then build
+and assess a new enriched artifact before final evaluation.
+
 ### Website integrity checkpoint
 
 Implemented and pushed the isolated 16-product synthetic demo shop and protected
@@ -213,5 +232,4 @@ Ten of 128 items attempted: seven valid outputs approved by assistant grounding
 review, three provider/schema failures, 118 unattempted. The two new requests were
 23762 (grounded identifier summary) and 29196 (JSON validation failure). No retry,
 no paid fallback. See docs/genai-targeted-batch-2-results.json. Earlier batch-one
-counts below are historical checkpoints, not the latest sample totals.
-
+counts are historical checkpoints, not the latest sample totals.

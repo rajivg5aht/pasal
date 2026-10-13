@@ -407,3 +407,17 @@ tests, including the isolated real MongoDB test, passed after the index addition
   json_validate_failed response. No retries. Cumulative 10 attempted, seven
   assistant-approved, three failed, 118 unattempted. See
   genai-targeted-batch-2-results.json. Human quality ratings are still outstanding.
+
+## 13 October: targeted batch 3 and independent review analysis
+
+- Eight new calls under the approved 128-item sample, existing free quotas and
+  original prompt/model: five schema passes, three recorded JSON failures.
+- Cumulative: 18 attempted, 110 unattempted, 12 valid, six provider/schema failures,
+  nine assistant-approved and three assistant-rejected. No retries or paid fallback.
+- Evidence: genai-targeted-batch-3-results.json. Source comparison reasons are in
+  ignored local sample reviews.jsonl, tied to exact cached output hashes.
+- Implemented immutable-packet validation and per-reviewer descriptive analysis;
+  no human ratings entered. Three focused tests and all 73 Python tests pass.
+- Full sandbox suite stalled at service tests and was stopped. The permitted local
+  service-access rerun passed all 73. No test results are inferred from the stall.
+- FINAL_EVALUATION_READINESS.md records unresolved release gates, not a final freeze.
