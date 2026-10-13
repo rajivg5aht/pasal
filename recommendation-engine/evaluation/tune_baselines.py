@@ -56,10 +56,10 @@ def switching_key(case,confidence,config):
 
 
 def objective(records, key_for):
-    # Equal weighting of the three nonzero-history strata. Zero-history routes
-    # cannot distinguish these tuning parameters and are assessed separately.
+    # Every approved history cohort contributes. A zero popularity weight can
+    # leave fixed-hybrid cold users unserved, so excluding them biases selection.
     means=[]
-    for label in COHORTS[1:]:
+    for label in COHORTS:
         rows=[r for r in records if r['partition']=='tune' and r['cohort']==label]
         means.append(float(np.mean([r['ndcg'][key_for(r)] for r in rows])))
     return float(np.mean(means))
@@ -123,7 +123,7 @@ def run(train_path,validation_path,content_dir,cf_dir,output,per_cohort=100):
         for row in rows: stream.write(json.dumps(row,allow_nan=False)+'\n')
     config={'status':'validation_selected_not_final_test_freeze','cutoff_ms':cutoff,
             'fixed_weights':weights[best_fixed],'switching':asdict(policy),
-            'objective':'equal mean NDCG@10 across nonzero-history tuning strata',
+            'objective':'equal mean NDCG@10 across all four tuning cohorts',
             'tie_policy':'first configuration in predeclared grid',
             'genai_condition':'not_evaluated', 'seed':42}
     (output/'selected_config.json').write_text(json.dumps(config,indent=2))

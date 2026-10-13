@@ -32,7 +32,7 @@ def diversity(recommendations, matrix, item_rows):
             'valid_pairs': valid_pairs, 'total_pairs': total_pairs}
 
 
-def analyze(suite_dir, output):
+def analyze(suite_dir, output, tuning_dir=None):
     suite_dir, output = Path(suite_dir), Path(output)
     if output.exists():
         raise FileExistsError('Use a new analysis version')
@@ -40,7 +40,11 @@ def analyze(suite_dir, output):
     suite = json.loads((suite_dir/'report.json').read_text())
     if {r['density_percent'] for r in suite['densities']} != {10, 25, 50, 100}:
         raise ValueError('Require all four densities')
-    tuning = json.loads((root/'data/processed/validation-tuning-v1/manifest.json').read_text())
+    tuning_dir = Path(tuning_dir) if tuning_dir else root/'data/processed/validation-tuning-v1'
+    tuning_path = tuning_dir/'manifest.json'
+    if suite.get('tuning_manifest_sha256', fingerprint(tuning_path)) != fingerprint(tuning_path):
+        raise ValueError('Tuning provenance differs from suite')
+    tuning = json.loads(tuning_path.read_text())
     ids = {r['visitorid'] for r in tuning['sample'] if r['partition'] == 'assessment'}
     train_path = root/'data/splits/event-count-v1/train.csv'
     validation_path = root/'data/splits/event-count-v1/validation.csv'
@@ -101,6 +105,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--suite', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--tuning-dir', type=Path)
     args = parser.parse_args()
-    analyze(args.suite, args.output)
+    analyze(args.suite, args.output, args.tuning_dir)
     print('Wrote secondary stable-novelty and diversity evidence')

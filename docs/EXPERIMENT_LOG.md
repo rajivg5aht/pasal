@@ -177,7 +177,7 @@ The original network failure remains archived. The successful API response,
 review and paired features remain under ignored local data paths. No credentials,
 raw catalogue payload or generated full response were committed to GitHub.
 
-## D12 — full collaborative model and development tuning
+## D12 â€” full collaborative model and development tuning
 
 The temporal CF model uses all 978,921 training users, 1,496,559 unique user-item
 pairs and 200,975 items. Binary distinct-user cosine, top 50 neighbours, excludes
@@ -198,7 +198,7 @@ The category baseline exceeds switching. Equal stratification is not population
 weighting; this diagnostic cannot establish hypothesis support. GenAI was not
 included. The final test remains unopened for evaluation.
 
-## D13 — connected application and MongoDB verification
+## D13 â€” connected application and MongoDB verification
 
 On October 12 the existing local MongoDB was reused because it already owned
 port 27017. Import completed for 411,732 historical catalogue records. FastAPI,
@@ -215,7 +215,7 @@ passed. These are engineering checks, not a complete usability, accessibility,
 security or performance study. Browser authentication was not exercised with an
 account; authentication was verified through backend HTTP tests.
 
-## D14 — local service load diagnostic and scoring optimization
+## D14 â€” local service load diagnostic and scoring optimization
 
 Two bounded runs used identical synthetic anonymous/one-event/25-event profiles,
 three warm-ups and 30 requests at each concurrency (1, 2, 4). The endpoint is
@@ -238,11 +238,11 @@ The interrupted prior service processes were restarted; the existing MongoDB and
 its catalogue were preserved. Requirements encoding was also repaired: 122 pins
 now use UTF-8, parse correctly, match installed packages and pass pip check.
 
-## D15 — complete 32-item genuine generation sample
+## D15 â€” complete 32-item genuine generation sample
 
 All 32 prespecified items were attempted on Groq Free without retries or
 replacements: 24 schema-valid outputs, eight failed/rejected requests. Schema
-success was 75%, Wilson 95% interval 57.9–86.7%; this is API reliability, not
+success was 75%, Wilson 95% interval 57.9â€“86.7%; this is API reliability, not
 factual consistency. Seven failures have HTTP 400 recorded; six additionally
 identify json_validate_failed. The earliest failure retained exception class only.
 Reported usage totals 11,099 input and 11,785 output tokens; all eight failures
@@ -255,7 +255,7 @@ engineering grounding reviews, not independent human quality ratings. Descriptio
 mostly restate anonymous identifiers, and groundedness does not establish usefulness.
 See genai-quality-sample-results.json and GENAI_QUALITY_PROTOCOL.md.
 
-## D16 — partial-coverage seventh configuration
+## D16 â€” partial-coverage seventh configuration
 
 The versioned enriched model preserves 411,732 original item rows and 100,000
 property columns, appending 145 generated-text columns with fixed .25 weight.
@@ -273,3 +273,31 @@ switching rankings changed. The paired NDCG difference and bootstrap interval
 were zero. This is inadequate treatment exposure, not evidence that full-coverage
 GenAI is ineffective or that H2 has been tested conclusively. The final holdout
 remains untouched. See paired-genai-quality-results.json and GENAI_RUNBOOK.md.
+
+
+## D17 - density diagnostic and tuning correction (13 October 2026)
+
+The v1 seven-condition suite completed at 10%, 25%, 50% and 100% training-event
+density with 200 fixed assessment users and 100,599 fixed candidate items. All
+original artifacts remain. The v1 aggregates and figure are historical development
+evidence; they use the earlier fixed-hybrid weights.
+
+The initial tuning objective excluded zero-history users even for fixed-hybrid
+weight selection. Because zero popularity weight can leave these users unserved,
+this exclusion is inappropriate. The objective now gives equal weight to all
+four approved cohorts. A regression fixture demonstrates that cold users can
+change selection. The complete Python suite passed all 65 tests.
+
+The same disjoint tuning/assessment partition was rerun in validation-tuning-v2.
+Fixed weights changed from (.75 content, .25 CF, 0 popularity) to
+(.50 content, .25 CF, .25 popularity). Switching settings remained (low 2, high
+10, confidence .25, CF weight .25). No holdout outcomes were opened. Reusing the
+assessment sample after a correctness repair is development evidence, not a
+newly independent confirmatory experiment.
+
+A new density-evaluation-v2 run uses corrected settings, preserving v1. CF fits
+are reused only after matching training fingerprints. Secondary descriptive
+analysis holds novelty targets to the original full-history seen set and measures
+diversity in unchanged property TF-IDF space; it is explicitly post-hoc and does
+not replace the declared primary metrics. Document encoding was normalized to
+UTF-8 after finding legacy Windows dash bytes mixed into UTF-8 text.

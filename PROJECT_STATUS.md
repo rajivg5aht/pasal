@@ -1,6 +1,6 @@
 # Pasal status and continuation handover
 
-## Current checkpoint — 13 October 2026
+## Current checkpoint â€” 13 October 2026
 
 Continue in dependency order without calendar waiting. Preserve the approved
 seven configurations and existing verified artifacts. Push substantive verified
@@ -25,8 +25,8 @@ chunks; do not manufacture commits to reach the project's 60-commit target.
 - Lazy online scoring preserves route rankings. Development single-request P95
   fell from 354 to 187 ms; capacity rejections remain at concurrency four. These
   are local service diagnostics, not final end-to-end performance evidence.
-- 62-test Python suite passed before density additions; the additional density
-  fixture also passed. Four backend tests (including isolated real MongoDB), four
+- All 65 Python regression tests pass, including density, diversity and corrected
+  tuning fixtures. Four backend tests (including isolated real MongoDB), four
   frontend tests and the production build pass. Requirements encoding repaired;
   all 122 pins match installed versions and pip check passes.
 - Dissertation methodology, implementation and measured preliminary findings
@@ -34,10 +34,13 @@ chunks; do not manufacture commits to reach the project's 60-commit target.
 
 ### In progress
 
-Four-density seven-condition validation suite: 10%, 25%, 50%, 100%. Samples are
+The v1 four-density suite completed. Corrected tuning includes cold users in the
+fixed-hybrid objective: weights are .50 content, .25 CF, .25 popularity. Switching
+settings are unchanged. The comparison is being rerun in density-evaluation-v2,
+reusing verified CF fits and preserving v1. Densities: 10%, 25%, 50%, 100%. Samples are
 nested, histories and cohorts recomputed, original cohorts also reported, and
 users/candidate universe/settings held fixed. Outputs are versioned under
-`data/processed/density-evaluation-v1`. Do not restart or overwrite a running suite.
+versioned directories. Do not restart or overwrite a running suite.
 
 ### Running locally
 

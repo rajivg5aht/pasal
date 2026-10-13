@@ -149,7 +149,7 @@ are still pending, and these limitations must remain explicit in the final thesi
 
 A prespecified uniform sample of 32 eligible historical items produced 24
 schema-valid Groq Free outputs and eight failed/rejected requests. The schema
-success proportion was 75% (Wilson 95% interval 57.9–86.7%). This measures API
+success proportion was 75% (Wilson 95% interval 57.9â€“86.7%). This measures API
 reliability, not factual consistency or relevance. Assistant source comparison
 approved 21 outputs and rejected three descriptions that overstated historical
 availability as purchase availability. These reviews are not independent human
@@ -170,3 +170,24 @@ synthetic single-request diagnostics, successful-request P95 fell from 353.6 to
 187.3 ms while ranking-equivalence fixtures passed. Capacity rejections still
 occurred with four simultaneous requests. These measurements exclude the browser,
 Express and MongoDB path and do not establish final system performance targets.
+
+
+## Density experiment and correction to development tuning
+
+The four-density development experiment retains 10%, 25%, 50% and 100% of training
+events using nested samples. It fixes 200 assessment users and a 100,599-item
+candidate universe while rebuilding interaction-dependent CF and histories.
+History cohorts can change with density. Novel targets also change when previously
+seen interactions are removed, so density trends cannot be attributed solely to
+model robustness. An explicitly post-hoc analysis holds novelty targets fixed
+and measures list diversity in the original property TF-IDF representation.
+Anonymous-code distance is not human semantic diversity.
+
+A correctness review found that the initial tuning objective omitted zero-history
+users even when choosing fixed-hybrid weights. Including all four cohorts equally
+changed the chosen content/CF/popularity weights from .75/.25/0 to .50/.25/.25.
+Switching thresholds were unchanged. Earlier results remain versioned development
+evidence, and the density comparison is being repeated with corrected weights.
+Neither reuse of validation data nor zero GenAI differences under sparse treatment
+exposure establish final hypothesis results. The final holdout protocol must be
+frozen before final testing.

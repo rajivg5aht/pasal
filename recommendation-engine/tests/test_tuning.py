@@ -9,10 +9,17 @@ import pandas as pd
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from models.content.train_snapshot import train as train_content
 from models.collaborative.train_full import train as train_cf
-from evaluation.tune_baselines import run
+from evaluation.tune_baselines import run, objective, COHORTS
 
 
 class TuningTests(unittest.TestCase):
+    def test_weight_selection_does_not_ignore_unserved_zero_history_users(self):
+        records = [{'partition': 'tune', 'cohort': label,
+                    'ndcg': {'cold_capable': 1. if label == '0' else .1,
+                             'warm_only': 0. if label == '0' else .2}} for label in COHORTS]
+        self.assertGreater(objective(records, lambda r: 'cold_capable'),
+                           objective(records, lambda r: 'warm_only'))
+
     def test_validation_user_partitions_are_disjoint_and_all_six_models_assessed(self):
         with TemporaryDirectory() as folder:
             root=Path(folder)
