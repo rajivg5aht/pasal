@@ -1,5 +1,14 @@
 # Pasal: accelerated four-week execution plan
 
+## Website checkpoint — 13 October 2026
+
+Catalogue audit, separate synthetic shop, protected administrator product management,
+research routing display and regression checks are complete for the bounded prototype.
+See `docs/PASAL_OPERATOR_GUIDE.md`. Operator role provisioning remains a local setup
+step. Continue immediately with the approved targeted GenAI sample, independent
+quality review, final evaluation and dissertation; no calendar waiting or unrelated
+commerce features. The frozen research inventory remains unchanged (83 hashes).
+
 ## Execution policy — latest user instruction
 
 Work continuously in dependency order. Week/date allocations below are historical

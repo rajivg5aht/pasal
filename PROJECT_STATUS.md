@@ -2,6 +2,23 @@
 
 ## Current checkpoint — 13 October 2026
 
+### Website integrity checkpoint
+
+Implemented and pushed the isolated 16-product synthetic demo shop and protected
+administrator APIs/interface. Search, readable categories, details, wishlist, cart
+quantities, consent and safe product administration are implemented. The existing
+Retailrocket experience remains separately available as the Research Lab with
+actual routing information; no anonymous item has been renamed as a real product.
+Eight frontend tests, five backend tests including MongoDB, and the production
+build pass. All 83 protected research artifact hashes match. See
+`docs/PASAL_OPERATOR_GUIDE.md` for URLs, role provisioning and verification limits.
+No user account has been chosen for administrator promotion.
+
+Next priority: finish the approved targeted GenAI sample within free quotas,
+review outputs, rebuild and compare the seventh configuration with measured route
+exposure, complete the final frozen evaluation protocol and dissertation results.
+Do not interpret the completed shopping interface as completed research evaluation.
+
 Continue in dependency order without calendar waiting. Preserve the approved
 seven configurations and existing verified artifacts. Push substantive verified
 chunks; do not manufacture commits to reach the project's 60-commit target.
@@ -189,3 +206,12 @@ project, redownload data, delete metadata-only items for lacking interactions,
 claim the proposal's targets are achieved, or label fixture output as research
 evidence. Website integration and dissertation drafting can proceed alongside
 research once their corresponding milestones are reached.
+
+### Targeted GenAI batch 2 — latest cumulative count
+
+Ten of 128 items attempted: seven valid outputs approved by assistant grounding
+review, three provider/schema failures, 118 unattempted. The two new requests were
+23762 (grounded identifier summary) and 29196 (JSON validation failure). No retry,
+no paid fallback. See docs/genai-targeted-batch-2-results.json. Earlier batch-one
+counts below are historical checkpoints, not the latest sample totals.
+

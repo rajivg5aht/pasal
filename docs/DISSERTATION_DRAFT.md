@@ -276,3 +276,36 @@ faster mixed workload reached the existing two-request service capacity limit.
 The failures remain in public-api-load-diagnostic-v2.json; the index improvement
 must not be described as resolving recommendation concurrency. All four backend
 tests, including the isolated real MongoDB test, passed after the index addition.
+
+## Website integrity and research boundary — 13 October 2026
+
+The product audit found no verified human-readable Retailrocket identities, brands,
+prices or photographs. Pasal therefore implements two experiences: a separate
+16-record synthetic Kathmandu-oriented shop and the original numeric-ID Research
+Lab. Demo records use namespaced string IDs, separate collections and explicit
+synthetic labels. Search, categories, cart quantities, wishlist and consent apply
+to the appropriate catalogue. Same-category demo suggestions are not presented as
+outputs of the evaluated switching model. No cross-catalogue mapping is invented.
+
+The administrator interface manages only demo products and displays actual service
+observations. Authorization checks stored roles server-side; public registration
+cannot assign an administrator role. Product deactivation preserves saved references.
+Only bundled illustrations can be selected. Live request counts and latency are
+operational observations, not substitutes for experimental measurements.
+
+Verification passed eight frontend tests, five backend tests including real MongoDB
+isolation tests, and a production build. All 83 inventoried raw/split/model/evaluation
+artifacts retained their SHA256 hashes. Browser inspection confirmed the research
+controller reported global_popularity for a zero-history profile, thresholds 2/10,
+CF confidence 0.000 against a 0.25 cutoff, and the historical training cutoff.
+These observations demonstrate integration, not superiority or hypothesis support.
+
+A further bounded Groq Free batch attempted two previously unattempted items. Item
+23762 returned a schema-valid description that accurately enumerates source keys
+without semantic product inference; assistant grounding review approved this exact
+output. Item 29196 failed provider JSON validation and was not retried. Cumulative
+progress is 10/128 attempted, seven generated and assistant-approved, three failed,
+118 unattempted. Reported usage is 3,607 input and 3,470 output tokens, excluding
+unavailable failure usage. Independent human quality ratings remain outstanding.
+The incomplete sample and descriptions that restate anonymous identifiers cannot
+establish useful semantic enrichment or recommendation gains.

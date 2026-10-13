@@ -393,3 +393,17 @@ faster mixed workload reached the existing two-request service capacity limit.
 The failures remain in public-api-load-diagnostic-v2.json; the index improvement
 must not be described as resolving recommendation concurrency. All four backend
 tests, including the isolated real MongoDB test, passed after the index addition.
+
+## 13 October: storefront verification and targeted batch 2
+
+- Eight frontend tests pass serially; five backend tests pass with MongoDB tests
+  enabled, none skipped. Production build passes. One parallel frontend run ran
+  out of memory; serial rerun passed, so retain resource-aware execution.
+- All 83 protected research files match the pre-change SHA256 inventory; see
+  storefront-research-preservation-after.json.
+- Browser verified synthetic mug search/details and same-category links, admin
+  login boundary, and actual Research Lab zero-history routing.
+- Targeted GenAI sample: two new requests, one valid grounded output and one
+  json_validate_failed response. No retries. Cumulative 10 attempted, seven
+  assistant-approved, three failed, 118 unattempted. See
+  genai-targeted-batch-2-results.json. Human quality ratings are still outstanding.
