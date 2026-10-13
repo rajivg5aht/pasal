@@ -153,6 +153,18 @@ export default function App() {
     [categories, setCategories] = useState<string[]>([]);
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]),
     [recError, setRecError] = useState("");
+  const [trace, setTrace] = useState<{
+    strategy?: string;
+    configuration?: string;
+    model_cutoff_ms?: number;
+    routing?: {
+      history_event_count: number;
+      cf_confidence: number;
+      low_history_threshold: number;
+      high_history_threshold: number;
+      cf_confidence_threshold: number;
+    };
+  } | null>(null);
   const [query, setQuery] = useState(""),
     [category, setCategory] = useState(""),
     [cursor, setCursor] = useState<number | null>(null);
@@ -215,13 +227,16 @@ export default function App() {
   useEffect(() => {
     const controller = new AbortController();
     setRecError("");
-    api<{ items: Recommendation[] }>(
+    api<{ items: Recommendation[] } & NonNullable<typeof trace>>(
       "/recommendations",
       "GET",
       undefined,
       controller.signal,
     )
-      .then((r) => setRecommendations(r.items))
+      .then((r) => {
+        setRecommendations(r.items);
+        setTrace(r);
+      })
       .catch((e) => {
         if (e.name !== "AbortError")
           setRecError(
@@ -318,15 +333,15 @@ export default function App() {
         A more thoughtful way to discover. <span>Pasal · Research preview</span>
       </div>
       <header className="header">
-        <a className="brand" href="#" aria-label="Pasal home">
+        <a className="brand" href="#research" aria-label="Pasal Research Lab">
           <span className="brand-mark">
             <Leaf size={20} />
           </span>
           pasal<span className="brand-dot">.</span>
         </a>
         <nav aria-label="Main navigation">
-          <a href="#catalogue">Explore</a>
-          <a href="#for-you">For you</a>
+          <a href="#research-catalogue">Explore</a>
+          <a href="#research-for-you">For you</a>
           <button onClick={() => setModal(user ? "privacy" : "login")}>
             Your preferences
           </button>
@@ -438,7 +453,39 @@ export default function App() {
             </button>
           </div>
         )}
-        <section className="section" id="for-you">
+        <section className="section" id="research-for-you">
+          {trace?.strategy && (
+            <details className="research-trace">
+              <summary>
+                How the live research recommendation was selected
+              </summary>
+              <p>
+                Actual strategy: <strong>{trace.strategy}</strong>.
+                Configuration: {trace.configuration}. Historical cutoff:{" "}
+                {trace.model_cutoff_ms
+                  ? new Date(trace.model_cutoff_ms).toISOString()
+                  : "not reported"}
+                .
+              </p>
+              {trace.routing && (
+                <p>
+                  Consented history: {trace.routing.history_event_count} events.
+                  Low/high thresholds: {trace.routing.low_history_threshold}/
+                  {trace.routing.high_history_threshold}. CF confidence:{" "}
+                  {trace.routing.cf_confidence.toFixed(3)}; required cutoff:{" "}
+                  {trace.routing.cf_confidence_threshold}. Zero-history profiles
+                  use popularity (category popularity when preferences exist).
+                  These are live controller inputs, not a claim of improved
+                  accuracy.
+                </p>
+              )}
+              <p>
+                Anonymous category codes have no verified retail names.
+                Generated catalogue summaries, when available, are separately
+                labelled. Demo shop products never enter this model.
+              </p>
+            </details>
+          )}
           <div className="section-heading">
             <div>
               <span className="eyebrow">A PLACE TO START</span>
@@ -497,7 +544,11 @@ export default function App() {
             </div>
           )}
         </section>
-        <section className="catalogue section" id="catalogue" ref={catalog}>
+        <section
+          className="catalogue section"
+          id="research-catalogue"
+          ref={catalog}
+        >
           <div className="section-heading">
             <div>
               <span className="eyebrow">FIND YOUR NEXT DISCOVERY</span>

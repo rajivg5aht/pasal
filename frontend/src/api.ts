@@ -7,6 +7,7 @@ export type Product = {
   available: boolean;
 };
 export type User = {
+  role?: 'customer' | 'admin';
   id: string;
   name: string;
   email: string;
