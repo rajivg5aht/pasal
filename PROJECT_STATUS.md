@@ -1,59 +1,62 @@
 # Pasal status and continuation handover
 
-## Current checkpoint — 12 October 2026
+## Current checkpoint — 13 October 2026
 
-Execute continuously in dependency order, without waiting for calendar weeks.
-Preserve the approved seven configurations. Push small verified commits; the
-60-commit goal must reflect substantive work, not artificial splitting.
+Continue in dependency order without calendar waiting. Preserve the approved
+seven configurations and existing verified artifacts. Push substantive verified
+chunks; do not manufacture commits to reach the project's 60-commit target.
 
-### Verified work
+### Completed and verified
 
-- Approved-methodology ambiguities and holdout exposure decisions documented.
-- Event-count train/validation split rebuilt; final test remains deferred.
-- Historical metadata: 411,732 items, zero future facts; TF-IDF trained on this
-  snapshot with 100,000 features. Original artifacts preserved.
-- Full item-CF: 978,921 training users, 200,975 items and 2,589,203 retained
-  neighbours. Training hash/cutoff checks protect artifact loading.
-- Shared engine serves six non-GenAI configurations with common eligibility,
-  complete seen-item exclusion and explicit switching reasons.
-- Validation tuning completed on 200 users, assessed on 200 disjoint users,
-  stratified equally by history cohort. This is a development diagnostic.
-  Category popularity outperformed switching on assessment NDCG@10; no
-  superiority claim is justified. See the experiment log and tuning evidence.
-- Genuine Groq Free one-item pilot succeeded (553 input / 454 output tokens).
-  It is integration evidence, not independent quality or ranking evidence.
-- FastAPI, Express sessions, MongoDB catalogue and React storefront connected.
-  Imported 411,732 historical catalogue records; browsing shows available items.
-  Accounts, optional personalization, history reset, wishlist and research basket
-  implemented. No payments, actual orders or current stock claims.
-- Tests: 54 Python tests (previous checkpoint), four backend tests including real
-  MongoDB concurrent updates/opt-out, three frontend tests; frontend production
-  build passed. Browser verified real search, details, guest sign-in transition
-  and responsive desktop/mobile layout. See frontend/README.md.
+- Temporal train/validation and historical metadata rebuild; final holdout deferred.
+- Full training-data item-CF and property TF-IDF; six-condition validation tuning.
+- Genuine 32-item Groq Free sample complete: 24 schema-valid, eight failed attempts;
+  assistant grounding review approved 21 and rejected three. No replacements,
+  retries or paid fallback. Independent human quality ratings remain outstanding.
+- Seventh configuration trained from actual reviewed generated descriptions.
+  All 411,732 rows retained; only 21 enriched. All seven configurations assessed
+  on the same 200 validation users. One profile was exposed; no rankings changed.
+  This is insufficient exposure for a conclusive GenAI hypothesis assessment.
+- React, Express, MongoDB and FastAPI connected; accounts, consent, history reset,
+  wishlist and research basket implemented. Historical catalogue imported.
+- Recommendations refresh after consented activity is stored. Generated summaries
+  have distinct labels and exact review provenance; baseline serving is still the
+  default, with explicit optional enriched-artifact configuration.
+- Lazy online scoring preserves route rankings. Development single-request P95
+  fell from 354 to 187 ms; capacity rejections remain at concurrency four. These
+  are local service diagnostics, not final end-to-end performance evidence.
+- 62-test Python suite passed before density additions; the additional density
+  fixture also passed. Four backend tests (including isolated real MongoDB), four
+  frontend tests and the production build pass. Requirements encoding repaired;
+  all 122 pins match installed versions and pip check passes.
+- Dissertation methodology, implementation and measured preliminary findings
+  updated. GenAI protocol/runbook and versioned evidence are in docs/.
+
+### In progress
+
+Four-density seven-condition validation suite: 10%, 25%, 50%, 100%. Samples are
+nested, histories and cohorts recomputed, original cohorts also reported, and
+users/candidate universe/settings held fixed. Outputs are versioned under
+`data/processed/density-evaluation-v1`. Do not restart or overwrite a running suite.
 
 ### Running locally
 
-The existing Windows MongoDB service owns port 27017 and is reused. Docker is
-running, but a second MongoDB container cannot bind that occupied port; do not
-stop the existing database. Recommender: 127.0.0.1:8000; backend: 127.0.0.1:3000;
-storefront: http://127.0.0.1:5173. See component READMEs for restart instructions.
-Secrets remain in ignored .env. Catalogue-only transfer to Groq Free is approved.
+Existing Windows MongoDB on 27017 is reused. Recommender: 127.0.0.1:8000;
+backend: 127.0.0.1:3000; storefront: http://127.0.0.1:5173. Services were restored
+after the interrupted session. Credentials remain only in ignored .env.
 
-### Next priorities and remaining work
+### Remaining research and delivery work
 
-1. Prespecify a representative eligible GenAI enrichment sample, generate within
-   Free limits, document grounding review and uncertainty, and train the paired
-   seventh condition. Current online reasons are local templates, not GenAI text.
-2. Complete cohort/density/sensitivity experiments and paired confidence intervals;
-   freeze configuration before final testing, disclose prior validation exposure
-   and report the independent untouched intersection separately.
-3. Extend end-to-end authentication/privacy, accessibility, usability and system
-   performance checks. Production deployment configuration is not yet verified.
-4. Continue dissertation implementation/results sections from measured evidence;
-   verify literature, independent quality ratings and final limitations.
-
-The project and dissertation are not complete. No final-test effectiveness result
-or representative GenAI improvement has been established.
+1. Expand scientifically justified GenAI coverage within Free limits; improve
+   generation reliability in a separately versioned study, retaining failures.
+   Anonymous property codes cannot justify invented semantic product facts.
+2. Finish density reporting, sensitivity/diversity/statistical analyses, then
+   freeze the final protocol before opening holdout outcomes. Disclose the known
+   historical validation exposure and report the untouched intersection separately.
+3. Independent explanation-quality review/ethics, usability/accessibility testing,
+   controlled end-to-end load tests and production deployment verification.
+4. Verify literature/citations, finish dissertation results/discussion/limitations,
+   and prepare reproducible final artifacts. The thesis is not complete.
 
 ## Historical checkpoint retained for audit (11 October)
 
