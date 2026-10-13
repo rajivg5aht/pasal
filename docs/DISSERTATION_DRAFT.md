@@ -223,3 +223,31 @@ effect of enriched content. Reporting unchanged rankings as proof of no GenAI
 benefit would overstate the experiment. All aggregate metrics and exposure counts
 are retained in density-development-v2-results.json, with the secondary analyses
 reported separately. The final holdout remains unopened for evaluation.
+
+
+### Feasibility of increasing generated-feature exposure
+
+A training-only design comparison evaluated nested uniform catalogue selection
+and selection ranked by distinct low-history user support. At the selected policy,
+697,327 training users take the content route; 192,010 have eligible profile items.
+A uniform 128-item sample exposes 293 users, compared with 20,290 (2.91%) for the
+support-based sample. The latter covers 73 known categories. This is in-sample
+potential exposure, assuming generation and approval of every selected item. It
+is not a power calculation, future coverage estimate or ranking-effect measure.
+
+A 128-item targeted development intervention was frozen separately from the
+uniform quality study. Larger 256/512-item alternatives expose 4.29%/6.25% of
+content-route training users but require at least six/eleven fresh daily windows
+under local quota guards. The chosen set reserves 464,751 tokens, requiring at
+least three fresh daily windows; packing, other usage and provider constraints
+can extend this. Support-based selection favors frequent profile items and cannot
+support representative catalogue-quality claims. The user explicitly authorized
+its catalogue-only transfer; generation is in progress, not yet a completed result.
+
+An anonymous public-API engineering diagnostic also completed 72 measured requests
+across three concurrency levels, plus three warm-ups. Recommendation responses
+included ten unique, correctly hydrated available catalogue items. Successful
+recommendation P95 ranged from 54.4 to 84.0 ms across these small mixed-route phases.
+The measurements include Express, FastAPI and MongoDB hydration but exclude browser
+rendering, authenticated histories and controlled workload isolation. They are
+preliminary integration evidence rather than final performance findings.

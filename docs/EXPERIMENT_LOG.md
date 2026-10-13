@@ -324,3 +324,47 @@ including the three assistant-rejected outputs. Verified 24 unique anonymous cas
 labels, blank ratings and absence of approval decisions. Eight generation failures
 remain accounted for separately. No human ratings or consent claims were invented.
 All three local services returned HTTP 200 on their health/root checks.
+
+
+## D18 - training-only GenAI exposure and frozen expansion
+
+GENAI_EXPOSURE_PLAN.md was recorded before implementation. The analysis read only
+training events, historical catalogue, tuning provenance and existing pilot usage;
+validation/test outcomes were not opened. At the chosen policy threshold, 697,327
+training users have a content route; 192,010 have an eligible profile item.
+
+| Items | Uniform exposed users | Targeted exposed users | Targeted share | Minimum fresh daily windows |
+|---|---:|---:|---:|---:|
+| 32 | 33 | 9,105 | 1.306% | 1 |
+| 128 | 293 | 20,290 | 2.910% | 3 |
+| 256 | 704 | 29,907 | 4.289% | 6 |
+| 512 | 1,418 | 43,555 | 6.246% | 11 |
+
+Targeting uses distinct low-history training-user support with item-ID ties.
+Uniform selection is a nested seeded permutation, separate from the original
+reservoir quality pilot. The chosen 128-item targeted development sample covers
+73 known categories, with 464,751 conservatively reserved tokens. It is not a
+representative quality study or a prediction of future-user exposure. Generation
+failures and rejected outputs will reduce the achievable treatment coverage.
+
+Commit 3f9a3d5 froze the sample before any new requests. Automatic approval review
+initially required separate consent for this expanded sample; the user then
+explicitly approved the full 128-item catalogue-only transfer. A capped eight-new-
+request batch started using existing quota guards, no retries and no paid fallback.
+The first full regression run encountered OpenBLAS memory allocation failure;
+limiting BLAS threads to one allowed all 69 tests to pass. No model settings changed.
+
+## D19 - anonymous public-API development diagnostic
+
+A bounded read-only diagnostic exercised products, categories and recommendations
+through Express, MongoDB and FastAPI. Three warm-ups and 72 measured requests
+completed successfully, at concurrency 1, 2 and 4. Each phase contained eight
+requests per route. Every recommendation response contained ten unique items
+with matching available catalogue records and the anonymous global-popularity
+strategy. The additional response-validation regression fixture passed.
+
+Recommendation P95 was 63.6, 54.4 and 84.0 ms; category-list P95 was 197.3 ms at
+concurrency one and 234.2 ms at four. The report retains all attempts and returned
+counts. This small mixed-route diagnostic excludes browser rendering, authenticated
+flows and controlled isolation from background generation. It does not establish
+final system targets. See public-api-load-diagnostic-v1.json.

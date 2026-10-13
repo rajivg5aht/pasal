@@ -59,3 +59,13 @@ items are a targeted intervention: do not pool its quality estimate with the
 uniform study or present its conditional exposure as population effectiveness.
 Retain the existing unconditional assessment and report actual route/profile
 exposure when the new artifact is ready; do not change thresholds to force benefit.
+
+## Execution status
+
+Implementation and real-data feasibility completed; the analysis and exact sample
+were committed in `3f9a3d5` before requesting generation. The eight-request start
+was rejected by automatic approval review because earlier transfer consent was
+interpreted as applying only to the original declared sample. No new request was
+sent at that point. The user subsequently explicitly approved the new 128-item
+catalogue-only sample. The capped eight-request start is now running under the
+existing guards; the complete 128-item sample has not yet been generated.

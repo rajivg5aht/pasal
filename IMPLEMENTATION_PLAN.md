@@ -23,11 +23,15 @@ seventh-model integration and the connected website are implemented. All 65 Pyth
 regression tests pass. Both density versions completed; v2 corrects the fixed-hybrid
 objective to include zero-history users. Secondary sensitivity, diversity and
 paired uncertainty reporting are complete. Preserve both versions.
-The next ready work is to expand justified GenAI
-exposure, complete independent quality review and controlled end-to-end tests,
+Training-only GenAI feasibility is complete and a 128-item targeted sample is
+frozen. The user explicitly approved its external catalogue-only transfer after
+automatic review requested separate authorization. A capped first batch is running.
+The anonymous public-API diagnostic passed 72 measured requests. Continue
+independent quality-review preparation and controlled end-to-end tests,
 then freeze final experiments. Continue dissertation writing alongside each result.
 Free API access is configured; the remaining constraint is coverage and quality,
-not account setup. The original calendar below is planning history, not a gate.
+not account setup. Continue only the declared, authorized sample within Free quota
+guards. The original calendar below is planning history, not a gate.
 
 ## Remaining calendar and capacity
 

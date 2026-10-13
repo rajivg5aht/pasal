@@ -25,7 +25,8 @@ chunks; do not manufacture commits to reach the project's 60-commit target.
 - Lazy online scoring preserves route rankings. Development single-request P95
   fell from 354 to 187 ms; capacity rejections remain at concurrency four. These
   are local service diagnostics, not final end-to-end performance evidence.
-- All 65 Python regression tests pass, including density, diversity and corrected
+- All 69 Python regression tests pass, including exposure/sample provenance,
+  density, diversity and corrected
   tuning fixtures. Four backend tests (including isolated real MongoDB), four
   frontend tests and the production build pass. Requirements encoding repaired;
   all 122 pins match installed versions and pip check passes.
@@ -48,6 +49,23 @@ identified by this sample. GenAI exposure remains inadequate for a conclusive H2
 An unrated independent review packet includes all 24 schema-valid generations,
 including assistant-rejected outputs, without assistant decisions. It is local
 under `data/processed/genai-human-review-v1`. No human ratings have been collected.
+
+### Next enrichment experiment prepared
+
+Training-only exposure analysis compared uniform and low-history-profile-support
+sampling at 32/128/256/512 items. The frozen 128-item targeted sample touches
+20,290 of 697,327 content-route training users (2.91%), versus 293 for uniform
+sampling. This is an in-sample exposure upper bound, not ranking effectiveness.
+Exact records and hashes are frozen locally in `data/processed/genai-targeted-sample-v1`;
+the protocol and aggregate report are in `docs/GENAI_EXPOSURE_PLAN.md` and
+`docs/genai-exposure-v1-results.json`. At least three fresh local daily quota
+windows are needed. Original pilot outputs, settings and seven configurations
+remain preserved. The user explicitly approved this expanded catalogue-only
+transfer after automatic approval review requested separate authorization.
+A capped eight-request batch is running with quota guards and no paid fallback.
+The 69-test suite passed with BLAS threads limited to one after an allocation
+failure. An additional public-API response fixture passes, and all 72 measured
+anonymous public-API requests passed; see `docs/public-api-load-diagnostic-v1.json`.
 
 ### Running locally
 
