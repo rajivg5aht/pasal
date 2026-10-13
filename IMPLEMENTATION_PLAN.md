@@ -20,9 +20,10 @@ verification, corrections and submission packaging. November 4 is superseded.
 
 Temporal artifacts, six-model tuning, genuine Free API generation, reviewed
 seventh-model integration and the connected website are implemented. All 65 Python
-regression tests pass. Density v1 completed; v2 is rerunning after correcting the
-fixed-hybrid objective to include zero-history users. Preserve both versions.
-The next ready work is to finish that evidence package, expand justified GenAI
+regression tests pass. Both density versions completed; v2 corrects the fixed-hybrid
+objective to include zero-history users. Secondary sensitivity, diversity and
+paired uncertainty reporting are complete. Preserve both versions.
+The next ready work is to expand justified GenAI
 exposure, complete independent quality review and controlled end-to-end tests,
 then freeze final experiments. Continue dissertation writing alongside each result.
 Free API access is configured; the remaining constraint is coverage and quality,

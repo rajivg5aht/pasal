@@ -32,15 +32,22 @@ chunks; do not manufacture commits to reach the project's 60-commit target.
 - Dissertation methodology, implementation and measured preliminary findings
   updated. GenAI protocol/runbook and versioned evidence are in docs/.
 
-### In progress
+### Latest completed experiment
 
-The v1 four-density suite completed. Corrected tuning includes cold users in the
-fixed-hybrid objective: weights are .50 content, .25 CF, .25 popularity. Switching
-settings are unchanged. The comparison is being rerun in density-evaluation-v2,
-reusing verified CF fits and preserving v1. Densities: 10%, 25%, 50%, 100%. Samples are
-nested, histories and cohorts recomputed, original cohorts also reported, and
-users/candidate universe/settings held fixed. Outputs are versioned under
-versioned directories. Do not restart or overwrite a running suite.
+The corrected v2 seven-condition suite completed at 10%, 25%, 50% and 100%
+density. Fixed-hybrid weights are .50 content, .25 CF, .25 popularity; switching
+settings are unchanged. Both versions are preserved. Samples are nested, histories
+and cohorts recomputed, and users/candidate universe/settings held fixed.
+Fixed hybrid has the highest mean NDCG in these small development assessments.
+Secondary fixed-target, diversity and descriptive paired interval analyses are
+complete; see `docs/density-development-v2-secondary.json`. The updated scientific
+figure is in `docs/figures/density-development-v2/`. No final hypothesis claim follows.
+The switching grid has 54 tied maxima among 72 settings: thresholds are weakly
+identified by this sample. GenAI exposure remains inadequate for a conclusive H2.
+
+An unrated independent review packet includes all 24 schema-valid generations,
+including assistant-rejected outputs, without assistant decisions. It is local
+under `data/processed/genai-human-review-v1`. No human ratings have been collected.
 
 ### Running locally
 
@@ -53,7 +60,7 @@ after the interrupted session. Credentials remain only in ignored .env.
 1. Expand scientifically justified GenAI coverage within Free limits; improve
    generation reliability in a separately versioned study, retaining failures.
    Anonymous property codes cannot justify invented semantic product facts.
-2. Finish density reporting, sensitivity/diversity/statistical analyses, then
+2. Extend beyond the completed development density/sensitivity analyses, then
    freeze the final protocol before opening holdout outcomes. Disclose the known
    historical validation exposure and report the untouched intersection separately.
 3. Independent explanation-quality review/ethics, usability/accessibility testing,

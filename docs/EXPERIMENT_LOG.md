@@ -301,3 +301,26 @@ analysis holds novelty targets to the original full-history seen set and measure
 diversity in unchanged property TF-IDF space; it is explicitly post-hoc and does
 not replace the declared primary metrics. Document encoding was normalized to
 UTF-8 after finding legacy Windows dash bytes mixed into UTF-8 text.
+
+
+### D17 completion
+
+The corrected v2 suite completed all four densities and seven conditions (5,600
+model/user observations). Fixed-hybrid mean NDCG@10 was .018273, .018603, .026408,
+and .021008 at 10%, 25%, 50%, and 100%, respectively. It had the highest observed
+mean among the seven conditions at each density. These are development results.
+No GenAI ranking changes occurred, and no user combined generated profile content
+with the content route. This is inadequate treatment exposure, not GenAI equivalence.
+
+Secondary stable-target, common-space diversity and descriptive paired bootstrap
+analyses completed. At full density switching minus fixed hybrid is -.007162
+with an unadjusted percentile interval [-.015259, -.001021]. The comparison is
+post-hoc, not confirmatory. 54 of 72 switching settings tied for the tuning maximum.
+The PNG/PDF figure was visually inspected: labels and legends are readable without
+clipping. Aggregate JSON/CSV, figures and sensitivity evidence are versioned in docs.
+
+An independent review packet was prepared with all 24 successful generations,
+including the three assistant-rejected outputs. Verified 24 unique anonymous case
+labels, blank ratings and absence of approval decisions. Eight generation failures
+remain accounted for separately. No human ratings or consent claims were invented.
+All three local services returned HTTP 200 on their health/root checks.

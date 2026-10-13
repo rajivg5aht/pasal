@@ -14,6 +14,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from evaluation.common import prepare_cases, ranking_metrics, summarize
+from evaluation.paired_genai import paired_interval
 from models.engine import load_artifact
 from models.content.train_snapshot import fingerprint
 
@@ -88,7 +89,12 @@ def analyze(suite_dir, output, tuning_dir=None):
                                       'assessed_lists': len(assessed), 'unassessable_lists': len(values)-len(assessed),
                                       'feature_pair_coverage': valid/total if total else None})
         results.append({'density_percent': density['density_percent'], 'stable_novelty_summaries': summaries,
-                        'common_property_space_diversity': diversity_summary})
+                        'common_property_space_diversity': diversity_summary,
+                        'descriptive_paired_ndcg_original_cohort_weight': [
+                            paired_interval([{**r, 'cohort': r['original_cohort']} for r in rows],
+                                            first='switching_without_genai', second=comparator)
+                            for comparator in ['fixed_hybrid', 'category_popularity', 'global_popularity']
+                        ]})
     report = {'status': 'secondary_descriptive_analysis_not_replacement_primary_metrics', 'results': results,
               'suite_sha256': fingerprint(suite_dir/'report.json'), 'source_sha256': fingerprint(__file__),
               'definitions': {'stable_novelty': 'future targets minus FULL original training seen set; no changes to recommendations',
@@ -96,6 +102,7 @@ def analyze(suite_dir, output, tuning_dir=None):
               'limitations': ['Secondary analysis chosen to explain novelty-denominator changes after seeing density migration',
                              'Anonymous-code TF-IDF distance is not human semantic diversity',
                              'Missing/empty vectors are unassessable; excluded pairs and lists are reported',
+                             'Paired baseline intervals use primary targets and equal ORIGINAL cohort weight; post-hoc, no multiplicity adjustment or confirmatory significance claims',
                              'Models, thresholds and ranking outputs are unchanged']}
     output.write_text(json.dumps(report, indent=2, allow_nan=False))
     return report

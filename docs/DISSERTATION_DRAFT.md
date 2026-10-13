@@ -187,7 +187,39 @@ A correctness review found that the initial tuning objective omitted zero-histor
 users even when choosing fixed-hybrid weights. Including all four cohorts equally
 changed the chosen content/CF/popularity weights from .75/.25/0 to .50/.25/.25.
 Switching thresholds were unchanged. Earlier results remain versioned development
-evidence, and the density comparison is being repeated with corrected weights.
+evidence, and the density comparison has been repeated with corrected weights.
 Neither reuse of validation data nor zero GenAI differences under sparse treatment
 exposure establish final hypothesis results. The final holdout protocol must be
 frozen before final testing.
+
+### Corrected development density results
+
+All seven approved configurations completed at all four densities. The table
+shows mean primary NDCG@10 on the same 200 original-stratified assessment users.
+Novel targets are recomputed from each retained history; the samples are not
+population-weighted and are not final test observations.
+
+| Retained events | Fixed hybrid | Category popularity | Switching | Switching + partial GenAI |
+|---|---:|---:|---:|---:|
+| 10% | .018273 | .017818 | .008631 | .008631 |
+| 25% | .018603 | .015377 | .006533 | .006533 |
+| 50% | .026408 | .017159 | .015434 | .015434 |
+| 100% | .021008 | .016982 | .013846 | .013846 |
+
+The fixed hybrid has the highest observed mean among all seven configurations
+at each density. At full density the descriptive switching-minus-fixed-hybrid
+paired difference is -.007162, with a 2,000-resample percentile interval
+[-.015259, -.001021]. This post-hoc interval is unadjusted for multiplicity and
+does not constitute a confirmatory test of the approved hypothesis. Corresponding
+intervals against category and global popularity include zero. The small tuning
+sample also weakly identifies switching thresholds: 54 of 72 grid configurations
+tie for the maximum objective, and the prespecified first-maximum rule was retained.
+
+No switching rankings changed with GenAI at any density. Although one full-density
+profile contains an enriched item, it does not take the content route; no assessed
+user has both a generated profile item and a content route at any density. This
+explains why these comparisons provide inadequate evidence about the ranking
+effect of enriched content. Reporting unchanged rankings as proof of no GenAI
+benefit would overstate the experiment. All aggregate metrics and exposure counts
+are retained in density-development-v2-results.json, with the secondary analyses
+reported separately. The final holdout remains unopened for evaluation.
