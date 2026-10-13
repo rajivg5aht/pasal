@@ -21,8 +21,11 @@ validation-selected research model, not a final frozen thesis result.
 Express must construct profiles from authenticated, consent-controlled database
 records. This internal service does not replace user authentication or consent
 persistence. Opt-out discards both history and preferences. Profiles are not
-stored or sent to GenAI. Two scoring calls may run concurrently; excess receives
-503. Ingress body-size/rate limits belong at Express as well.
+stored or sent to GenAI. Two scoring calls may run concurrently. At most two
+additional requests wait for up to 500 ms; admission overflow or wait expiry
+receives 503 with an internal Retry-After header. No automatic retry or unbounded
+queue is introduced. Successful responses include queue_wait_ms and total local
+latency including that wait. Ingress body-size/rate limits belong at Express as well.
 
 The historical Retailrocket model has no present-day inventory knowledge.
 Availability is a historical research constraint, not live commercial stock.

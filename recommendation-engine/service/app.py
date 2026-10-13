@@ -4,7 +4,6 @@ import hmac
 import json
 import os
 from pathlib import Path
-import threading
 import time
 from typing import Annotated
 
@@ -17,6 +16,7 @@ from genai.explanations import explain
 from models.engine import RecommendationEngine
 from models.content.train_snapshot import fingerprint
 from switching.policy import PolicyConfig
+from service.capacity import RecommendationCapacity
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -68,7 +68,7 @@ def create_app(runtime=None, token=None):
     service_token=token if token is not None else os.environ.get('RECOMMENDATION_SERVICE_TOKEN','')
     if len(service_token)<32:
         raise ValueError('Configure a random RECOMMENDATION_SERVICE_TOKEN of at least 32 characters')
-    gate=threading.BoundedSemaphore(2)
+    gate=RecommendationCapacity(active=2, waiting=2, wait_seconds=0.5)
 
     @asynccontextmanager
     async def lifespan(app):
@@ -88,10 +88,8 @@ def create_app(runtime=None, token=None):
 
     @app.post('/recommendations',dependencies=[Depends(authenticate)])
     def recommendations(profile:Profile):
-        if not gate.acquire(blocking=False):
-            raise HTTPException(503,'Recommendation capacity busy; try again shortly')
-        try:
-            started=time.perf_counter()
+        started=time.perf_counter()
+        with gate.slot() as queue_wait_ms:
             engine,config=app.state.runtime
             # Consent disabled: discard history AND preference evidence, not merely
             # hide its use in the explanation. Profiles are never persisted here.
@@ -123,7 +121,6 @@ def create_app(runtime=None, token=None):
                                 'low_history_threshold':config['switching']['low_history_threshold'],
                                 'high_history_threshold':config['switching']['high_history_threshold'],
                                 'cf_confidence_threshold':config['switching']['cf_confidence_threshold']},
+                    'queue_wait_ms':round(queue_wait_ms,3),
                     'latency_ms':round((time.perf_counter()-started)*1000,3)}
-        finally:
-            gate.release()
     return app

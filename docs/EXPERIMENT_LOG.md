@@ -421,3 +421,15 @@ tests, including the isolated real MongoDB test, passed after the index addition
 - Full sandbox suite stalled at service tests and was stopped. The permitted local
   service-access rerun passed all 73. No test results are inferred from the stall.
 - FINAL_EVALUATION_READINESS.md records unresolved release gates, not a final freeze.
+
+## 13 October: bounded admission and quota pause
+
+- GenAI continuation invoked with a four-request cap; daily reservation guard
+  stopped before any new call. Counts remain 18 attempts. No quota bypass.
+- Human review deferred by user; confirmed requirements do not constitute ratings.
+- Service now permits two active plus two waiting requests, maximum wait 500 ms.
+  Overflow/timeout remains 503; successful latency includes queue time.
+- All 76 Python tests passed with local service access. Recommender restarted.
+- public-api-load-diagnostic-v3.json: 72/72 measured requests valid, including all
+  eight recommendation requests at concurrency four; recommendation P95 127.1 ms.
+  v2's three concurrency-four 503s remain preserved. Development comparison only.

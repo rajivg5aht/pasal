@@ -1,0 +1,643 @@
+{
+  "status": "development_anonymous_public_api_diagnostic",
+  "warmup_requests": 3,
+  "requests_per_phase": 24,
+  "phases": [
+    {
+      "concurrency": 1,
+      "wall_seconds": 0.5916660999937449,
+      "valid_requests_per_second": 40.56341913159083,
+      "routes": [
+        {
+          "path": "/api/products",
+          "attempts": 8,
+          "valid_successes": 8,
+          "status_counts": {
+            "200": 8
+          },
+          "success_p50_ms": 10.071700002299622,
+          "success_p95_ms": 20.434925011068117,
+          "minimum_returned_items": 24
+        },
+        {
+          "path": "/api/categories",
+          "attempts": 8,
+          "valid_successes": 8,
+          "status_counts": {
+            "200": 8
+          },
+          "success_p50_ms": 16.17110001097899,
+          "success_p95_ms": 30.64998501649825,
+          "minimum_returned_items": 808
+        },
+        {
+          "path": "/api/recommendations",
+          "attempts": 8,
+          "valid_successes": 8,
+          "status_counts": {
+            "200": 8
+          },
+          "success_p50_ms": 43.35284999979194,
+          "success_p95_ms": 59.72424500650959,
+          "minimum_returned_items": 10
+        }
+      ],
+      "rows": [
+        {
+          "path": "/api/products",
+          "valid": true,
+          "status": 200,
+          "returned_items": 24,
+          "latency_ms": 5.761400010669604
+        },
+        {
+          "path": "/api/categories",
+          "valid": true,
+          "status": 200,
+          "returned_items": 808,
+          "latency_ms": 30.961800017394125
+        },
+        {
+          "path": "/api/recommendations",
+          "valid": true,
+          "status": 200,
+          "returned_items": 10,
+          "latency_ms": 60.696300002746284
+        },
+        {
+          "path": "/api/products",
+          "valid": true,
+          "status": 200,
+          "returned_items": 24,
+          "latency_ms": 14.38199999392964
+        },
+        {
+          "path": "/api/categories",
+          "valid": true,
+          "status": 200,
+          "returned_items": 808,
+          "latency_ms": 15.348200016887859
+        },
+        {
+          "path": "/api/recommendations",
+          "valid": true,
+          "status": 200,
+          "returned_items": 10,
+          "latency_ms": 43.52509998716414
+        },
+        {
+          "path": "/api/products",
+          "valid": true,
+          "status": 200,
+          "returned_items": 24,
+          "latency_ms": 18.853800022043288
+        },
+        {
+          "path": "/api/categories",
+          "valid": true,
+          "status": 200,
+          "returned_items": 808,
+          "latency_ms": 17.56169999134727
+        },
+        {
+          "path": "/api/recommendations",
+          "valid": true,
+          "status": 200,
+          "returned_items": 10,
+          "latency_ms": 57.91900001349859
+        },
+        {
+          "path": "/api/products",
+          "valid": true,
+          "status": 200,
+          "returned_items": 24,
+          "latency_ms": 3.8861000211909413
+        },
+        {
+          "path": "/api/categories",
+          "valid": true,
+          "status": 200,
+          "returned_items": 808,
+          "latency_ms": 30.07090001483448
+        },
+        {
+          "path": "/api/recommendations",
+          "valid": true,
+          "status": 200,
+          "returned_items": 10,
+          "latency_ms": 38.98110002046451
+        },
+        {
+          "path": "/api/products",
+          "valid": true,
+          "status": 200,
+          "returned_items": 24,
+          "latency_ms": 21.28630000515841
+        },
+        {
+          "path": "/api/categories",
+          "valid": true,
+          "status": 200,
+          "returned_items": 808,
+          "latency_ms": 16.99400000507012
+        },
+        {
+          "path": "/api/recommendations",
+          "valid": true,
+          "status": 200,
+          "returned_items": 10,
+          "latency_ms": 43.180600012419745
+        },
+        {
+          "path": "/api/products",
+          "valid": true,
+          "status": 200,
+          "returned_items": 24,
+          "latency_ms": 18.44319998053834
+        },
+        {
+          "path": "/api/categories",
+          "valid": true,
+          "status": 200,
+          "returned_items": 808,
+          "latency_ms": 14.90629999898374
+        },
+        {
+          "path": "/api/recommendations",
+          "valid": true,
+          "status": 200,
+          "returned_items": 10,
+          "latency_ms": 33.36470000795089
+        },
+        {
+          "path": "/api/products",
+          "valid": true,
+          "status": 200,
+          "returned_items": 24,
+          "latency_ms": 2.9691999952774495
+        },
+        {
+          "path": "/api/categories",
+          "valid": true,
+          "status": 200,
+          "returned_items": 808,
+          "latency_ms": 4.399500001454726
+        },
+        {
+          "path": "/api/recommendations",
+          "valid": true,
+          "status": 200,
+          "returned_items": 10,
+          "latency_ms": 31.26170000177808
+        },
+        {
+          "path": "/api/products",
+          "valid": true,
+          "status": 200,
+          "returned_items": 24,
+          "latency_ms": 4.68039998668246
+        },
+        {
+          "path": "/api/categories",
+          "valid": true,
+          "status": 200,
+          "returned_items": 808,
+          "latency_ms": 4.36920000356622
+        },
+        {
+          "path": "/api/recommendations",
+          "valid": true,
+          "status": 200,
+          "returned_items": 10,
+          "latency_ms": 54.1516000230331
+        }
+      ]
+    },
+    {
+      "concurrency": 2,
+      "wall_seconds": 0.3501014999928884,
+      "valid_requests_per_second": 68.55154862372058,
+      "routes": [
+        {
+          "path": "/api/products",
+          "attempts": 8,
+          "valid_successes": 8,
+          "status_counts": {
+            "200": 8
+          },
+          "success_p50_ms": 15.729199993074872,
+          "success_p95_ms": 27.895384999283124,
+          "minimum_returned_items": 24
+        },
+        {
+          "path": "/api/categories",
+          "attempts": 8,
+          "valid_successes": 8,
+          "status_counts": {
+            "200": 8
+          },
+          "success_p50_ms": 15.194950014119968,
+          "success_p95_ms": 23.42014500900404,
+          "minimum_returned_items": 808
+        },
+        {
+          "path": "/api/recommendations",
+          "attempts": 8,
+          "valid_successes": 8,
+          "status_counts": {
+            "200": 8
+          },
+          "success_p50_ms": 55.29644999478478,
+          "success_p95_ms": 85.71070001489716,
+          "minimum_returned_items": 10
+        }
+      ],
+      "rows": [
+        {
+          "path": "/api/products",
+          "valid": true,
+          "status": 200,
+          "returned_items": 24,
+          "latency_ms": 4.241000016918406
+        },
+        {
+          "path": "/api/categories",
+          "valid": true,
+          "status": 200,
+          "returned_items": 808,
+          "latency_ms": 26.72530000563711
+        },
+        {
+          "path": "/api/recommendations",
+          "valid": true,
+          "status": 200,
+          "returned_items": 10,
+          "latency_ms": 54.32259998633526
+        },
+        {
+          "path": "/api/products",
+          "valid": true,
+          "status": 200,
+          "returned_items": 24,
+          "latency_ms": 15.419899980770424
+        },
+        {
+          "path": "/api/categories",
+          "valid": true,
+          "status": 200,
+          "returned_items": 808,
+          "latency_ms": 14.733400021214038
+        },
+        {
+          "path": "/api/recommendations",
+          "valid": true,
+          "status": 200,
+          "returned_items": 10,
+          "latency_ms": 82.45159999933094
+        },
+        {
+          "path": "/api/products",
+          "valid": true,
+          "status": 200,
+          "returned_items": 24,
+          "latency_ms": 3.603099990868941
+        },
+        {
+          "path": "/api/categories",
+          "valid": true,
+          "status": 200,
+          "returned_items": 808,
+          "latency_ms": 4.602900007739663
+        },
+        {
+          "path": "/api/recommendations",
+          "valid": true,
+          "status": 200,
+          "returned_items": 10,
+          "latency_ms": 36.2353999807965
+        },
+        {
+          "path": "/api/products",
+          "valid": true,
+          "status": 200,
+          "returned_items": 24,
+          "latency_ms": 16.03850000537932
+        },
+        {
+          "path": "/api/categories",
+          "valid": true,
+          "status": 200,
+          "returned_items": 808,
+          "latency_ms": 5.277999996906146
+        },
+        {
+          "path": "/api/recommendations",
+          "valid": true,
+          "status": 200,
+          "returned_items": 10,
+          "latency_ms": 56.2703000032343
+        },
+        {
+          "path": "/api/products",
+          "valid": true,
+          "status": 200,
+          "returned_items": 24,
+          "latency_ms": 25.563900009728968
+        },
+        {
+          "path": "/api/categories",
+          "valid": true,
+          "status": 200,
+          "returned_items": 808,
+          "latency_ms": 16.892099985852838
+        },
+        {
+          "path": "/api/recommendations",
+          "valid": true,
+          "status": 200,
+          "returned_items": 10,
+          "latency_ms": 35.548699990613386
+        },
+        {
+          "path": "/api/products",
+          "valid": true,
+          "status": 200,
+          "returned_items": 24,
+          "latency_ms": 13.837300008162856
+        },
+        {
+          "path": "/api/categories",
+          "valid": true,
+          "status": 200,
+          "returned_items": 808,
+          "latency_ms": 17.282000015256926
+        },
+        {
+          "path": "/api/recommendations",
+          "valid": true,
+          "status": 200,
+          "returned_items": 10,
+          "latency_ms": 61.091799987480044
+        },
+        {
+          "path": "/api/products",
+          "valid": true,
+          "status": 200,
+          "returned_items": 24,
+          "latency_ms": 27.200599986827
+        },
+        {
+          "path": "/api/categories",
+          "valid": true,
+          "status": 200,
+          "returned_items": 808,
+          "latency_ms": 15.656500007025898
+        },
+        {
+          "path": "/api/recommendations",
+          "valid": true,
+          "status": 200,
+          "returned_items": 10,
+          "latency_ms": 87.46560002327897
+        },
+        {
+          "path": "/api/products",
+          "valid": true,
+          "status": 200,
+          "returned_items": 24,
+          "latency_ms": 28.269500005990267
+        },
+        {
+          "path": "/api/categories",
+          "valid": true,
+          "status": 200,
+          "returned_items": 808,
+          "latency_ms": 5.8031000080518425
+        },
+        {
+          "path": "/api/recommendations",
+          "valid": true,
+          "status": 200,
+          "returned_items": 10,
+          "latency_ms": 39.0283000015188
+        }
+      ]
+    },
+    {
+      "concurrency": 4,
+      "wall_seconds": 0.2646915999939665,
+      "valid_requests_per_second": 90.67155890306707,
+      "routes": [
+        {
+          "path": "/api/products",
+          "attempts": 8,
+          "valid_successes": 8,
+          "status_counts": {
+            "200": 8
+          },
+          "success_p50_ms": 6.669199996395037,
+          "success_p95_ms": 26.640739990398284,
+          "minimum_returned_items": 24
+        },
+        {
+          "path": "/api/categories",
+          "attempts": 8,
+          "valid_successes": 8,
+          "status_counts": {
+            "200": 8
+          },
+          "success_p50_ms": 6.526049997773953,
+          "success_p95_ms": 26.550285003031604,
+          "minimum_returned_items": 808
+        },
+        {
+          "path": "/api/recommendations",
+          "attempts": 8,
+          "valid_successes": 8,
+          "status_counts": {
+            "200": 8
+          },
+          "success_p50_ms": 102.14085000916384,
+          "success_p95_ms": 127.06348500651073,
+          "minimum_returned_items": 10
+        }
+      ],
+      "rows": [
+        {
+          "path": "/api/products",
+          "valid": true,
+          "status": 200,
+          "returned_items": 24,
+          "latency_ms": 5.852399975992739
+        },
+        {
+          "path": "/api/categories",
+          "valid": true,
+          "status": 200,
+          "returned_items": 808,
+          "latency_ms": 6.265900010475889
+        },
+        {
+          "path": "/api/recommendations",
+          "valid": true,
+          "status": 200,
+          "returned_items": 10,
+          "latency_ms": 74.93760000215843
+        },
+        {
+          "path": "/api/products",
+          "valid": true,
+          "status": 200,
+          "returned_items": 24,
+          "latency_ms": 7.486000016797334
+        },
+        {
+          "path": "/api/categories",
+          "valid": true,
+          "status": 200,
+          "returned_items": 808,
+          "latency_ms": 27.703500003553927
+        },
+        {
+          "path": "/api/recommendations",
+          "valid": true,
+          "status": 200,
+          "returned_items": 10,
+          "latency_ms": 134.12960001733154
+        },
+        {
+          "path": "/api/products",
+          "valid": true,
+          "status": 200,
+          "returned_items": 24,
+          "latency_ms": 23.220699978992343
+        },
+        {
+          "path": "/api/categories",
+          "valid": true,
+          "status": 200,
+          "returned_items": 808,
+          "latency_ms": 5.86870001279749
+        },
+        {
+          "path": "/api/recommendations",
+          "valid": true,
+          "status": 200,
+          "returned_items": 10,
+          "latency_ms": 107.73710001376458
+        },
+        {
+          "path": "/api/products",
+          "valid": true,
+          "status": 200,
+          "returned_items": 24,
+          "latency_ms": 28.48229999653995
+        },
+        {
+          "path": "/api/categories",
+          "valid": true,
+          "status": 200,
+          "returned_items": 808,
+          "latency_ms": 6.661699997493997
+        },
+        {
+          "path": "/api/recommendations",
+          "valid": true,
+          "status": 200,
+          "returned_items": 10,
+          "latency_ms": 99.75380002288148
+        },
+        {
+          "path": "/api/products",
+          "valid": true,
+          "status": 200,
+          "returned_items": 24,
+          "latency_ms": 18.073199986247346
+        },
+        {
+          "path": "/api/categories",
+          "valid": true,
+          "status": 200,
+          "returned_items": 808,
+          "latency_ms": 4.581799992593005
+        },
+        {
+          "path": "/api/recommendations",
+          "valid": true,
+          "status": 200,
+          "returned_items": 10,
+          "latency_ms": 104.5278999954462
+        },
+        {
+          "path": "/api/products",
+          "valid": true,
+          "status": 200,
+          "returned_items": 24,
+          "latency_ms": 5.526699998881668
+        },
+        {
+          "path": "/api/categories",
+          "valid": true,
+          "status": 200,
+          "returned_items": 808,
+          "latency_ms": 6.390399998053908
+        },
+        {
+          "path": "/api/recommendations",
+          "valid": true,
+          "status": 200,
+          "returned_items": 10,
+          "latency_ms": 113.94069998641498
+        },
+        {
+          "path": "/api/products",
+          "valid": true,
+          "status": 200,
+          "returned_items": 24,
+          "latency_ms": 4.4861999922432005
+        },
+        {
+          "path": "/api/categories",
+          "valid": true,
+          "status": 200,
+          "returned_items": 808,
+          "latency_ms": 20.04020000458695
+        },
+        {
+          "path": "/api/recommendations",
+          "valid": true,
+          "status": 200,
+          "returned_items": 10,
+          "latency_ms": 89.50289999484085
+        },
+        {
+          "path": "/api/products",
+          "valid": true,
+          "status": 200,
+          "returned_items": 24,
+          "latency_ms": 4.474999994272366
+        },
+        {
+          "path": "/api/categories",
+          "valid": true,
+          "status": 200,
+          "returned_items": 808,
+          "latency_ms": 24.408600002061576
+        },
+        {
+          "path": "/api/recommendations",
+          "valid": true,
+          "status": 200,
+          "returned_items": 10,
+          "latency_ms": 60.76240001129918
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Includes Express, recommendation service and MongoDB response hydration",
+    "Excludes browser rendering, signed-in sessions and personalization flows",
+    "Small mixed-route load with concurrent background work; not final controlled performance evidence",
+    "No credentials, cookies, accounts or mutations; failures retained without retry"
+  ]
+}

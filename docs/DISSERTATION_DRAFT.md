@@ -334,3 +334,25 @@ pairs, alongside unassessable counts, missingness and ordinal distributions.
 It retains pairwise disagreements without adjudication or identity claims.
 All 73 Python regression tests pass. Final evaluation release gates are documented;
 the final execution manifest and held-out results remain unfinished.
+
+## Bounded service admission — 13 October 2026
+
+The previous service immediately rejected a third simultaneous scoring request.
+The revised admission policy retains two active computations and permits two
+additional requests to wait for at most 500 ms. Excess arrivals and expired waits
+still return 503. Both admission and computation permits are released on errors.
+Queue wait is reported separately and included in total service latency. This
+changes scheduling, not the approved ranking algorithms, cohorts or frozen data.
+
+All 76 Python tests pass, including admission overflow, timeout permit recovery,
+exception cleanup and a waiting request proceeding when capacity is released.
+A repeated 72-request mixed-route public API diagnostic returned valid results for
+all requests at concurrency one, two and four. Recommendation P95 at concurrency
+four was 127.1 ms; the prior diagnostic retained three 503s. These measurements
+include Express and MongoDB hydration but exclude browser rendering and signed-in
+personalization. The short uncontrolled local run cannot establish a production
+capacity guarantee or the thesis's final latency target under sustained load.
+
+Independent human review is deferred at the user's request. Its absence remains
+a limitation. A further generation invocation stopped at the local daily quota
+before making a new call; the sample and its 18-attempt evidence remain unchanged.
