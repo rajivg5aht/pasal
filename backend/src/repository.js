@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     passwordHash: { type: String, required: true },
+    role: { type: String, enum: ["customer", "admin"], default: "customer" },
     personalization: { type: Boolean, default: false },
     selectedCategories: { type: [String], default: [] },
     eventCount: { type: Number, default: 0 },

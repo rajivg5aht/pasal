@@ -5,6 +5,7 @@ import { rateLimit } from "express-rate-limit";
 import { randomBytes, scrypt as rawScrypt, timingSafeEqual } from "node:crypto";
 import { promisify } from "node:util";
 import { z } from "zod";
+import { demoRouter } from "./demo.js";
 
 const scrypt = promisify(rawScrypt);
 const dummyPasswordHash = `${"0".repeat(32)}:${"0".repeat(128)}`;
@@ -29,6 +30,7 @@ const publicUser = (u) => ({
   id: String(u._id),
   name: u.name,
   email: u.email,
+  role: u.role === "admin" ? "admin" : "customer",
   personalization: u.personalization,
   selectedCategories: u.selectedCategories,
   wishlist: u.wishlist,
@@ -65,6 +67,8 @@ export function createApp({
   recommend,
   origins = ["http://127.0.0.1:5173", "http://localhost:5173"],
   production = false,
+  demoRepository,
+  serviceHealth = async () => ({ status: "not_configured" }),
 }) {
   if (!sessionSecret || sessionSecret.length < 32 || !store)
     throw new Error("Persistent session store and strong secret required");
@@ -201,11 +205,9 @@ export function createApp({
       return res.status(404).json({ error: "Item unavailable" });
     const updated = await repository.recordEvent(req.user._id, input.itemid);
     if (!updated)
-      return res
-        .status(409)
-        .json({
-          error: "Personalization disabled or history capacity reached",
-        });
+      return res.status(409).json({
+        error: "Personalization disabled or history capacity reached",
+      });
     res.status(204).end();
   });
   for (const list of ["wishlist", "cart"])
@@ -229,6 +231,21 @@ export function createApp({
       });
     }
   app.get("/api/recommendations", async (req, res) => {
+    const started = performance.now();
+    let observed;
+    res.once("finish", () => {
+      if (demoRepository)
+        void demoRepository
+          .recordMetric({
+            status: res.statusCode,
+            latencyMs: performance.now() - started,
+            strategy: observed?.strategy,
+            configuration: observed?.configuration,
+            cutoff: observed?.model_cutoff_ms,
+            fallback: observed?.fallback ?? null,
+          })
+          .catch(() => {});
+    });
     const user = req.session.userId
       ? await repository.getUser(req.session.userId)
       : null;
@@ -242,6 +259,7 @@ export function createApp({
       k: 10,
     };
     const result = await recommend(profile);
+    observed = result;
     const products = await repository.productsByIds(
       result.items.map((i) => i.itemid),
     );
@@ -253,6 +271,11 @@ export function createApp({
         .map((i) => ({ ...i, product: lookup.get(i.itemid) })),
     });
   });
+  if (demoRepository)
+    app.use(
+      "/api",
+      demoRouter({ repository: demoRepository, requireUser, serviceHealth }),
+    );
   app.use((error, req, res, next) => {
     if (error instanceof z.ZodError)
       return res.status(400).json({ error: "Invalid request fields" });

@@ -118,6 +118,11 @@ def create_app(runtime=None, token=None):
                     'genai_description_count':description_count,
                     'configuration':configuration,
                     'configuration_status':config['status'],
+                    'routing': {'history_event_count':case.event_count,
+                                'cf_confidence':float(confidence),
+                                'low_history_threshold':config['switching']['low_history_threshold'],
+                                'high_history_threshold':config['switching']['high_history_threshold'],
+                                'cf_confidence_threshold':config['switching']['cf_confidence_threshold']},
                     'latency_ms':round((time.perf_counter()-started)*1000,3)}
         finally:
             gate.release()
