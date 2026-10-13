@@ -1,0 +1,147 @@
+{
+  "status": "training_only_feasibility_not_effectiveness",
+  "seed": 42,
+  "training_users": 978921,
+  "content_route_training_users": 697327,
+  "content_route_users_with_eligible_profile_item": 192010,
+  "eligible_catalogue_items": 59912,
+  "comparisons": [
+    {
+      "design": "uniform_catalogue",
+      "size": 32,
+      "content_route_training_users_exposed": 33,
+      "content_route_training_user_exposure_fraction": 4.7323565558195796e-05,
+      "items_with_content_profile_support": 13,
+      "known_categories": 24,
+      "local_reserved_tokens": 113296,
+      "oversized_records_not_sendable": 0,
+      "fresh_quota_days_lower_bound": 1,
+      "minute_windows_lower_bound": 17
+    },
+    {
+      "design": "uniform_catalogue",
+      "size": 128,
+      "content_route_training_users_exposed": 293,
+      "content_route_training_user_exposure_fraction": 0.0004201759002591324,
+      "items_with_content_profile_support": 59,
+      "known_categories": 74,
+      "local_reserved_tokens": 455257,
+      "oversized_records_not_sendable": 0,
+      "fresh_quota_days_lower_bound": 3,
+      "minute_windows_lower_bound": 66
+    },
+    {
+      "design": "uniform_catalogue",
+      "size": 256,
+      "content_route_training_users_exposed": 704,
+      "content_route_training_user_exposure_fraction": 0.0010095693985748436,
+      "items_with_content_profile_support": 115,
+      "known_categories": 124,
+      "local_reserved_tokens": 911762,
+      "oversized_records_not_sendable": 0,
+      "fresh_quota_days_lower_bound": 6,
+      "minute_windows_lower_bound": 131
+    },
+    {
+      "design": "uniform_catalogue",
+      "size": 512,
+      "content_route_training_users_exposed": 1418,
+      "content_route_training_user_exposure_fraction": 0.0020334792715612617,
+      "items_with_content_profile_support": 233,
+      "known_categories": 210,
+      "local_reserved_tokens": 1827539,
+      "oversized_records_not_sendable": 0,
+      "fresh_quota_days_lower_bound": 11,
+      "minute_windows_lower_bound": 262
+    },
+    {
+      "design": "training_profile_support",
+      "size": 32,
+      "content_route_training_users_exposed": 9105,
+      "content_route_training_user_exposure_fraction": 0.013057001951738567,
+      "items_with_content_profile_support": 32,
+      "known_categories": 25,
+      "local_reserved_tokens": 116250,
+      "oversized_records_not_sendable": 0,
+      "fresh_quota_days_lower_bound": 1,
+      "minute_windows_lower_bound": 17
+    },
+    {
+      "design": "training_profile_support",
+      "size": 128,
+      "content_route_training_users_exposed": 20290,
+      "content_route_training_user_exposure_fraction": 0.029096822581084626,
+      "items_with_content_profile_support": 128,
+      "known_categories": 73,
+      "local_reserved_tokens": 464751,
+      "oversized_records_not_sendable": 0,
+      "fresh_quota_days_lower_bound": 3,
+      "minute_windows_lower_bound": 67
+    },
+    {
+      "design": "training_profile_support",
+      "size": 256,
+      "content_route_training_users_exposed": 29907,
+      "content_route_training_user_exposure_fraction": 0.04288805682269581,
+      "items_with_content_profile_support": 256,
+      "known_categories": 117,
+      "local_reserved_tokens": 928348,
+      "oversized_records_not_sendable": 0,
+      "fresh_quota_days_lower_bound": 6,
+      "minute_windows_lower_bound": 133
+    },
+    {
+      "design": "training_profile_support",
+      "size": 512,
+      "content_route_training_users_exposed": 43555,
+      "content_route_training_user_exposure_fraction": 0.06245993629961266,
+      "items_with_content_profile_support": 512,
+      "known_categories": 182,
+      "local_reserved_tokens": 1857616,
+      "oversized_records_not_sendable": 0,
+      "fresh_quota_days_lower_bound": 11,
+      "minute_windows_lower_bound": 266
+    }
+  ],
+  "limitations": [
+    "Training exposure is in-sample and may not generalize to future users",
+    "Targeted selection favors frequent low-history profile items, not a representative catalogue sample",
+    "Raw event counts determine routing; zero-history users have no content profile",
+    "Availability restricts enrichment selection, not retained user history",
+    "Exposure assumes every selected output is generated and approved; not ranking benefit",
+    "Quota estimates assume fresh local windows, no other usage; packing/provider limits may add time",
+    "Oversized records cannot be sent under the current local guard"
+  ],
+  "pilot_usage": {
+    "attempts_with_reported_usage": 24,
+    "attempts_without_usage": 8,
+    "mean_reported_tokens_per_usage_known_attempt": 953.5,
+    "interpretation": "Observed usage subset only; do not impute missing failure usage"
+  },
+  "inputs_sha256": {
+    "data\\splits\\event-count-v1\\train.csv": "47fe12bbec8a8512b314ed0e28d053f4cf0253efc8e8559d1917f76388e07080",
+    "data\\processed\\metadata-event-count-v1\\catalogue.jsonl": "5ce8af2b34cc1524cb4b9339c5375c7d624b4e89e250fadc48f032ec0e8b65bd",
+    "data\\processed\\validation-tuning-v2\\manifest.json": "1a3deb4a596f4cafe4b06cca448fe3110e16de77aa35219d54372fd425c13390",
+    "data\\processed\\validation-tuning-v2\\selected_config.json": "c826fb284d2ec893e3fc4432c8b3cf12d67946041934eac6e31113c6e7b527aa",
+    "docs\\genai-quality-sample-results.json": "8d9fc21e46467e0b89235461e52d9a072fadf084291517d3bd5150a0c4f67be6"
+  },
+  "source_sha256": "828ca79213f943f1ebf4802944f09c87ec0ec2db6be05fb876570da7e31a32ed",
+  "quota_source": {
+    "url": "https://console.groq.com/docs/rate-limits",
+    "checked_date": "2026-10-13",
+    "model": "openai/gpt-oss-20b",
+    "published_free": {
+      "rpm": 30,
+      "rpd": 1000,
+      "tpm": 8000,
+      "tpd": 200000
+    },
+    "local_guard": {
+      "rpm": 20,
+      "rpd": 900,
+      "tpm": 7000,
+      "tpd": 180000
+    }
+  },
+  "selections_sha256": "76f0334a48860c95d1f4beb074957e3fd6b0ca6a6002c7c5b5b2a431c871d98b"
+}

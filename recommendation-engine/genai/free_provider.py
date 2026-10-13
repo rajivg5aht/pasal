@@ -83,6 +83,11 @@ class QuotaPaused(RuntimeError):
         self.retry_after = retry_after
 
 
+def reservation_tokens(provider, record):
+    """Conservative local reservation, shared with offline workload planning."""
+    return len(canonical(provider.payload(record)).encode()) + 1024 + provider.max_output_tokens
+
+
 class FreeQuota:
     """Persistent conservative reservations; caller holds the shared cache lock.
 
@@ -98,7 +103,7 @@ class FreeQuota:
         rows = [json.loads(s) for s in self.path.read_text().splitlines()] if self.path.exists() else []
         recent = [r for r in rows if r["time"] > now - 86400]
         minute = [r for r in recent if r["time"] > now - 60]
-        tokens = len(canonical(self.provider.payload(record)).encode()) + 1024 + self.provider.max_output_tokens
+        tokens = reservation_tokens(self.provider, record)
         # Reserve before sending. Daily exhaustion and oversized records never wait.
         if tokens > 7000:
             raise QuotaPaused("Record exceeds the conservative minute token allowance")
