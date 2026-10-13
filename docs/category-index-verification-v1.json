@@ -1,0 +1,89 @@
+{
+  "status": "local_category_index_equivalence_verified",
+  "before": {
+    "categories": 809,
+    "categorySetSha256": "561edc7f47b3330a2b99a78c7b1b985f640d862defcbc0dfc64f9444f3f3bd5f",
+    "keysExamined": 58189,
+    "documentsExamined": 58189,
+    "executionTimeMillis": 182,
+    "winningPlan": {
+      "isCached": false,
+      "stage": "FETCH",
+      "nss": "pasal.products",
+      "inputStage": {
+        "stage": "IXSCAN",
+        "nss": "pasal.products",
+        "keyPattern": {
+          "available": 1,
+          "_id": 1
+        },
+        "indexName": "available_1__id_1",
+        "isMultiKey": false,
+        "multiKeyPaths": {
+          "available": [],
+          "_id": []
+        },
+        "isUnique": false,
+        "isSparse": false,
+        "isPartial": false,
+        "indexVersion": 2,
+        "direction": "forward",
+        "indexBounds": {
+          "available": [
+            "[true, true]"
+          ],
+          "_id": [
+            "[MinKey, MaxKey]"
+          ]
+        }
+      }
+    }
+  },
+  "after": {
+    "categories": 809,
+    "categorySetSha256": "561edc7f47b3330a2b99a78c7b1b985f640d862defcbc0dfc64f9444f3f3bd5f",
+    "keysExamined": 809,
+    "documentsExamined": 0,
+    "executionTimeMillis": 3,
+    "winningPlan": {
+      "isCached": false,
+      "stage": "PROJECTION_COVERED",
+      "transformBy": {
+        "_id": 0,
+        "category": 1
+      },
+      "inputStage": {
+        "stage": "DISTINCT_SCAN",
+        "keyPattern": {
+          "available": 1,
+          "category": 1
+        },
+        "indexName": "available_1_category_1",
+        "isMultiKey": false,
+        "multiKeyPaths": {
+          "available": [],
+          "category": []
+        },
+        "isUnique": false,
+        "isSparse": false,
+        "isPartial": false,
+        "isShardFiltering": false,
+        "isFetching": false,
+        "indexVersion": 2,
+        "direction": "forward",
+        "indexBounds": {
+          "available": [
+            "[true, true]"
+          ],
+          "category": [
+            "[MinKey, MaxKey]"
+          ]
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Single-host diagnostic; timings are not a controlled benchmark",
+    "Index is additive; catalogue data unchanged"
+  ]
+}

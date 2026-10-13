@@ -62,10 +62,17 @@ the protocol and aggregate report are in `docs/GENAI_EXPOSURE_PLAN.md` and
 windows are needed. Original pilot outputs, settings and seven configurations
 remain preserved. The user explicitly approved this expanded catalogue-only
 transfer after automatic approval review requested separate authorization.
-A capped eight-request batch is running with quota guards and no paid fallback.
+A capped eight-request batch completed: six schema-valid outputs, all six passed
+assistant grounding review, and two recorded failures; 120 items remain unattempted.
+These are incomplete targeted-sample results, not independent human quality ratings.
+See `docs/genai-targeted-batch-1-results.json`. Quota guards and no paid fallback remain.
 The 69-test suite passed with BLAS threads limited to one after an allocation
 failure. An additional public-API response fixture passes, and all 72 measured
 anonymous public-API requests passed; see `docs/public-api-load-diagnostic-v1.json`.
+An additive category-query index preserved exact category results and reduced
+single-request category P95 from 197.3 to 5.5 ms. The repeat mixed-load diagnostic
+recorded three recommendation 503s at concurrency four; capacity remains unfinished.
+All four backend tests, including the isolated real MongoDB fixture, pass.
 
 ### Running locally
 

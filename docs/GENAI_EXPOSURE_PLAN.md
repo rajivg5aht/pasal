@@ -67,5 +67,7 @@ were committed in `3f9a3d5` before requesting generation. The eight-request star
 was rejected by automatic approval review because earlier transfer consent was
 interpreted as applying only to the original declared sample. No new request was
 sent at that point. The user subsequently explicitly approved the new 128-item
-catalogue-only sample. The capped eight-request start is now running under the
-existing guards; the complete 128-item sample has not yet been generated.
+catalogue-only sample. The capped eight-request start completed under existing
+guards: six schema-valid, source-reviewed outputs and two retained failures.
+The remaining 120 items are unattempted. The full sample is incomplete; do not
+interpret this first, item-ID-ordered batch as a representative quality estimate.

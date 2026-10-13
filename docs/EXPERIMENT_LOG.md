@@ -368,3 +368,28 @@ concurrency one and 234.2 ms at four. The report retains all attempts and return
 counts. This small mixed-route diagnostic excludes browser rendering, authenticated
 flows and controlled isolation from background generation. It does not establish
 final system targets. See public-api-load-diagnostic-v1.json.
+
+
+### Follow-up: first targeted batch and category index verification
+
+The first eight targeted generation attempts completed with six schema-valid
+outputs and two HTTP 400 failures. All six outputs passed assistant comparison
+against their exact historical sources; these are not independent human ratings.
+The 128-item sample remains incomplete, with 120 items unattempted. Reported usage
+is 3,175 input and 2,865 output tokens; both failures lack usage, so totals are
+lower bounds. No failures were retried or replaced. The outputs largely restate
+anonymous property identifiers; grounding does not establish practical usefulness.
+
+Query-plan inspection found that category discovery fetched 58,189 product
+documents. An additive (available, category) index changed this to 809 index keys
+and zero document fetches. The exact category-set hash was unchanged. MongoDB's
+809 distinct values include the missing category; the public API continues to
+filter that value and return 808 category codes.
+
+In the repeated small public-API diagnostic, category P95 at concurrency one
+fell from 197.3 to 5.5 ms. All requests at concurrency one and two succeeded.
+At concurrency four, three of eight recommendation requests returned 503 as the
+faster mixed workload reached the existing two-request service capacity limit.
+The failures remain in public-api-load-diagnostic-v2.json; the index improvement
+must not be described as resolving recommendation concurrency. All four backend
+tests, including the isolated real MongoDB test, passed after the index addition.

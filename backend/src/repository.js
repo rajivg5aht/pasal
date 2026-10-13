@@ -27,6 +27,7 @@ const productSchema = new mongoose.Schema({
   metadataCutoffMs: Number,
 });
 productSchema.index({ available: 1, _id: 1 });
+productSchema.index({ available: 1, category: 1 });
 productSchema.index({ category: 1, available: 1, _id: 1 });
 export const User = mongoose.model("User", userSchema);
 export const Product = mongoose.model("Product", productSchema);

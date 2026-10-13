@@ -25,7 +25,8 @@ objective to include zero-history users. Secondary sensitivity, diversity and
 paired uncertainty reporting are complete. Preserve both versions.
 Training-only GenAI feasibility is complete and a 128-item targeted sample is
 frozen. The user explicitly approved its external catalogue-only transfer after
-automatic review requested separate authorization. A capped first batch is running.
+automatic review requested separate authorization. The first eight-request batch
+completed with six source-reviewed outputs and two failures; 120 remain unattempted.
 The anonymous public-API diagnostic passed 72 measured requests. Continue
 independent quality-review preparation and controlled end-to-end tests,
 then freeze final experiments. Continue dissertation writing alongside each result.
