@@ -37,8 +37,14 @@ role removes access without relying on a stale client-side menu state. The
 dashboard manages demonstration products and their active status, uses a bounded
 set of illustrations, and reports actual stored statistics.
 
-The application is a research prototype. It does not process real payments or
-place fulfilment orders. Administrative functions do not edit frozen research
+The application is a research prototype. Demonstration checkout commits a stored
+order, synthetic stock deduction and cart clearing atomically. A customer-scoped
+idempotency key prevents duplicate orders on retry. Customers can retrieve order
+history and cancel a placed order; administrators advance valid simulated status
+transitions. Cancellation restores stock once. The deployment uses a local
+single-node MongoDB replica set, copied and fingerprint-verified from the preserved
+standalone database. It does not process real payments or place fulfilment orders.
+Administrative functions do not edit frozen research
 artifacts or relabel anonymous items as known products. These scope decisions
 prioritise correctness and demonstrability over unrelated commerce features.
 
@@ -58,13 +64,13 @@ BLAS settings reduce resource contention in this local experimental environment.
 
 ## 4.4 Verification and limitations
 
-The recorded October 14 verification includes nine frontend tests, five backend
+The recorded October 14 verification includes twelve frontend tests, eight backend
 tests including real MongoDB integration, and a successful production frontend
 build. Backend checks cover persistence, isolation, consent reset and live role
 revocation. Research code has a separate Python test suite covering temporal
 features, history rules, metrics, generation provenance and final evaluation.
-Its current exact count belongs in the submission evidence manifest, rather than
-being treated as a permanent property of the system.
+All 83 Python tests passed at this checkpoint. Exact counts belong in the
+submission evidence manifest rather than being treated as permanent properties.
 
 A research-preservation checkpoint matched hashes for 83 protected raw, split,
 model and evaluation files before and after storefront work. This verifies that

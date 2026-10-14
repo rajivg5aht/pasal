@@ -1,10 +1,11 @@
 // Local operator action only; does not create a password or a default account.
 import mongoose from "mongoose";
 import { User } from "../src/repository.js";
+import { mongoUrl } from "../src/local-config.js";
 const email = process.argv[2]?.trim().toLowerCase();
 if (!email || !email.includes("@"))
   throw new Error("Usage: node scripts/set-admin.js existing-account-email");
-await mongoose.connect("mongodb://127.0.0.1:27017/pasal");
+await mongoose.connect(mongoUrl);
 try {
   const result = await User.updateOne({ email }, { $set: { role: "admin" } });
   if (result.matchedCount !== 1)

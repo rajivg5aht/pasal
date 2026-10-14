@@ -1,7 +1,8 @@
 # Demonstration ordering deployment
 
-The order API requires MongoDB transactions. The current application database at
-localhost:27017 is standalone. Checkout fails closed with a clear 503 response;
+The order API requires MongoDB transactions. The preserved original database at
+localhost:27017 is standalone; the active database is now at 27018. If configured
+against a standalone database, checkout fails closed with a clear 503 response;
 it never falls back to non-atomic writes. The isolated integration-test replica
 set at port 27118 is not the application database and must not be used as one.
 
@@ -25,7 +26,15 @@ set at port 27118 is not the application database and must not be used as one.
   details. No payment is collected, no delivery occurs and no order trains research
   models. Status histories omit internal actor IDs in API responses.
 
-## Proposed local deployment change — requires user approval
+## Approved local deployment change
+
+The user approved the verified copy and switch after initially deferring it.
+Activation completed on 14 October 2026. All seven collections had matching
+record fingerprints/counts and index definitions; sessions were excluded. The
+private manifest is `tmp/database-copy-evidence.json`. Aggregate live checks are
+recorded in `commerce-deployment-verification.json`. The original database remains
+unchanged. The instructions below describe the completed method, not a request
+to repeat the copy.
 
 Preserve the existing database at port 27017. Create a new single-node replica set
 named `pasalLocal` on loopback port 27018 with a persistent local data directory.
@@ -44,6 +53,7 @@ are created: reconcile new writes first. No raw files, model artifacts or frozen
 evaluation files are part of this database operation.
 
 This is a development single-node deployment, not fault-tolerant production
-infrastructure. The existing compose file remains unchanged until an approved
-deployment path is selected. Docker startup was unavailable in this session;
-isolated transaction tests used the installed MongoDB binary instead.
+infrastructure. The existing compose file remains unchanged and is not the active
+deployment. Docker startup was unavailable in this session; the active replica set
+and isolated transaction tests use the installed MongoDB binary instead. Restart
+the application database with `backend/scripts/start-local-mongo.ps1`.

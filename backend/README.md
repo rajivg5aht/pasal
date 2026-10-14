@@ -1,5 +1,19 @@
 # Pasal backend
 
+Current local deployment: the approved copy uses a single-node replica set at
+localhost:27018, configured through the root `.env`. Start it with
+`scripts/start-local-mongo.ps1`. The original database remains at 27017; the existing
+compose service is standalone and does not enable checkout. See
+`../docs/COMMERCE_DEPLOYMENT.md` before changing database configuration.
+
+Demonstration orders require transactions. Server-derived prices, stock deduction,
+order insertion and cart clearing commit together. Customer-scoped idempotency
+keys prevent duplicate checkout. Cancellation restores stock once; administrator
+state changes are restricted. No payments or real fulfilment are performed.
+Set `RUN_ORDER_TESTS=1` to include the isolated replica-set test on port 27118
+(`pasalOrderTest`); it creates/drops only a unique test database. With both test
+flags enabled, eight backend tests passed on 14 October 2026.
+
 `npm ci`, then `npm start` from this directory. Requires MongoDB and the local
 FastAPI service. Run `docker compose up -d mongo` from the root when Docker is
 available, then `node src/import-catalogue.js` here to import the historical

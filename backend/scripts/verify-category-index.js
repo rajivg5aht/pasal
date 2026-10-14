@@ -2,10 +2,11 @@
 import mongoose from "mongoose";
 import { createHash } from "node:crypto";
 import { writeFile } from "node:fs/promises";
+import { mongoUrl } from "../src/local-config.js";
 
 const output = process.argv[2];
 if (!output) throw new Error("Supply a new aggregate evidence file path");
-await mongoose.connect("mongodb://127.0.0.1:27017/pasal", {
+await mongoose.connect(mongoUrl, {
   serverSelectionTimeoutMS: 5000,
 });
 try {

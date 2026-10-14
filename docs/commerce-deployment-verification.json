@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "date": "2026-10-14",
+  "database": "pasalLocal replica set on localhost:27018",
+  "checkoutAvailable": true,
+  "serverPriceVerified": true,
+  "idempotentReplay": true,
+  "historyPersisted": true,
+  "cancellationRestoresStock": true,
+  "simulationOnly": true,
+  "retainedFixture": "One clearly labelled verification account and cancelled demo order; no real customer or payment data",
+  "researchRecommendation": 10
+}

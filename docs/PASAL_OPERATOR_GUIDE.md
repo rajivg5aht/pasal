@@ -9,7 +9,27 @@
 The shop contains 16 explicitly synthetic products, readable categories, original
 vector illustrations and illustrative NPR prices. Search, category filtering,
 sorting, product details, wishlist, quantity cart and optional category preferences
-operate on these records. There is no checkout, payment or delivery.
+operate on these records. Signed-in customers can review checkout, place explicitly
+simulated orders, view history and cancel a placed order. No payment is collected
+and no real delivery takes place. Use fictional delivery details only.
+
+## Start the current local deployment
+
+The application uses the approved, verified `pasalLocal` replica set at
+localhost:27018. The original localhost:27017 database is preserved. Do not run
+the application against the old copy after creating new records in the new one.
+The ignored root `.env` selects the new URI. To restart locally:
+
+1. Run `backend/scripts/start-local-mongo.ps1` from PowerShell and wait for MongoDB
+   to become primary. It opens no visible helper window.
+2. From the root, set `OPENBLAS_NUM_THREADS=1`, then run
+   `.venv/Scripts/python.exe recommendation-engine/service/run.py`.
+3. In `backend`, run `npm start`.
+4. In `frontend`, run `npm run dev`.
+
+Copied sessions were deliberately omitted; sign in again with your existing
+account. The current compose file is the older standalone configuration,
+not the active transaction-ready deployment. See `COMMERCE_DEPLOYMENT.md`.
 
 ## Administrator access
 
@@ -27,7 +47,9 @@ the user's behalf. Backend authorization checks the stored role on each request.
 
 Administrators can create and edit synthetic products, set category/subcategory,
 select a bundled illustration, and deactivate products. Deactivation preserves
-saved references. Remote image uploads, real orders and research artifact editing
+saved references. Inventory controls use expected-stock checks and an audit log.
+Order management supports simulated status changes and cancellation with atomic
+stock restoration. Remote image uploads, real orders and research artifact editing
 are outside this dashboard's scope. Catalogue lists currently return at most 100
 products per query; pagination is needed before scaling beyond this small prototype.
 

@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { DemoProduct } from "../src/demo-repository.js";
-await mongoose.connect("mongodb://127.0.0.1:27017/pasal");
+import { mongoUrl } from "../src/local-config.js";
+await mongoose.connect(mongoUrl);
 const rows = [
   [
     "everyday-tote",
