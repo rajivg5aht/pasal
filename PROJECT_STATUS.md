@@ -1,6 +1,26 @@
 # Pasal status and continuation handover
 
-## Current checkpoint — 13 October 2026
+## Current checkpoint — 14 October 2026
+
+Signed-in shopping verification is expanded: saved lists survive logout/login,
+separate accounts remain isolated, history clearing preserves cart/wishlist, and
+role revocation applies immediately to an existing admin session. A cart save now
+updates the UI even if subsequent optional activity recording fails; decreasing
+quantity no longer records an add-to-cart event. Nine frontend tests, all five
+backend tests (including real isolated MongoDB), and the production build pass.
+
+The quota guard allowed two new GenAI requests. Both schema-valid outputs passed
+assistant grounding review: items 68000 and 69533. Cumulative targeted sample:
+20/128 attempted, 14 schema-valid, six provider/schema failures, 11 approved and
+three rejected; 108 remain unattempted. See docs/genai-targeted-batch-4-results.json.
+Reported tokens 7,298 input/7,866 output exclude unavailable failure usage. Human
+ratings remain deferred by request. Final holdout outcomes remain unopened.
+
+Next: continue bounded generation within available free quota, complete the exact
+sample before building the new enriched artifact, and follow the final-evaluation
+release gates. Do not describe these assistant approvals as independent ratings.
+
+## Historical checkpoint — 13 October 2026
 
 ### Latest research checkpoint
 

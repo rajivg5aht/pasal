@@ -356,3 +356,26 @@ capacity guarantee or the thesis's final latency target under sustained load.
 Independent human review is deferred at the user's request. Its absence remains
 a limitation. A further generation invocation stopped at the local daily quota
 before making a new call; the sample and its 18-attempt evidence remain unchanged.
+
+## 14 October: shopping-state consistency and targeted batch 4
+
+The client previously awaited optional activity recording before refreshing a
+successfully saved cart. A consent change in another session could therefore hide
+the successful mutation behind an activity error. The UI now applies the saved
+profile immediately and reports the optional activity failure separately. Quantity
+decreases no longer emit add-to-cart events. This affects the synthetic shop only.
+
+Verification passed nine frontend tests, five backend tests including isolated
+MongoDB, and the production build. Added checks cover saved-state persistence on
+re-login, isolation between accounts, retained shopping lists after history reset,
+and immediate enforcement of administrator role revocation in an existing session.
+These automated checks do not substitute for independent usability assessment.
+
+Two new targeted generations passed schema and assistant source-grounding checks.
+Item 68000 reports category 1613 and listed identifiers with source-marked
+availability; historical context remains required. Item 69533 enumerates the 16
+source keys without inferring semantic product attributes. Cumulative: 20 attempted,
+14 valid, six provider/schema failures, 11 assistant-approved, three rejected,
+108 unattempted. Reported token usage is 7,298 input and 7,866 output; missing
+failure usage remains excluded. Human ratings are deferred; final holdout outcomes
+were not inspected. The incomplete targeted sample cannot support final H2 claims.

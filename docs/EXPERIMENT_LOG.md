@@ -433,3 +433,15 @@ tests, including the isolated real MongoDB test, passed after the index addition
 - public-api-load-diagnostic-v3.json: 72/72 measured requests valid, including all
   eight recommendation requests at concurrency four; recommendation P95 127.1 ms.
   v2's three concurrency-four 503s remain preserved. Development comparison only.
+
+## 14 October: authenticated shopping checks and targeted batch 4
+
+- Fixed successful-cart-save visibility when subsequent optional activity fails;
+  quantity decreases no longer produce add-to-cart events.
+- Verified re-login persistence, cross-account isolation, preserved shopping lists
+  on history reset and live-session admin role revocation in isolated MongoDB.
+- Nine frontend tests, all five backend tests and production build pass.
+- Two new requests: 68000 and 69533, both schema-valid and assistant-approved.
+  Cumulative 20 attempted, 14 generated, six provider failures, 11 approvals,
+  three grounding rejections, 108 unattempted. No retries or paid fallback.
+- Evidence: genai-targeted-batch-4-results.json. Human review remains deferred.
