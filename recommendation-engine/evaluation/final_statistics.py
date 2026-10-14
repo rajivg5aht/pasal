@@ -32,6 +32,12 @@ def analyze(rows, resamples=2000, permutations=9999, seed=42):
             raise ValueError('Paired cohorts must agree')
         if not left.cohort.isin(COHORTS).all():
             raise ValueError('Unknown cohort')
+        # Approved proposal H1: 1-19 events; H2: 0-19 events.
+        primary_cohorts = ('1-4', '5-19') if first == 'switching_without_genai' else ('0', '1-4', '5-19')
+        mask = left.cohort.isin(primary_cohorts)
+        left, right = left[mask], right[mask]
+        if left.empty:
+            raise ValueError('No users in the proposal hypothesis cohorts')
         for data in (left.ndcg.to_numpy(), right.ndcg.to_numpy()):
             if not np.isfinite(data).all() or ((data < 0) | (data > 1)).any():
                 raise ValueError('Finite NDCG in [0, 1] required')
@@ -51,6 +57,7 @@ def analyze(rows, resamples=2000, permutations=9999, seed=42):
                 permutation_type='samples', vectorized=False, n_resamples=permutations,
                 batch=128, alternative='two-sided', rng=np.random.default_rng(seed)).pvalue)
         reports.append({'first': first, 'second': second, 'users': len(delta),
+            'primary_cohorts': list(primary_cohorts),
             'cohort_sizes': {label: int((left.cohort == label).sum()) for label in COHORTS},
             'equal_cohort_mean_ndcg_difference': float(np.sum(delta * weights)),
             'paired_bootstrap_95_percentile_interval': np.quantile(bootstrap, [.025, .975]).tolist(),

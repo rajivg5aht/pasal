@@ -22,7 +22,9 @@ class FinalStatisticsTests(unittest.TestCase):
         for row in result['comparisons']:
             self.assertEqual(row['holm_p'], 1)
             self.assertEqual(row['paired_bootstrap_95_percentile_interval'], [0, 0])
-            self.assertEqual(row['ties'], 4)
+            self.assertEqual(row['ties'], row['users'])
+        self.assertEqual(result['comparisons'][0]['users'], 1)
+        self.assertEqual(result['comparisons'][1]['users'], 4)
 
     def test_macro_weighting_and_matched_population(self):
         rows = self.rows()
@@ -33,6 +35,15 @@ class FinalStatisticsTests(unittest.TestCase):
         self.assertEqual(report['equal_cohort_mean_ndcg_difference'], .5)
         with self.assertRaises(ValueError): analyze(rows[:-1])
         with self.assertRaises(ValueError): analyze(rows + [rows[0]])
+
+    def test_high_history_scores_do_not_change_approved_hypothesis_results(self):
+        rows = self.rows()
+        for model in ['fixed_hybrid', 'switching_without_genai', 'switching_with_genai']:
+            rows.append({'model': model, 'visitorid': 100, 'cohort': '20+',
+                         'ndcg': 1.0 if model == 'switching_with_genai' else 0.0})
+        for result in analyze(rows, resamples=20, permutations=31)['comparisons']:
+            self.assertEqual(result['equal_cohort_mean_ndcg_difference'], 0)
+            self.assertNotIn('20+', result['primary_cohorts'])
 
 
 if __name__ == '__main__': unittest.main()

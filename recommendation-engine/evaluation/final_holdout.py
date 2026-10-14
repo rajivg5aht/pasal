@@ -55,6 +55,7 @@ def freeze(output, enriched, sample, reviews, per_cohort=500):
         'split': ROOT/'data/splits/event-count-v1/manifest.json',
         'train': ROOT/'data/splits/event-count-v1/train.csv',
         'config': ROOT/'data/processed/validation-tuning-v2/selected_config.json',
+        'validation_summary': ROOT/'data/processed/validation-tuning-v2/summary.json',
         'base': ROOT/'data/processed/content-event-count-v1/manifest.json',
         'cf': ROOT/'data/processed/cf-event-count-v1/manifest.json',
         'enriched': enriched/'manifest.json', 'sample': sample/'manifest.json', 'reviews': reviews}
@@ -71,6 +72,16 @@ def freeze(output, enriched, sample, reviews, per_cohort=500):
         extra += [paths[key].parent/name for name in manifest['artifacts_sha256']]
     files = {str(p.resolve().relative_to(ROOT)): fingerprint(p) for p in [*paths.values(), *extra]}
     config = json.loads(paths['config'].read_text())
+    validation_summary = json.loads(paths['validation_summary'].read_text())
+    baseline_scores = {}
+    for model in CONFIGURATIONS[:-1]:
+        group = [r for r in validation_summary if r['model'] == model and r['cohort'] in ('1-4', '5-19') and r['users']]
+        if len(group) != 2:
+            raise ValueError('Both H1 validation cohorts required for baseline selection')
+        baseline_scores[model] = float(np.mean([r['ndcg'] for r in group]))
+    best_baseline = max(baseline_scores, key=baseline_scores.get)
+    if best_baseline != 'fixed_hybrid':
+        raise ValueError('Primary comparator must be updated prospectively to the validation-best baseline')
     plan = json.loads(paths['split'].read_text())
     if config['cutoff_ms'] != plan['metadata_cutoff_exclusive_ms']:
         raise ValueError('Configuration origin does not match split')
@@ -89,7 +100,9 @@ def freeze(output, enriched, sample, reviews, per_cohort=500):
         'populations': {'full_15_percent': 'Historically exposed secondary analysis',
                         'untouched_intersection': 'Primary comparisons; timestamp strictly after legacy validation end'},
         'statistics': {'primary': ['switching_without_genai - fixed_hybrid', 'switching_with_genai - switching_without_genai'],
-            'metric': 'NDCG@10, equal weight across observed cohorts', 'bootstrap': 2000,
+            'H1_cohorts': ['1-4', '5-19'], 'H2_cohorts': ['0', '1-4', '5-19'],
+            'validation_baseline_scores_H1': baseline_scores,
+            'metric': 'NDCG@10, equal weight across observed hypothesis cohorts', 'bootstrap': 2000,
             'paired_label_swap_permutations_max': 9999, 'holm_family_alpha': .05},
         'human_ratings': 'Deferred; no independent human-quality claim',
         'limitations': ['Static training-origin histories imply a longer forecast horizon for test than validation.',

@@ -35,11 +35,22 @@ independent API latency. Use the separate service diagnostics for that purpose.
 
 ## Statistical family
 
-Primary metric: equal-observed-cohort mean NDCG@10 difference on the untouched
-intersection. The two prespecified comparisons are:
+Primary metric: equal-observed-hypothesis-cohort mean NDCG@10 difference on the
+untouched intersection. H1 includes only 1–4 and 5–19 histories; H2 includes only
+0, 1–4 and 5–19 histories, as stated on page 9 of the approved proposal. The two prespecified comparisons are:
 
-1. Switching without GenAI minus the tuned fixed hybrid.
-2. Switching with GenAI minus switching without GenAI.
+1. Switching without GenAI minus the validation-best non-switching baseline
+   (fixed hybrid), for users with 1–19 events.
+2. Switching with GenAI minus switching without GenAI, for users with 0–19 events.
+
+In the existing validation assessment, H1-cohort macro NDCG is .023991711 for
+fixed hybrid, .021498928 for category popularity, .021122881 for TF-IDF,
+.003204042 for item-CF and .003065736 for global popularity. Thus the fixed
+hybrid comparator is selected on validation, never on final test performance.
+The freeze records and verifies that validation summary. The 20+ cohort remains
+a descriptive result, not a primary H1/H2 hypothesis population. Density and
+end-to-end efficiency are separate required evidence; a ranking p-value alone
+cannot establish the full compound hypotheses.
 
 Use stratified paired-user bootstrap percentile intervals (2,000 resamples, seed
 42). For each contrast, swap paired condition labels within users under the null,
