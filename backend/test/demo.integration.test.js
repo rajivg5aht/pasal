@@ -166,11 +166,39 @@ test(
       assert.equal(p.profile.eventCount, 1);
       assert.equal(p.profile.cart[0].quantity, 2);
       assert.equal(p.products[0]._id, created._id);
+      // Saved shopping state survives logout/login and never leaks to another account.
+      await customer.post("/api/auth/logout").set("Origin", origin).expect(204);
+      await customer.get("/api/demo/profile").expect(401);
+      await customer
+        .post("/api/auth/login")
+        .set("Origin", origin)
+        .send({
+          email: "customer@example.test",
+          password: "fixture-password-123",
+        })
+        .expect(200);
+      p = (await customer.get("/api/demo/profile")).body;
+      assert.equal(p.profile.cart[0].quantity, 2);
+      assert.deepEqual(p.profile.wishlist, [created._id]);
+      const other = request.agent(app);
+      await registration(other, "other@example.test").expect(201);
+      const otherProfile = (await other.get("/api/demo/profile")).body.profile;
+      assert.deepEqual(otherProfile.cart, []);
+      assert.deepEqual(otherProfile.wishlist, []);
       await customer.get("/api/recommendations").expect(200);
       const stats = (await admin.get("/api/admin/overview").expect(200)).body;
       assert.equal(stats.products, 1);
       assert.equal(stats.activity.events, 1);
       assert.equal(stats.service.status, "ready");
+      await customer
+        .delete("/api/demo/history")
+        .set("Origin", origin)
+        .expect(200);
+      p = (await customer.get("/api/demo/profile")).body.profile;
+      assert.equal(p.eventCount, 0);
+      assert.equal(p.personalization, false);
+      assert.equal(p.cart[0].quantity, 2);
+      assert.deepEqual(p.wishlist, [created._id]);
       await admin
         .put("/api/admin/products/" + created._id)
         .set("Origin", origin)
@@ -204,6 +232,12 @@ test(
       assert.deepEqual(p.wishlist, []);
       assert.equal(await Product.countDocuments(), 0);
       assert.equal(await DemoProduct.countDocuments(), 1);
+      // Revoking a role takes effect in the existing authenticated session.
+      await User.updateOne(
+        { email: "operator@example.test" },
+        { $set: { role: "customer" } },
+      );
+      await admin.get("/api/admin/overview").expect(403);
       await customer.post("/api/auth/logout").set("Origin", origin).expect(204);
       await customer.get("/api/demo/profile").expect(401);
     } finally {

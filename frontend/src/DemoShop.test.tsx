@@ -128,7 +128,7 @@ it("uses only demo catalogue IDs for cart and wishlist and never calls the resea
   render(<DemoShop />);
   await screen.findByRole("button", { name: "View Synthetic morning mug" });
   fireEvent.click(screen.getByRole("button", { name: "Add to cart" }));
-  await screen.findByText("Added to your demo cart.");
+  await screen.findByText("Your demo cart was updated.");
   expect(profile.cart).toEqual([{ productId: "demo-mug", quantity: 1 }]);
   fireEvent.click(
     screen.getByRole("button", { name: "Save Synthetic morning mug" }),
@@ -184,4 +184,60 @@ it("does not render administrator data for a customer", async () => {
   expect(
     screen.queryByRole("button", { name: "Save demo product" }),
   ).toBeNull();
+});
+
+it("keeps a saved cart visible when optional activity is rejected and does not log quantity decreases", async () => {
+  let profile = {
+    personalization: true,
+    selectedCategories: [],
+    eventCount: 0,
+    wishlist: [],
+    cart: [] as { productId: string; quantity: number }[],
+  };
+  let events = 0;
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(async (input: string, options?: RequestInit) => {
+      let data: unknown = {};
+      if (input === "/api/me")
+        data = { user: { id: "fixture", name: "Fixture", role: "customer" } };
+      else if (input === "/api/demo/categories")
+        data = { categories: ["Home"] };
+      else if (input.startsWith("/api/demo/products"))
+        data = { products: [product] };
+      else if (input === "/api/demo/profile")
+        data = { profile, products: [product] };
+      else if (input === "/api/demo/cart") {
+        profile = { ...profile, cart: [JSON.parse(options?.body as string)] };
+        data = { profile };
+      } else if (input === "/api/demo/events") {
+        events++;
+        return {
+          ok: false,
+          status: 409,
+          json: async () => ({ error: "Consent changed in another tab" }),
+        };
+      } else throw new Error("Unexpected endpoint: " + input);
+      return { ok: true, status: 200, json: async () => data };
+    }),
+  );
+  render(<DemoShop />);
+  await screen.findByRole("button", { name: "View Synthetic morning mug" });
+  fireEvent.click(screen.getByRole("button", { name: "Add to cart" }));
+  await screen.findByText(
+    "Your cart was saved, but optional browsing activity was not recorded.",
+  );
+  expect(profile.cart).toEqual([{ productId: "demo-mug", quantity: 1 }]);
+  fireEvent.click(screen.getByRole("button", { name: "Open cart" }));
+  const quantity = await screen.findByRole("spinbutton", {
+    name: "Quantity for Synthetic morning mug",
+  });
+  expect((quantity as HTMLInputElement).value).toBe("1");
+  fireEvent.change(quantity, { target: { value: "2" } });
+  await waitFor(() => expect(events).toBe(2));
+  await waitFor(() => expect(quantity).not.toBeDisabled());
+  fireEvent.change(quantity, { target: { value: "1" } });
+  await waitFor(() => expect(profile.cart[0].quantity).toBe(1));
+  await waitFor(() => expect(quantity).not.toBeDisabled());
+  expect(events).toBe(2);
 });

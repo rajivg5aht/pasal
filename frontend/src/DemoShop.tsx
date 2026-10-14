@@ -211,12 +211,28 @@ export default function DemoShop() {
     }
     if (needAccount()) return;
     await action(async () => {
-      await api("/demo/cart", "PUT", { productId: p._id, quantity });
-      if (quantity) await event(p._id, "addtocart");
-      await refreshProfile();
+      const previous =
+        profile.cart.find((r) => r.productId === p._id)?.quantity || 0;
+      const result = await api<{ profile: Profile }>("/demo/cart", "PUT", {
+        productId: p._id,
+        quantity,
+      });
+      setProfile(result.profile);
       setNotice(
-        quantity ? "Added to your demo cart." : "Removed from your cart.",
+        quantity ? "Your demo cart was updated." : "Removed from your cart.",
       );
+      // Saving the cart and optional activity recording are separate operations.
+      // A consent change in another tab must not hide a successful cart save.
+      if (quantity > previous) {
+        try {
+          await event(p._id, "addtocart");
+        } catch {
+          setError(
+            "Your cart was saved, but optional browsing activity was not recorded.",
+          );
+        }
+      }
+      await refreshProfile();
     });
   }
   function preferences() {
