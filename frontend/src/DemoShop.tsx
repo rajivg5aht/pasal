@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { api, type User } from "./api";
 import ProductArt from "./ProductArt";
+import { Checkout, OrderHistory, OrderSummary, type Order } from "./Orders";
 type Product = {
   _id: string;
   title: string;
@@ -26,6 +27,7 @@ type Product = {
   image: string;
   attributes: string[];
   available: boolean;
+  stock?: number;
   provenance: string;
 };
 type Profile = {
@@ -86,6 +88,7 @@ function Dialog({
   );
 }
 export default function DemoShop() {
+  const [placedOrder, setPlacedOrder] = useState<Order | null>(null);
   const [user, setUser] = useState<User | null>(null),
     [profile, setProfile] = useState<Profile>(empty),
     [products, setProducts] = useState<Product[]>([]),
@@ -545,6 +548,7 @@ export default function DemoShop() {
           <button className="primary" onClick={preferences}>
             Manage demo preferences
           </button>
+          <button onClick={() => setModal("orders")}>Order history</button>
           <button
             onClick={() =>
               void action(async () => {
@@ -641,7 +645,8 @@ export default function DemoShop() {
           close={() => setModal("")}
         >
           <p>
-            Demo products only. No payment, order or delivery will be created.
+            Synthetic products only. Checkout creates a demonstration order,
+            with no real charge or delivery.
           </p>
           {(modal === "cart"
             ? profile.cart.map((r) => r.productId)
@@ -727,9 +732,62 @@ export default function DemoShop() {
                   ),
                 )}
               </strong>
-              <p>Illustrative total only. Checkout is not enabled.</p>
+              <p>
+                Demonstration prices. Availability and stock are checked when
+                ordering.
+              </p>
+              <button
+                className="primary"
+                disabled={
+                  busy ||
+                  !profile.cart.length ||
+                  profile.cart.some(
+                    (l) => !saved.find((p) => p._id === l.productId)?.available,
+                  )
+                }
+                onClick={() => {
+                  setError("");
+                  setModal("checkout");
+                }}
+              >
+                Review checkout
+              </button>
             </div>
           )}
+        </Dialog>
+      )}
+      {modal === "checkout" && (
+        <Dialog title="Demonstration checkout" close={() => setModal("")}>
+          <Checkout
+            lines={profile.cart}
+            total={profile.cart.reduce(
+              (sum, l) =>
+                sum +
+                (saved.find((p) => p._id === l.productId)?.priceNpr || 0) *
+                  l.quantity,
+              0,
+            )}
+            onPlaced={(order) => {
+              setPlacedOrder(order);
+              setModal("confirmation");
+              void refreshProfile().catch((e) => setError(e.message));
+            }}
+          />
+        </Dialog>
+      )}
+      {modal === "confirmation" && placedOrder && (
+        <Dialog
+          title="Demonstration order placed"
+          error={error}
+          close={() => setModal("")}
+        >
+          <OrderSummary order={placedOrder} />
+          <button onClick={() => setModal("orders")}>View order history</button>
+        </Dialog>
+      )}
+      {modal === "orders" && (
+        <Dialog title="Order history" close={() => setModal("")}>
+          <OrderHistory />
         </Dialog>
       )}
       {detail && (

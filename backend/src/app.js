@@ -6,6 +6,7 @@ import { randomBytes, scrypt as rawScrypt, timingSafeEqual } from "node:crypto";
 import { promisify } from "node:util";
 import { z } from "zod";
 import { demoRouter } from "./demo.js";
+import { orderRouter } from "./orders.js";
 
 const scrypt = promisify(rawScrypt);
 const dummyPasswordHash = `${"0".repeat(32)}:${"0".repeat(128)}`;
@@ -271,6 +272,7 @@ export function createApp({
         .map((i) => ({ ...i, product: lookup.get(i.itemid) })),
     });
   });
+  if (demoRepository) app.use("/api", orderRouter({ requireUser }));
   if (demoRepository)
     app.use(
       "/api",

@@ -46,6 +46,7 @@ data/raw/
 data/processed/
 data/enriched/
 data/splits/
+data/local-mongo/
 
 # Jupyter checkpoints
 .ipynb_checkpoints/

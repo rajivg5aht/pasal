@@ -574,3 +574,24 @@ dialog {
     scroll-behavior: auto !important;
   }
 }
+.order-card {
+  border: 1px solid #d7dfce;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 8px;
+}
+.order-card small {
+  overflow-wrap: anywhere;
+}
+.order-card li {
+  margin: 0.4rem 0;
+}
+.orders-section > div > button {
+  margin: 0.25rem;
+}
+.shop-form fieldset {
+  display: grid;
+  gap: 1rem;
+  border: 0;
+  padding: 0;
+}

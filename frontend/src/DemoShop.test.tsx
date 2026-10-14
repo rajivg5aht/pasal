@@ -137,7 +137,7 @@ it("uses only demo catalogue IDs for cart and wishlist and never calls the resea
   expect(profile.wishlist).toEqual(["demo-mug"]);
   fireEvent.click(screen.getByRole("button", { name: "Open cart" }));
   await screen.findByRole("dialog", { name: "Your shopping cart" });
-  expect(screen.getByText(/Checkout is not enabled/)).toBeTruthy();
+  expect(screen.getByRole("button", { name: "Review checkout" })).toBeTruthy();
   expect(
     fetchMock.mock.calls.some(
       ([p]) => p === "/api/recommendations" || p === "/api/events",

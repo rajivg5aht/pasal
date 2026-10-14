@@ -2,9 +2,12 @@ import { useEffect, useState, type FormEvent } from "react";
 import { api, type User } from "./api";
 import type { Product } from "./DemoShop";
 import ProductArt from "./ProductArt";
+import { OrderHistory } from "./Orders";
 type Overview = {
   products: number;
   available: number;
+  inventory?: { units: number; outOfStock: number };
+  orders?: { total: number; statuses: Record<string, number> };
   categories: string[];
   activity: { consentingProfiles: number; events: number };
   service: { status: string };
@@ -38,6 +41,8 @@ export default function Admin() {
     [products, setProducts] = useState<Product[]>([]),
     [edit, setEdit] = useState<string | null>(null),
     [form, setForm] = useState(initial);
+  const [showOrders, setShowOrders] = useState(false),
+    [stock, setStock] = useState(0);
   async function load() {
     const [o, p] = await Promise.all([
       api<Overview>("/admin/overview"),
@@ -76,6 +81,7 @@ export default function Admin() {
     }
   }
   function select(p: Product) {
+    setStock(p.stock || 0);
     setEdit(p._id);
     setForm({
       title: p.title,
@@ -186,6 +192,9 @@ export default function Admin() {
                 Signed in as {user.name}. No customer identities or histories
                 are exposed here.
               </p>
+              <button onClick={() => setShowOrders(!showOrders)}>
+                {showOrders ? "Hide orders" : "Manage orders"}
+              </button>
               <button
                 onClick={() => void load().catch((e) => setError(e.message))}
               >
@@ -205,9 +214,18 @@ export default function Admin() {
                 Sign out
               </button>
             </div>
+            {showOrders && <OrderHistory admin />}
             {overview && (
               <>
                 <div className="admin-stats">
+                  <article>
+                    <strong>{overview.orders?.total ?? 0}</strong>
+                    <span>Demonstration orders</span>
+                  </article>
+                  <article>
+                    <strong>{overview.inventory?.units ?? 0}</strong>
+                    <span>Demo stock units</span>
+                  </article>
                   <article>
                     <strong>{overview.products}</strong>
                     <span>Demo products</span>
@@ -225,6 +243,14 @@ export default function Admin() {
                     <span>Consented demo events retained</span>
                   </article>
                 </div>
+                <p>
+                  Active products out of stock:{" "}
+                  {overview.inventory?.outOfStock ?? 0}. Order statuses:{" "}
+                  {Object.entries(overview.orders?.statuses || {})
+                    .map(([status, count]) => `${status}: ${count}`)
+                    .join(" · ") || "No orders"}
+                  .
+                </p>
                 <section className="admin-panel">
                   <h2>Research service monitoring</h2>
                   <p>
@@ -282,6 +308,47 @@ export default function Admin() {
               </>
             )}
             <section className="admin-panel" id="product-editor">
+              {edit && (
+                <section>
+                  <h2>Demonstration inventory</h2>
+                  <p>
+                    Stock is separate from product details. Changes use a
+                    transaction and an audit record.
+                  </p>
+                  <label>
+                    Stock units
+                    <input
+                      type="number"
+                      min={0}
+                      max={1000000}
+                      value={stock}
+                      onChange={(e) => setStock(Number(e.target.value))}
+                    />
+                  </label>
+                  <button
+                    disabled={busy || !Number.isInteger(stock) || stock < 0}
+                    onClick={async () => {
+                      setBusy(true);
+                      setError("");
+                      try {
+                        await api("/admin/inventory/" + edit, "PUT", {
+                          expected:
+                            products.find((p) => p._id === edit)?.stock || 0,
+                          stock,
+                        });
+                        await load();
+                        setNotice("Demo stock updated.");
+                      } catch (e) {
+                        setError((e as Error).message);
+                      } finally {
+                        setBusy(false);
+                      }
+                    }}
+                  >
+                    Save stock
+                  </button>
+                </section>
+              )}
               <h2>
                 {edit
                   ? "Edit demonstration product"
@@ -442,6 +509,7 @@ export default function Admin() {
                       <th>Category</th>
                       <th>NPR</th>
                       <th>Status</th>
+                      <th>Demo stock</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -457,6 +525,7 @@ export default function Admin() {
                         </td>
                         <td>{p.priceNpr}</td>
                         <td>{p.available ? "Active" : "Inactive"}</td>
+                        <td>{p.stock || 0}</td>
                         <td>
                           <button onClick={() => select(p)}>
                             Edit {p.title}

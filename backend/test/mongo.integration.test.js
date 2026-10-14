@@ -14,6 +14,8 @@ test(
     const database = `pasal_test_${randomUUID().replaceAll("-", "")}`;
     await mongoose.connect(`mongodb://127.0.0.1:27017/${database}`, {
       serverSelectionTimeoutMS: 3000,
+      autoCreate: false,
+      autoIndex: false,
     });
     let ownsDatabase = false;
     try {
@@ -22,8 +24,10 @@ test(
         0,
       );
       ownsDatabase = true;
-      await User.init();
-      await Product.init();
+      await User.createCollection();
+      await Product.createCollection();
+      await User.createIndexes();
+      await Product.createIndexes();
       await Product.create({
         _id: 7,
         title: "Fixture only",

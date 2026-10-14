@@ -13,6 +13,7 @@ export const DemoProduct = mongoose.model(
       image: String,
       attributes: [String],
       available: Boolean,
+      stock: { type: Number, min: 0, default: 0 },
       provenance: { type: String, default: "synthetic_demo" },
     },
     { timestamps: true, collection: "demo_products" },
@@ -189,7 +190,7 @@ export class DemoRepository {
     return ResearchRequest.create(data);
   }
   async dashboard() {
-    const [products, activity, metrics] = await Promise.all([
+    const [products, activity, metrics, orderCounts] = await Promise.all([
       DemoProduct.find().lean(),
       DemoProfile.aggregate([
         { $match: { personalization: true } },
@@ -202,6 +203,10 @@ export class DemoRepository {
         },
       ]),
       ResearchRequest.find().sort({ createdAt: -1 }).limit(1000).lean(),
+      mongoose.connection
+        .collection("demo_orders")
+        .aggregate([{ $group: { _id: "$status", count: { $sum: 1 } } }])
+        .toArray(),
     ]);
     const times = metrics.map((r) => r.latencyMs).sort((a, b) => a - b);
     const strategies = {};
@@ -211,6 +216,15 @@ export class DemoRepository {
     return {
       products: products.length,
       available: products.filter((p) => p.available).length,
+      inventory: {
+        units: products.reduce((n, p) => n + (p.stock || 0), 0),
+        outOfStock: products.filter((p) => p.available && !(p.stock > 0))
+          .length,
+      },
+      orders: {
+        total: orderCounts.reduce((n, r) => n + r.count, 0),
+        statuses: Object.fromEntries(orderCounts.map((r) => [r._id, r.count])),
+      },
       categories: [...new Set(products.map((p) => p.category))].sort(),
       activity: activity[0] || { consentingProfiles: 0, events: 0 },
       research: {
