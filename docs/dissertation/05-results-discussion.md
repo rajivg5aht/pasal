@@ -54,7 +54,23 @@ expose 20,290 content-route users, or 2.91%, compared with 293 for a uniform set
 of the same size. These counts assume every selected output is approved and
 measure in-sample potential, not future exposure or effect size. The targeted
 sample is still being generated under conservative Free-tier quotas. Its final
-failure, approval, usage and ranking outcomes remain unreported until complete.
+failure, approval, usage and ranking outcomes will be reported after completion.
+
+At the eighth operational checkpoint, 98 of 128 declared items had been attempted:
+69 outputs passed schema validation and 29 attempts failed or were rejected during
+generation. Assistant grounding screening approved 41 outputs and rejected 28;
+none of the 69 schema-valid outputs remained unreviewed. Thirty items were still
+unattempted when the conservative rolling daily quota stopped generation. These
+are incomplete-sample counts, not final quality estimates. Recorded usage totalled
+35,641 input and 34,329 output tokens, excluding unavailable usage for 29 failures.
+The evidence is recorded in `docs/genai-targeted-batch-8-results.json`.
+
+Rejected outputs included unsupported present-day availability claims, category
+codes presented as item identities, and omitted source-property citations for
+asserted facts. Accepted outputs often only restated anonymous property names or
+explicit historical availability flags. Acceptance therefore indicates source
+consistency under assistant screening, not meaningful semantic enrichment or
+independent human judgement. No targeted-treatment ranking benefit is asserted.
 
 ## 5.4 Interpretation and threats to validity
 
