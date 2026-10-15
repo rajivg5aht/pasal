@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { api } from "./api";
+import { api, ApiError } from "./api";
 export type Order = {
   _id: string;
   status: string;
@@ -57,14 +57,17 @@ export function Checkout({
   lines,
   total,
   onPlaced,
+  onReviewCart,
 }: {
   lines: { productId: string; quantity: number }[];
   total: number;
   onPlaced: (order: Order) => void;
+  onReviewCart?: () => void;
 }) {
   const [available, setAvailable] = useState<boolean | null>(null),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
+  const [conflict, setConflict] = useState(false);
   // Keep the exact request after an ambiguous network failure so retry cannot create another order.
   const pending = useRef<Record<string, unknown> | null>(null);
   useEffect(() => {
@@ -97,6 +100,8 @@ export function Checkout({
       onPlaced(r.order);
     } catch (e) {
       setError((e as Error).message);
+      if (e instanceof ApiError && [400, 409].includes(e.status))
+        setConflict(true);
     } finally {
       setBusy(false);
     }
@@ -153,7 +158,10 @@ export function Checkout({
             order with no charge or delivery.
           </label>
         </fieldset>
-        <button className="primary" disabled={busy || available !== true}>
+        <button
+          className="primary"
+          disabled={busy || available !== true || conflict}
+        >
           {pending.current
             ? "Retry the same order"
             : "Place demonstration order"}
@@ -165,6 +173,9 @@ export function Checkout({
           </p>
         )}
       </form>
+      {conflict && onReviewCart && (
+        <button onClick={onReviewCart}>Refresh and review cart</button>
+      )}
       {error && (
         <p role="alert" className="shop-error">
           {error}

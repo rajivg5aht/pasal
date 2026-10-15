@@ -153,7 +153,13 @@ it("searches natural product text and opens a labelled synthetic detail", async 
         ? { error: "Sign in" }
         : input === "/api/demo/categories"
           ? { categories: ["Home"] }
-          : { products: [product] },
+          : input === "/api/demo/recommendations"
+            ? {
+                items: [],
+                strategy: "catalogue_fallback",
+                fallback: "insufficient_demo_evidence",
+              }
+            : { products: [product] },
   }));
   vi.stubGlobal("fetch", fetchMock);
   render(<DemoShop />);
@@ -189,6 +195,7 @@ it("does not render administrator data for a customer", async () => {
 it("keeps a saved cart visible when optional activity is rejected and does not log quantity decreases", async () => {
   let profile = {
     personalization: true,
+    recommendationConsentVersion: 1,
     selectedCategories: [],
     eventCount: 0,
     wishlist: [],

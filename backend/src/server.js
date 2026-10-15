@@ -20,6 +20,19 @@ const app = createApp({
   repository: new MongoRepository(),
   store: MongoStore.create({ mongoUrl }),
   demoRepository: new DemoRepository(),
+  recommendDemo: async (payload) => {
+    const response = await fetch(`${upstream}/demo/recommendations`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Service-Token": process.env.RECOMMENDATION_SERVICE_TOKEN,
+      },
+      body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(10000),
+    });
+    if (!response.ok) throw new Error("Demo recommender unavailable");
+    return response.json();
+  },
   serviceHealth: async () => {
     const response = await fetch(`${upstream}/health`, {
       signal: AbortSignal.timeout(2000),

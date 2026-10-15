@@ -61,8 +61,10 @@ observations means unknown rather than zero latency or proven reliability.
 ## How recommendations remain scientifically valid
 
 Demo IDs start with `demo-`. Demo products/profiles/cart/wishlist live in separate
-MongoDB collections. The shop's curated/category browsing is explicitly labelled;
-it does not call the Retailrocket ranker or claim experimental recommendation quality.
+MongoDB collections. The shop uses a separate demo switching recommender; see
+`DEMO_RECOMMENDER.md`. It uses synthetic text and explicitly consented demo activity,
+not Retailrocket IDs or experimental scores. Confirm the updated preferences to
+enable it: older category-only consent is excluded and renewal starts fresh history.
 
 The Research Lab retains numeric Retailrocket IDs and its existing consented
 profile API. Express passes that profile to FastAPI's approved switching controller,

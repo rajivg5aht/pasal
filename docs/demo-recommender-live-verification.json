@@ -1,0 +1,16 @@
+{
+  "kind": "local_engineering_diagnostic_not_research_results",
+  "date": "2026-10-15",
+  "checks": [
+    "anonymous_results_use_only_eligible_demo_ids",
+    "one_event_selects_content_route",
+    "seen_item_excluded",
+    "two_events_select_hybrid",
+    "sufficient_evidence_selects_cf",
+    "cf_returns_co_viewed_unseen_demo_product",
+    "reset_discards_personalization",
+    "demo_does_not_claim_genai",
+    "research_profile_remains_separate"
+  ],
+  "status": "passed"
+}

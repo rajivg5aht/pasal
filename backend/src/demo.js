@@ -25,7 +25,13 @@ const product = z
   })
   .strict();
 
-export function demoRouter({ repository, requireUser, serviceHealth }) {
+export function demoRouter({
+  repository,
+  requireUser,
+  serviceHealth,
+  recommendDemo,
+  optionalUser,
+}) {
   const router = Router();
   const admin = [
     requireUser,
@@ -41,6 +47,46 @@ export function demoRouter({ repository, requireUser, serviceHealth }) {
       next();
     },
   ];
+  router.get("/demo/recommendations", optionalUser, async (req, res) => {
+    const profile = req.user ? await repository.profile(req.user._id) : null;
+    const active = Boolean(profile?.personalization && profile.recommendationConsentVersion === 1);
+    const products = await repository.products({ includeInactive: true });
+    const recent = active ? profile.recentItems : [];
+    const result = await recommendDemo({
+      products: products.map((p) => ({
+        id: p._id,
+        title: p.title,
+        category: p.category,
+        description: p.description,
+        attributes: p.attributes,
+        eligible: Boolean(p.available && p.stock > 0),
+      })),
+      profiles: await repository.recommendationProfiles(),
+      profile: {
+        personalization: active,
+        event_count: active ? profile.eventCount : 0,
+        recent_items: recent,
+        seen_items: active
+          ? [...new Set([...(profile.seenItems || []), ...recent])]
+          : [],
+        selected_categories: active ? profile.selectedCategories : [],
+      },
+      k: 4,
+    });
+    // Re-hydrate live eligibility after scoring; never display a deactivated or sold-out candidate.
+    const current = await repository.productsByIds(
+      result.items.map((r) => r.productId),
+    );
+    const lookup = new Map(
+      current.filter((p) => p.available && p.stock > 0).map((p) => [p._id, p]),
+    );
+    res.json({
+      ...result,
+      items: result.items
+        .filter((r) => lookup.has(r.productId))
+        .map((r) => ({ ...r, product: lookup.get(r.productId) })),
+    });
+  });
   router.get("/demo/products", async (req, res) => {
     const input = z
       .object({
@@ -166,15 +212,13 @@ export function demoRouter({ repository, requireUser, serviceHealth }) {
     }),
   );
   router.post("/admin/products", ...admin, async (req, res) =>
-    res
-      .status(201)
-      .json({
-        product: await repository.create({
-          ...product.parse(req.body),
-          _id: "demo-" + randomUUID(),
-          provenance: "synthetic_demo",
-        }),
+    res.status(201).json({
+      product: await repository.create({
+        ...product.parse(req.body),
+        _id: "demo-" + randomUUID(),
+        provenance: "synthetic_demo",
       }),
+    }),
   );
   router.put("/admin/products/:id", ...admin, async (req, res) => {
     const updated = await repository.update(

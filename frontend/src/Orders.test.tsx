@@ -32,6 +32,49 @@ const response = (value: unknown) => ({
   status: 200,
   json: async () => value,
 });
+it("returns to cart review after a definitive price or cart conflict", async () => {
+  const review = vi.fn();
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(async (url: string) =>
+      url.endsWith("checkout-status")
+        ? response({ available: true })
+        : {
+            ok: false,
+            status: 409,
+            json: async () => ({ error: "Prices changed" }),
+          },
+    ),
+  );
+  render(
+    <Checkout
+      lines={[{ productId: "demo-mug", quantity: 1 }]}
+      total={600}
+      onPlaced={vi.fn()}
+      onReviewCart={review}
+    />,
+  );
+  await waitFor(() =>
+    expect(
+      screen.getByRole("button", { name: "Place demonstration order" }),
+    ).not.toBeDisabled(),
+  );
+  fireEvent.change(screen.getByLabelText("Demo recipient name"), {
+    target: { value: "Example shopper" },
+  });
+  fireEvent.click(screen.getByRole("checkbox"));
+  fireEvent.click(
+    screen.getByRole("button", { name: "Place demonstration order" }),
+  );
+  await screen.findByText("Prices changed");
+  expect(
+    screen.getByRole("button", { name: "Retry the same order" }),
+  ).toBeDisabled();
+  fireEvent.click(
+    screen.getByRole("button", { name: "Refresh and review cart" }),
+  );
+  expect(review).toHaveBeenCalledOnce();
+});
 it("retries an ambiguous checkout using exactly the same idempotency key and payload", async () => {
   const writes: unknown[] = [];
   const placed = vi.fn();

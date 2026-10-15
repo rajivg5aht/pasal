@@ -70,6 +70,9 @@ export function createApp({
   production = false,
   demoRepository,
   serviceHealth = async () => ({ status: "not_configured" }),
+  recommendDemo = async () => {
+    throw new Error("Demo recommender unavailable");
+  },
 }) {
   if (!sessionSecret || sessionSecret.length < 32 || !store)
     throw new Error("Persistent session store and strong secret required");
@@ -119,6 +122,12 @@ export function createApp({
       req.session.userId && (await repository.getUser(req.session.userId));
     if (!user) return res.status(401).json({ error: "Sign in to continue" });
     req.user = user;
+    next();
+  }
+  async function optionalUser(req, res, next) {
+    req.user = req.session.userId
+      ? await repository.getUser(req.session.userId)
+      : null;
     next();
   }
   app.get("/api/health", (req, res) => res.json({ status: "ready" }));
@@ -276,7 +285,13 @@ export function createApp({
   if (demoRepository)
     app.use(
       "/api",
-      demoRouter({ repository: demoRepository, requireUser, serviceHealth }),
+      demoRouter({
+        repository: demoRepository,
+        requireUser,
+        serviceHealth,
+        recommendDemo,
+        optionalUser,
+      }),
     );
   app.use((error, req, res, next) => {
     if (error instanceof z.ZodError)

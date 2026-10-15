@@ -28,9 +28,18 @@ test(
         0,
       );
       owns = true;
+      const demoRequests = [];
       const app = createApp({
         repository: new MongoRepository(),
         demoRepository: new DemoRepository(),
+        recommendDemo: async (payload) => {
+          demoRequests.push(payload);
+          return {
+            items: [],
+            source: "synthetic_demo",
+            strategy: "catalogue_fallback",
+          };
+        },
         store: new session.MemoryStore(),
         sessionSecret: "fixture-secret-".repeat(4),
         recommend: async (profile) => {
@@ -164,6 +173,20 @@ test(
       assert.deepEqual(u.wishlist, []);
       let p = (await customer.get("/api/demo/profile")).body;
       assert.equal(p.profile.eventCount, 1);
+      await customer.get("/api/demo/recommendations").expect(200);
+      assert.equal(demoRequests.at(-1).profile.event_count, 1);
+      assert.deepEqual(demoRequests.at(-1).profile.seen_items, [created._id]);
+      assert.deepEqual(demoRequests.at(-1).profiles, [[created._id]]);
+      assert.equal(
+        JSON.stringify(demoRequests.at(-1)).includes("customer@example.test"),
+        false,
+      );
+      assert.ok(
+        demoRequests.at(-1).products.every((p) => p.id.startsWith("demo-")),
+      );
+      await request(app).get("/api/demo/recommendations").expect(200);
+      assert.equal(demoRequests.at(-1).profile.personalization, false);
+      assert.deepEqual(demoRequests.at(-1).profile.seen_items, []);
       assert.equal(p.profile.cart[0].quantity, 2);
       assert.equal(p.products[0]._id, created._id);
       // Saved shopping state survives logout/login and never leaks to another account.
@@ -197,6 +220,40 @@ test(
       p = (await customer.get("/api/demo/profile")).body.profile;
       assert.equal(p.eventCount, 0);
       assert.equal(p.personalization, false);
+      // Legacy category-only consent cannot enter the new collaborative model.
+      const currentUser = await User.findOne({
+        email: "customer@example.test",
+      });
+      await DemoProfile.updateOne(
+        { _id: String(currentUser._id) },
+        {
+          $set: {
+            personalization: true,
+            recommendationConsentVersion: 0,
+            eventCount: 1,
+            recentItems: [created._id],
+          },
+        },
+      );
+      await customer.get("/api/demo/recommendations").expect(200);
+      assert.equal(demoRequests.at(-1).profile.personalization, false);
+      assert.deepEqual(demoRequests.at(-1).profiles, []);
+      await customer
+        .put("/api/demo/privacy")
+        .set("Origin", origin)
+        .send({ personalization: true, selectedCategories: [] })
+        .expect(200);
+      const renewed = (await customer.get("/api/demo/profile")).body.profile;
+      assert.equal(renewed.recommendationConsentVersion, 1);
+      assert.equal(renewed.eventCount, 0);
+      assert.deepEqual(renewed.recentItems, []);
+      await customer
+        .delete("/api/demo/history")
+        .set("Origin", origin)
+        .expect(200);
+      await customer.get("/api/demo/recommendations").expect(200);
+      assert.deepEqual(demoRequests.at(-1).profiles, []);
+      assert.deepEqual(demoRequests.at(-1).profile.seen_items, []);
       assert.equal(p.cart[0].quantity, 2);
       assert.deepEqual(p.wishlist, [created._id]);
       await admin

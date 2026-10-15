@@ -31,6 +31,7 @@ type Product = {
   provenance: string;
 };
 type Profile = {
+  recommendationConsentVersion?: number;
   personalization: boolean;
   selectedCategories: string[];
   eventCount: number;
@@ -89,6 +90,12 @@ function Dialog({
 }
 export default function DemoShop() {
   const [placedOrder, setPlacedOrder] = useState<Order | null>(null);
+  const [recommendations, setRecommendations] = useState<{
+    items: { productId: string; reason: string; product: Product }[];
+    strategy: string;
+    fallback: string | null;
+  } | null>(null);
+  const [recommendationError, setRecommendationError] = useState("");
   const [user, setUser] = useState<User | null>(null),
     [profile, setProfile] = useState<Profile>(empty),
     [products, setProducts] = useState<Product[]>([]),
@@ -114,6 +121,28 @@ export default function DemoShop() {
     setSaved(r.products);
     return r.profile;
   }
+  useEffect(() => {
+    const controller = new AbortController();
+    setRecommendations(null);
+    setRecommendationError("");
+    api<{
+      items: { productId: string; reason: string; product: Product }[];
+      strategy: string;
+      fallback: string | null;
+    }>("/demo/recommendations", "GET", undefined, controller.signal)
+      .then((result) => {
+        if (!Array.isArray(result.items))
+          throw new Error("Invalid recommendation response");
+        if (!controller.signal.aborted) setRecommendations(result);
+      })
+      .catch((e) => {
+        if (e.name !== "AbortError")
+          setRecommendationError(
+            "Suggestions are temporarily unavailable. You can still browse the shop.",
+          );
+      });
+    return () => controller.abort();
+  }, [profile, user]);
   useEffect(() => {
     api<{ user: User }>("/me")
       .then((r) => {
@@ -185,7 +214,7 @@ export default function DemoShop() {
     return false;
   }
   async function event(id: string, type: "view" | "addtocart") {
-    if (profile.personalization)
+    if (profile.personalization && profile.recommendationConsentVersion === 1)
       await api("/demo/events", "POST", { productId: id, type });
   }
   function openProduct(p: Product) {
@@ -416,6 +445,50 @@ export default function DemoShop() {
             <div className="grid">{selected.slice(0, 4).map(card)}</div>
           </section>
         )}
+        <section className="shop-section" aria-label="Shop recommendations">
+          {profile.personalization &&
+            profile.recommendationConsentVersion !== 1 && (
+              <p>
+                Your earlier consent covered category browsing.{" "}
+                <button onClick={preferences}>
+                  Review preferences to enable demo recommendations
+                </button>
+                . Enabling starts a fresh recommendation history.
+              </p>
+            )}
+          <h2>
+            {recommendations?.strategy === "catalogue_fallback"
+              ? "Explore something new"
+              : "Suggestions for your next visit"}
+          </h2>
+          <p>
+            Suggestions use this demonstration catalogue and consented demo
+            activity. They are separate from the Retailrocket research
+            evaluation.
+          </p>
+          {recommendationError && <p role="status">{recommendationError}</p>}
+          {!recommendations && !recommendationError && (
+            <p role="status">Loading suggestions…</p>
+          )}
+          {recommendations && (
+            <>
+              {!recommendations.items.length && (
+                <p>
+                  No unseen, in-stock suggestions right now. Explore the full
+                  catalogue below.
+                </p>
+              )}
+              <div className="grid">
+                {recommendations.items.map((r) => (
+                  <div key={r.productId}>
+                    {card(r.product)}
+                    <p className="recommendation-reason">{r.reason}</p>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+        </section>
         <section className="shop-section" id="shop-catalogue">
           <span className="eyebrow">FIND YOUR NEXT EVERYDAY FAVOURITE</span>
           <h2>Explore the shop</h2>
@@ -595,9 +668,12 @@ export default function DemoShop() {
               Save my demo browsing activity and category choices
             </label>
             <p>
-              Used for demo category browsing only. Turning this off clears the
-              demo interaction history and preferences. Research Lab consent is
-              separate.
+              Allow demo browsing to personalise your suggestions and contribute
+              to co-viewing and popularity signals for other demo shoppers.
+              Consenting profiles are used locally; customer activity is never
+              sent to a Generative AI provider. Turning this off clears demo
+              history and preferences and removes your contribution. Research
+              Lab consent is separate.
             </p>
             <fieldset disabled={!consent}>
               <legend>Preferred categories</legend>
@@ -771,6 +847,12 @@ export default function DemoShop() {
               setPlacedOrder(order);
               setModal("confirmation");
               void refreshProfile().catch((e) => setError(e.message));
+            }}
+            onReviewCart={() => {
+              void action(async () => {
+                await refreshProfile();
+                setModal("cart");
+              });
             }}
           />
         </Dialog>

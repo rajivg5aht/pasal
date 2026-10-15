@@ -23,9 +23,11 @@ const profileSchema = new Schema(
   {
     _id: String,
     personalization: { type: Boolean, default: false },
+    recommendationConsentVersion: { type: Number, default: 0 },
     selectedCategories: { type: [String], default: [] },
     eventCount: { type: Number, default: 0 },
     recentItems: { type: [String], default: [] },
+    seenItems: { type: [String], default: [] },
     wishlist: { type: [String], default: [] },
     cart: {
       type: [{ _id: false, productId: String, quantity: Number }],
@@ -95,25 +97,48 @@ export class DemoRepository {
     ).lean();
   }
   privacy(id, personalization, selectedCategories) {
+    const retain = {
+      $and: [personalization, { $eq: ["$recommendationConsentVersion", 1] }],
+    };
     return DemoProfile.findByIdAndUpdate(
       String(id),
-      {
-        $set: {
-          personalization,
-          selectedCategories: personalization ? selectedCategories : [],
-          ...(!personalization ? { eventCount: 0, recentItems: [] } : {}),
+      [
+        {
+          $set: {
+            personalization,
+            recommendationConsentVersion: personalization ? 1 : 0,
+            selectedCategories: {
+              $literal: personalization ? selectedCategories : [],
+            },
+            eventCount: { $cond: [retain, "$eventCount", 0] },
+            recentItems: { $cond: [retain, "$recentItems", []] },
+            seenItems: { $cond: [retain, { $ifNull: ["$seenItems", []] }, []] },
+            updatedAt: "$$NOW",
+          },
         },
-      },
-      { returnDocument: "after" },
+      ],
+      { returnDocument: "after", updatePipeline: true },
     ).lean();
   }
   event(id, item) {
     return DemoProfile.findOneAndUpdate(
-      { _id: String(id), personalization: true },
+      {
+        _id: String(id),
+        personalization: true,
+        recommendationConsentVersion: 1,
+        $or: [{ seenItems: item }, { "seenItems.999": { $exists: false } }],
+      },
       [
         {
           $set: {
             eventCount: { $add: ["$eventCount", 1] },
+            seenItems: {
+              $setUnion: [
+                { $ifNull: ["$seenItems", []] },
+                "$recentItems",
+                [item],
+              ],
+            },
             recentItems: {
               $slice: [
                 {
@@ -185,6 +210,17 @@ export class DemoRepository {
   }
   productsByIds(ids) {
     return DemoProduct.find({ _id: { $in: ids } }).lean();
+  }
+  async recommendationProfiles() {
+    const rows = await DemoProfile.find({
+      personalization: true,
+      recommendationConsentVersion: 1,
+    })
+      .select({ recentItems: 1, _id: 0 })
+      .sort({ updatedAt: -1, _id: 1 })
+      .limit(5000)
+      .lean();
+    return rows.map((r) => [...new Set(r.recentItems)].slice(-20));
   }
   recordMetric(data) {
     return ResearchRequest.create(data);

@@ -17,6 +17,7 @@ from models.engine import RecommendationEngine
 from models.content.train_snapshot import fingerprint
 from switching.policy import PolicyConfig
 from service.capacity import RecommendationCapacity
+from service.demo import DemoRequest, recommend_demo
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -123,4 +124,10 @@ def create_app(runtime=None, token=None):
                                 'cf_confidence_threshold':config['switching']['cf_confidence_threshold']},
                     'queue_wait_ms':round(queue_wait_ms,3),
                     'latency_ms':round((time.perf_counter()-started)*1000,3)}
+    @app.post('/demo/recommendations', dependencies=[Depends(authenticate)])
+    def demo_recommendations(request: DemoRequest):
+        with gate.slot():
+            _, config = app.state.runtime
+            return recommend_demo(request, PolicyConfig(**config['switching']))
+
     return app
