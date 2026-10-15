@@ -36,12 +36,12 @@ independent API latency. Use the separate service diagnostics for that purpose.
 ## Statistical family
 
 Primary metric: equal-observed-hypothesis-cohort mean NDCG@10 difference on the
-untouched intersection. H1 includes only 1–4 and 5–19 histories; H2 includes only
-0, 1–4 and 5–19 histories, as stated on page 9 of the approved proposal. The two prespecified comparisons are:
+untouched intersection. H1 includes only 1â€“4 and 5â€“19 histories; H2 includes only
+0, 1â€“4 and 5â€“19 histories, as stated on page 9 of the approved proposal. The two prespecified comparisons are:
 
 1. Switching without GenAI minus the validation-best non-switching baseline
-   (fixed hybrid), for users with 1–19 events.
-2. Switching with GenAI minus switching without GenAI, for users with 0–19 events.
+   (fixed hybrid), for users with 1â€“19 events.
+2. Switching with GenAI minus switching without GenAI, for users with 0â€“19 events.
 
 In the existing validation assessment, H1-cohort macro NDCG is .023991711 for
 fixed hybrid, .021498928 for category popularity, .021122881 for TF-IDF,
@@ -68,11 +68,14 @@ and [statsmodels Holm implementation/documentation](https://www.statsmodels.org/
 
 Build a new enriched artifact and run the paired validation check first, retaining
 all previous versions. Then freeze inputs using the new artifact and completed
-sample; the script refuses unfinished attempts, pending reviews and mismatches:
+sample; the script refuses unfinished attempts, pending reviews and mismatches.
+The paired report must match exact input hashes and hashed per-user/exposure outputs,
+with all seven conditions on identical users at full density. No positive-effect
+requirement is imposed: this is a provenance check, not performance selection.
 
 ```powershell
 $env:OPENBLAS_NUM_THREADS='1'
-.venv\Scripts\python.exe recommendation-engine/evaluation/final_holdout.py freeze --enriched data/processed/content-genai-targeted-v1 --sample data/processed/genai-targeted-sample-v1 --reviews data/processed/genai-targeted-sample-v1/reviews.jsonl --output docs/final-evaluation-freeze-v1.json --per-cohort 500
+.venv\Scripts\python.exe recommendation-engine/evaluation/final_holdout.py freeze --enriched data/processed/content-genai-targeted-v1 --sample data/processed/genai-targeted-sample-v1 --reviews data/processed/genai-targeted-sample-v1/reviews.jsonl --paired-validation data/processed/paired-genai-targeted-v1/report.json --output docs/final-evaluation-freeze-v1.json --per-cohort 500
 ```
 
 Commit that freeze before executing the next command. It records code revision,

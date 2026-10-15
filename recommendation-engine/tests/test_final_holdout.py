@@ -11,12 +11,41 @@ from scipy.sparse import eye
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from evaluation.common import Case
-from evaluation.final_holdout import require_complete, run, select_cases, verify
+from evaluation.final_holdout import require_complete, require_paired_validation, run, select_cases, verify
 from evaluation.tune_baselines import CONFIGURATIONS
 from models.content.train_snapshot import fingerprint
 
 
 class FinalHoldoutTests(unittest.TestCase):
+    def test_paired_validation_requires_current_inputs_and_complete_cases(self):
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root/'manifest.json'
+            source.write_text('{}')
+            rows = [dict(visitorid=1, model=model, failure=None)
+                    for model in CONFIGURATIONS + ['switching_with_genai']]
+            records = root/'per_user.jsonl'
+            records.write_text('\n'.join(map(json.dumps, rows)))
+            (root/'exposure.jsonl').write_text('{"visitorid": 1}\n')
+            report = root/'report.json'
+            evidence = dict(status='partial_enrichment_validation_diagnostic_not_final_H2',
+                density_manifest=None, exposure={'users': 1},
+                inputs_sha256={str(source): fingerprint(source)},
+                outputs_sha256={name: fingerprint(root/name) for name in ('per_user.jsonl', 'exposure.jsonl')})
+            report.write_text(json.dumps(evidence))
+            require_paired_validation(report, [source])
+            source.write_text('{"new_treatment": true}')
+            with self.assertRaisesRegex(ValueError, 'input mismatch'):
+                require_paired_validation(report, [source])
+            source.write_text('{}')
+            records.write_text('\n'.join(map(json.dumps, rows[:-1])))
+            with self.assertRaisesRegex(ValueError, 'output mismatch'):
+                require_paired_validation(report, [source])
+            evidence['outputs_sha256']['per_user.jsonl'] = fingerprint(records)
+            report.write_text(json.dumps(evidence))
+            with self.assertRaisesRegex(ValueError, 'seven configurations'):
+                require_paired_validation(report, [source])
+
     def test_incomplete_generation_cannot_freeze(self):
         evidence = dict(status='incomplete_sample', not_attempted=108, pending_review=0, reviewed_approved=11)
         with self.assertRaises(ValueError): require_complete(evidence)

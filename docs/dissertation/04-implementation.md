@@ -62,15 +62,37 @@ with Retry-After rather than consuming unbounded resources. Queue wait is includ
 in observed latency. Release occurs on both success and failure. Single-threaded
 BLAS settings reduce resource contention in this local experimental environment.
 
+The synthetic shop has a separate ranking adapter using the same switching-policy
+implementation. TF-IDF is fitted on synthetic catalogue text; popularity counts
+distinct-item support in consented demo profiles; item-CF uses normalised profile
+co-occurrence. Only active, in-stock, unseen demo items are returned. A deterministic
+catalogue fallback is explicitly identified when insufficient scoring evidence
+exists. Transferred research thresholds are not claimed to be validated on this
+demo population, and no generated demo text is claimed.
+
+The adapter uses at most 100 products, 5,000 latest updated consenting profiles and
+20 recent distinct items per profile. Full retained seen history is capped at
+1,000 items. Versioned consent distinguishes this collaborative purpose from the
+earlier category-browsing permission. Renewing consent starts fresh history; old
+consent is excluded from ranking inputs. Local service payloads contain no account
+IDs, email addresses or delivery details, and none of this activity goes to Groq.
+
 ## 4.4 Verification and limitations
 
-The recorded October 14 verification includes twelve frontend tests, eight backend
+The recorded October 15 verification includes thirteen frontend tests, eight backend
 tests including real MongoDB integration, and a successful production frontend
 build. Backend checks cover persistence, isolation, consent reset and live role
 revocation. Research code has a separate Python test suite covering temporal
 features, history rules, metrics, generation provenance and final evaluation.
-All 83 Python tests passed at this checkpoint. Exact counts belong in the
+All 89 Python tests passed at this checkpoint. Exact counts belong in the
 submission evidence manifest rather than being treated as permanent properties.
+
+Live API diagnostics verified one-event content routing, sparse-history hybrid
+routing and richer-history collaborative routing with actual synthetic fixture
+interactions. They checked eligibility, seen-item exclusion and history reset,
+then cleared fixture activity. These are engineering checks, not offline efficacy
+results. Browser automation was blocked during this checkpoint, so a fresh browser
+checkout walkthrough and final accessibility review remain unverified.
 
 A research-preservation checkpoint matched hashes for 83 protected raw, split,
 model and evaluation files before and after storefront work. This verifies that

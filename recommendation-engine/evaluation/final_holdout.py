@@ -43,7 +43,40 @@ def select_cases(cases, per_cohort, seed):
     return selected, population
 
 
-def freeze(output, enriched, sample, reviews, per_cohort=500):
+def require_paired_validation(report_path, inputs):
+    """Require the exact treatment's validation evidence without selecting on its scores."""
+    report_path = Path(report_path)
+    evidence = json.loads(report_path.read_text())
+    if (evidence.get('status') != 'partial_enrichment_validation_diagnostic_not_final_H2'
+            or evidence.get('density_manifest') is not None):
+        raise ValueError('Full-density paired validation required')
+    recorded = {str(Path(p).resolve()): digest for p, digest in evidence['inputs_sha256'].items()}
+    for path in inputs:
+        if recorded.get(str(path.resolve())) != fingerprint(path):
+            raise ValueError('Paired validation input mismatch: ' + str(path))
+    outputs = [report_path.parent/name for name in ('per_user.jsonl', 'exposure.jsonl')]
+    for path in outputs:
+        if evidence.get('outputs_sha256', {}).get(path.name) != fingerprint(path):
+            raise ValueError('Paired validation output mismatch: ' + path.name)
+    rows = [json.loads(line) for line in outputs[0].read_text().splitlines()]
+    models = set(CONFIGURATIONS + ['switching_with_genai'])
+    users = {}
+    for row in rows:
+        observed = users.setdefault(row['visitorid'], set())
+        if row['model'] in observed or row.get('failure'):
+            raise ValueError('Duplicate or failed paired validation case')
+        observed.add(row['model'])
+    if not users or any(observed != models for observed in users.values()):
+        raise ValueError('All seven configurations must assess the same users')
+    if len(users) != evidence['exposure']['users']:
+        raise ValueError('Paired validation user count mismatch')
+    exposure = [json.loads(line) for line in outputs[1].read_text().splitlines()]
+    if len(exposure) != len(users) or {row['visitorid'] for row in exposure} != set(users):
+        raise ValueError('Paired validation exposure users mismatch')
+    return outputs
+
+
+def freeze(output, enriched, sample, reviews, paired_validation, per_cohort=500):
     output, enriched, sample, reviews = map(Path, (output, enriched, sample, reviews))
     if output.exists():
         raise FileExistsError('Never overwrite a final freeze')
@@ -54,6 +87,8 @@ def freeze(output, enriched, sample, reviews, per_cohort=500):
     paths = {'raw_events': ROOT/'data/raw/events.csv',
         'split': ROOT/'data/splits/event-count-v1/manifest.json',
         'train': ROOT/'data/splits/event-count-v1/train.csv',
+        'validation': ROOT/'data/splits/event-count-v1/validation.csv',
+        'paired_validation': Path(paired_validation),
         'config': ROOT/'data/processed/validation-tuning-v2/selected_config.json',
         'validation_summary': ROOT/'data/processed/validation-tuning-v2/summary.json',
         'base': ROOT/'data/processed/content-event-count-v1/manifest.json',
@@ -65,8 +100,10 @@ def freeze(output, enriched, sample, reviews, per_cohort=500):
             or enhanced['base_manifest_sha256'] != fingerprint(paths['base'])
             or enhanced['approved_items'] != quality['reviewed_approved']):
         raise ValueError('Final enriched artifact does not match the completed reviewed sample')
+    paired_outputs = require_paired_validation(paths['paired_validation'],
+        [paths[key] for key in ('train', 'validation', 'config', 'base', 'cf', 'enriched')])
     # Snapshot every implementation and every model file, not just top-level manifests.
-    extra = list((ROOT/'recommendation-engine').rglob('*.py'))
+    extra = list((ROOT/'recommendation-engine').rglob('*.py')) + paired_outputs
     for key in ('base', 'cf', 'enriched'):
         manifest = json.loads(paths[key].read_text())
         extra += [paths[key].parent/name for name in manifest['artifacts_sha256']]
@@ -217,6 +254,7 @@ if __name__ == '__main__':
     create = subs.add_parser('freeze')
     for key in ('output', 'enriched', 'sample', 'reviews'): create.add_argument('--'+key, type=Path, required=True)
     create.add_argument('--per-cohort', type=int, default=500)
+    create.add_argument('--paired-validation', type=Path, required=True)
     execute = subs.add_parser('run')
     execute.add_argument('--frozen', type=Path, required=True)
     execute.add_argument('--output', type=Path, required=True)

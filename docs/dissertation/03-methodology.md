@@ -2,6 +2,20 @@
 
 ## 3.1 Experimental design
 
+The approved research process uses Design Science Research, supported by CRISP-DM
+and Agile development. The design-science artifact is the integrated switching
+recommender and its research prototype. Problem identification concerns sparse
+interaction evidence; design and construction produce the data pipeline, models,
+generation safeguards and application; demonstration exercises the artifact; and
+evaluation assesses measured ranking and operational behaviour. Building a working
+artifact alone does not establish the research hypotheses.
+
+CRISP-DM provides the practical sequence of understanding the retail problem and
+dataset, preparing historical data, fitting models, evaluating outcomes and deploying
+the prototype. Iterative development addresses defects in small changes with tests
+and versioned evidence. These iterations may improve implementation, but they do
+not justify changing frozen outcomes or retuning on the final test partition.
+
 The controlled comparison uses the seven configurations in the approved proposal:
 global popularity, category popularity, TF-IDF content similarity, item-based
 collaborative filtering, a fixed hybrid, switching without generated metadata and

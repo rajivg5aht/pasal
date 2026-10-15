@@ -134,6 +134,7 @@ def run(train, validation, content_dir, enriched_dir, cf_dir, tuning_dir, output
                            'approved_items': len(generated)},
               'inputs_sha256': {str(p): fingerprint(p) for p in [train, validation, tuning_dir/'selected_config.json',
                   Path(content_dir)/'manifest.json', Path(enriched_dir)/'manifest.json', Path(cf_dir)/'manifest.json']},
+              'outputs_sha256': {name: fingerprint(output/name) for name in ('per_user.jsonl', 'exposure.jsonl')},
               'total_wall_seconds': time.perf_counter()-started,
               'limitations': ['Shared signal computation does not measure independent request latency',
                               'Small, partially enriched catalogue; no final test or representative H2 claim']}
