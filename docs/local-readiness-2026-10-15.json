@@ -1,0 +1,23 @@
+{
+  "checkedAtUtc": "2026-10-15T16:56:38.015Z",
+  "checks": [
+    {
+      "name": "configured_database_is_writable_replica_primary",
+      "passed": true
+    },
+    {
+      "name": "backend_ready",
+      "passed": true
+    },
+    {
+      "name": "recommender_ready",
+      "passed": true
+    },
+    {
+      "name": "frontend_reachable",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "scope": "Read-only process and database prerequisites; not a browser walkthrough, transaction execution or research validation."
+}

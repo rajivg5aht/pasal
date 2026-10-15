@@ -27,6 +27,13 @@ The ignored root `.env` selects the new URI. To restart locally:
 3. In `backend`, run `npm start`.
 4. In `frontend`, run `npm run dev`.
 
+5. From `backend`, run `node scripts/check-readiness.js`. All four checks should
+   pass before demonstrating the application. An optional new output filename
+   saves aggregate evidence without credentials. This command reads database
+   topology and service health only; it does not change records, create indexes,
+   execute orders or establish that research results are complete. A failed check
+   exits nonzero; inspect the named service locally before proceeding.
+
 Copied sessions were deliberately omitted; sign in again with your existing
 account. The current compose file is the older standalone configuration,
 not the active transaction-ready deployment. See `COMMERCE_DEPLOYMENT.md`.
