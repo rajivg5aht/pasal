@@ -72,6 +72,8 @@ sample; the script refuses unfinished attempts, pending reviews and mismatches.
 The paired report must match exact input hashes and hashed per-user/exposure outputs,
 with all seven conditions on identical users at full density. No positive-effect
 requirement is imposed: this is a provenance check, not performance selection.
+The tuning manifest is also hashed, and the assessed user IDs must exactly match
+its declared assessment partition; matching counts alone are insufficient.
 
 ```powershell
 $env:OPENBLAS_NUM_THREADS='1'

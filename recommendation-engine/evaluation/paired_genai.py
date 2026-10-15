@@ -132,7 +132,7 @@ def run(train, validation, content_dir, enriched_dir, cf_dir, tuning_dir, output
                            'content_routed_users': sum(r['content_route'] for r in exposure),
                            'generated_profile_and_content_routed_users': sum(r['content_route'] and r['generated_profile_items'] > 0 for r in exposure),
                            'approved_items': len(generated)},
-              'inputs_sha256': {str(p): fingerprint(p) for p in [train, validation, tuning_dir/'selected_config.json',
+              'inputs_sha256': {str(p): fingerprint(p) for p in [train, validation, tuning_dir/'selected_config.json', tuning_dir/'manifest.json',
                   Path(content_dir)/'manifest.json', Path(enriched_dir)/'manifest.json', Path(cf_dir)/'manifest.json']},
               'outputs_sha256': {name: fingerprint(output/name) for name in ('per_user.jsonl', 'exposure.jsonl')},
               'total_wall_seconds': time.perf_counter()-started,

@@ -43,7 +43,7 @@ def select_cases(cases, per_cohort, seed):
     return selected, population
 
 
-def require_paired_validation(report_path, inputs):
+def require_paired_validation(report_path, inputs, assessment_users):
     """Require the exact treatment's validation evidence without selecting on its scores."""
     report_path = Path(report_path)
     evidence = json.loads(report_path.read_text())
@@ -70,6 +70,8 @@ def require_paired_validation(report_path, inputs):
         raise ValueError('All seven configurations must assess the same users')
     if len(users) != evidence['exposure']['users']:
         raise ValueError('Paired validation user count mismatch')
+    if set(users) != set(assessment_users):
+        raise ValueError('Paired validation assessment partition mismatch')
     exposure = [json.loads(line) for line in outputs[1].read_text().splitlines()]
     if len(exposure) != len(users) or {row['visitorid'] for row in exposure} != set(users):
         raise ValueError('Paired validation exposure users mismatch')
@@ -90,6 +92,7 @@ def freeze(output, enriched, sample, reviews, paired_validation, per_cohort=500)
         'validation': ROOT/'data/splits/event-count-v1/validation.csv',
         'paired_validation': Path(paired_validation),
         'config': ROOT/'data/processed/validation-tuning-v2/selected_config.json',
+        'tuning_manifest': ROOT/'data/processed/validation-tuning-v2/manifest.json',
         'validation_summary': ROOT/'data/processed/validation-tuning-v2/summary.json',
         'base': ROOT/'data/processed/content-event-count-v1/manifest.json',
         'cf': ROOT/'data/processed/cf-event-count-v1/manifest.json',
@@ -100,8 +103,11 @@ def freeze(output, enriched, sample, reviews, paired_validation, per_cohort=500)
             or enhanced['base_manifest_sha256'] != fingerprint(paths['base'])
             or enhanced['approved_items'] != quality['reviewed_approved']):
         raise ValueError('Final enriched artifact does not match the completed reviewed sample')
+    tuning = json.loads(paths['tuning_manifest'].read_text())
+    assessment_users = {row['visitorid'] for row in tuning['sample'] if row['partition'] == 'assessment'}
     paired_outputs = require_paired_validation(paths['paired_validation'],
-        [paths[key] for key in ('train', 'validation', 'config', 'base', 'cf', 'enriched')])
+        [paths[key] for key in ('train', 'validation', 'config', 'tuning_manifest', 'base', 'cf', 'enriched')],
+        assessment_users)
     # Snapshot every implementation and every model file, not just top-level manifests.
     extra = list((ROOT/'recommendation-engine').rglob('*.py')) + paired_outputs
     for key in ('base', 'cf', 'enriched'):

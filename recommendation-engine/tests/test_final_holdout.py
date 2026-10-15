@@ -33,18 +33,20 @@ class FinalHoldoutTests(unittest.TestCase):
                 inputs_sha256={str(source): fingerprint(source)},
                 outputs_sha256={name: fingerprint(root/name) for name in ('per_user.jsonl', 'exposure.jsonl')})
             report.write_text(json.dumps(evidence))
-            require_paired_validation(report, [source])
+            require_paired_validation(report, [source], {1})
+            with self.assertRaisesRegex(ValueError, 'assessment partition'):
+                require_paired_validation(report, [source], {2})
             source.write_text('{"new_treatment": true}')
             with self.assertRaisesRegex(ValueError, 'input mismatch'):
-                require_paired_validation(report, [source])
+                require_paired_validation(report, [source], {1})
             source.write_text('{}')
             records.write_text('\n'.join(map(json.dumps, rows[:-1])))
             with self.assertRaisesRegex(ValueError, 'output mismatch'):
-                require_paired_validation(report, [source])
+                require_paired_validation(report, [source], {1})
             evidence['outputs_sha256']['per_user.jsonl'] = fingerprint(records)
             report.write_text(json.dumps(evidence))
             with self.assertRaisesRegex(ValueError, 'seven configurations'):
-                require_paired_validation(report, [source])
+                require_paired_validation(report, [source], {1})
 
     def test_incomplete_generation_cannot_freeze(self):
         evidence = dict(status='incomplete_sample', not_attempted=108, pending_review=0, reviewed_approved=11)
