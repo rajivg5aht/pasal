@@ -72,6 +72,14 @@ explicit historical availability flags. Acceptance therefore indicates source
 consistency under assistant screening, not meaningful semantic enrichment or
 independent human judgement. No targeted-treatment ranking benefit is asserted.
 
+The subsequent ninth checkpoint reached 107 attempted items, with 77 schema-valid
+outputs and 30 generation failures. After grounding screening, 48 outputs were
+approved and 29 rejected; no generated outputs awaited review. The remaining 21
+items were unattempted because the rolling Free-tier guard stopped generation.
+Recorded token totals were 39,810 input and 38,280 output tokens, excluding failure
+usage. These superseding operational counts are preserved in
+`docs/genai-targeted-batch-9-results.json`; they remain incomplete-sample evidence.
+
 ## 5.4 Interpretation and threats to validity
 
 The development findings challenge the assumption that switching necessarily

@@ -1,0 +1,1444 @@
+{
+  "status": "incomplete_sample",
+  "sample_size": 128,
+  "attempted": 107,
+  "not_attempted": 21,
+  "generated_schema_pass": 77,
+  "failed_or_rejected": 30,
+  "schema_pass_rate_among_attempts": 0.719626168224299,
+  "schema_pass_wilson_95_interval": [
+    0.6280470858860803,
+    0.7959819777879273
+  ],
+  "reviewed_approved": 48,
+  "reviewed_rejected": 29,
+  "pending_review": 0,
+  "reported_input_tokens": 39810,
+  "reported_output_tokens": 38280,
+  "attempts_without_usage": 30,
+  "all_attempt_latency_ms": {
+    "median": 1337.8175999969244,
+    "p95": 1876.6112900002547
+  },
+  "http_status_counts": {
+    "400": 29
+  },
+  "sample_manifest_sha256": "2e29e62e4bd56624a5d8c3f2c8da7edc1f8971bd210b18f72f3544bd990ae4c1",
+  "attempts": [
+    {
+      "itemid": 46156,
+      "cache_key": "0042b6fc7abbe8fdf5a321a1f3e5a23ec868cdcacbfb2c6640828a7558d8934d",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 516,
+        "output_tokens": 642
+      },
+      "latency_ms": 1246.7925999953877,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 237422,
+      "cache_key": "012bd1bb1dbc0e9b846bff01f947f4260f960bd37ea7740ec0110ebfd059a5b0",
+      "status": "rejected_or_failed",
+      "http_status": null,
+      "error_code": null,
+      "usage": null,
+      "latency_ms": 3.265900013502687,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 215596,
+      "cache_key": "023b0c070f970863a8431cb01258e72f26fa7d12e7899e0b41a4f92daa1e8e94",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1495.2919999996084,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 247909,
+      "cache_key": "02ea546930d45fc05d0818392e797ed9d4e37cebb875b2636518832996ce4c39",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 511,
+        "output_tokens": 325
+      },
+      "latency_ms": 985.6574000004912,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 98425,
+      "cache_key": "076f7e80fd78cd9aeb6f2803d93b555813b5cf0bd81866328e972f1169be4dbe",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1600.9853999998995,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 242905,
+      "cache_key": "16c2785d4a253733b4a5835f3cf4f13a2dce9f9da02d8b102b577174a41eb8d5",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1460.6633999937912,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 65273,
+      "cache_key": "1a67b7dfa23abcdfa5c45c28add02e03410c8e91f7d771a5cffc19892ca4e68d",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1487.8520000202116,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 342530,
+      "cache_key": "1bfd2acc1bed4d25837c7ca6a5f06ba90c3256c6a866fb43ec7ce778f987967e",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 472,
+        "output_tokens": 353
+      },
+      "latency_ms": 1037.4332000064896,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 190000,
+      "cache_key": "1ef58506b0d154d83da096bda7ede682b0c55699a3468a5763209aba675d06ed",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 378,
+        "output_tokens": 462
+      },
+      "latency_ms": 1160.808100000395,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 211811,
+      "cache_key": "1f648d84f431d676daacd66b6b4169e58d4f1777164502f6373b6b1bed48571d",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 510,
+        "output_tokens": 695
+      },
+      "latency_ms": 1593.1981000030646,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 354233,
+      "cache_key": "26bacbd65c36bf7cfed7f544a21e50f564232aae5b1ca250b8a50f97ba5be361",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1587.674499998684,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 341482,
+      "cache_key": "29bdc68d0d4ad1c3310b78c9223865d5078498ef72b83485c8acede4626cee77",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 287
+      },
+      "latency_ms": 1032.5104000075953,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 280375,
+      "cache_key": "2ba618d3d18b04cce2a3a384c6ebb26088db28d0660e1558bcd812b1470503b9",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1522.5004999956582,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 215704,
+      "cache_key": "2ca4b7b5fc60fcc6323b7d08a127705ec3c4bea0ec0e46a8437d4ea5fa135be8",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 2422.6378000021214,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 18519,
+      "cache_key": "314037ea5ca60253ef7f8fbc84edef00b545acaf790f94706e64f8f0ee12b078",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 508,
+        "output_tokens": 393
+      },
+      "latency_ms": 1098.610400018515,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 330647,
+      "cache_key": "37090d541346e9c1bd3931e10440afe7e351ae103b1d6612422a243943fd09e0",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 502,
+        "output_tokens": 508
+      },
+      "latency_ms": 1205.8252999995602,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 273118,
+      "cache_key": "37850d5003a203658f4fbf458b224697dd93cf4e0e122a6485e339ac4507bec2",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 520,
+        "output_tokens": 255
+      },
+      "latency_ms": 874.6122000011383,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 15948,
+      "cache_key": "39ef0eb2d70a469a904fbd366da2af5c4322a1473998a19623732f81b796e428",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 553,
+        "output_tokens": 348
+      },
+      "latency_ms": 1337.8175999969244,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 91600,
+      "cache_key": "3bbd355a12851e3fac6f42d0f421676bdb3b39f5b6ac8dbc5069a833d15036b2",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 495,
+        "output_tokens": 410
+      },
+      "latency_ms": 1062.1968999998899,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 240900,
+      "cache_key": "3f3895743a413f676cc2fa444dee05ca1d27fa03f07ac895472f4e318e86a43b",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 563,
+        "output_tokens": 332
+      },
+      "latency_ms": 1012.7988000022015,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 82278,
+      "cache_key": "3f8021fdc4112733514de7b1f103066ab8b6a17ac0d2eb8b2b97b1b660626404",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 523,
+        "output_tokens": 507
+      },
+      "latency_ms": 1246.7282999996314,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 170811,
+      "cache_key": "42f1bdb9f7c1504a44a2cc0038749446f96b0328c64f9a4eac7a596559917da2",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1559.5162999998138,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 301404,
+      "cache_key": "4396b5ed3bb38169870ffc6e221107c47ba4dfc6fed2ad35acbd61a43a196d0a",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 449,
+        "output_tokens": 707
+      },
+      "latency_ms": 1378.0953999958,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 259873,
+      "cache_key": "44b127111df58081a6a54ebc0a941a7cd8f471a088ad9d3be04469c4d7fb615a",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 540,
+        "output_tokens": 460
+      },
+      "latency_ms": 1155.2776000025915,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 18287,
+      "cache_key": "466412f3ac3a445352441643fa8e8a1bdf75b522549d0b21e47d15c0063beb2c",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1435.3952999808826,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 37029,
+      "cache_key": "46ca68c658b18cc9f94f8872ae4761618d61a7e4f2a8282623e7c1111458432f",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1729.1926000034437,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 62549,
+      "cache_key": "4a384c8e1e73e4763e19a9ec1cda665519bf7620e8fd6dfdcf4435ba56b8f79f",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 409,
+        "output_tokens": 661
+      },
+      "latency_ms": 1387.456700002076,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 320130,
+      "cache_key": "4f04282e85c4858fd852566c3c7d2f01b78a3d045eaf5faf65abd92797624c8f",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 529,
+        "output_tokens": 386
+      },
+      "latency_ms": 980.1990999985719,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 276245,
+      "cache_key": "52bd48ed8f6816b31a03304b419f7d0eb278fe1d0d3701c8de386ccd0200217c",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1173.7525000062305,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 122604,
+      "cache_key": "54a290dd8ff4072e8ab6d2abc2810f6e04ca90d392a52168aa8a87b708e89b20",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 519,
+        "output_tokens": 431
+      },
+      "latency_ms": 1532.840099999703,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 259884,
+      "cache_key": "57062013eee9413412dee33a9f5d476e6df37519564fb8b81b0cec76a56a659f",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 563,
+        "output_tokens": 633
+      },
+      "latency_ms": 1320.4302999947686,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 392074,
+      "cache_key": "5799c979b75f0d2646fab45b9b308d943d772784b9ba4f3132d7ea1581ccbd90",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1504.9104999998235,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 68000,
+      "cache_key": "580cd2257b7b8fd0ebef333b27973ea4f207d43020fc5cd487eb55014557c31b",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 572,
+        "output_tokens": 785
+      },
+      "latency_ms": 1905.51099999999,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 380237,
+      "cache_key": "6087e8307c037624dabefcd2e72640314319bb9533784b433efb9e12311c75e0",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 526,
+        "output_tokens": 459
+      },
+      "latency_ms": 1195.4148000004352,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 4001,
+      "cache_key": "6112cdbc5a6b376d9797a7ad2f393d16839cb4f6c54bb423fb5c8cea5b47967b",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 555,
+        "output_tokens": 523
+      },
+      "latency_ms": 1656.9068999961019,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 353519,
+      "cache_key": "646bcc77d5d4656c4679f574c6e2532f0f49ca8c38a00601c8562e30a91e96f9",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 584,
+        "output_tokens": 634
+      },
+      "latency_ms": 1308.6203999991994,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 103156,
+      "cache_key": "64af4dd88f6f544a24ad234d7cb5aafc7a75c3a895d611ebdef8a590154d10e0",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 509,
+        "output_tokens": 687
+      },
+      "latency_ms": 1829.2418000000907,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 315545,
+      "cache_key": "6645b709dc177eafe3f11acad7e0f0f523dbb9fdd943a7d24dcbd9135928696d",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1562.6503999956185,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 175356,
+      "cache_key": "6a584a19bc3303a425dd9a8c672cb642f25d0baaddafcedf0409ecc05787a1a6",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 575,
+        "output_tokens": 522
+      },
+      "latency_ms": 1427.0860999999968,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 153778,
+      "cache_key": "6a7bc42e1ca82cd6f80c9172ce3f701ad20f91544eb261731459f504407d9ebc",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 543,
+        "output_tokens": 682
+      },
+      "latency_ms": 1401.989500000127,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 253615,
+      "cache_key": "6b5e911c13a626584c00ef542003becc5285e1b6d387eea10c4b149f0501944e",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 634,
+        "output_tokens": 279
+      },
+      "latency_ms": 961.6554000094766,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 111530,
+      "cache_key": "716e2b4b012ee7a5a377a04c5dd1cdf0e2ad2705385c73691ed05925dd90afa1",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 539,
+        "output_tokens": 520
+      },
+      "latency_ms": 1194.7257000001628,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 7943,
+      "cache_key": "7563156da7e3fd41045e254c2cadabbd58293a70b1d97247267fea8b42e08c5f",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 521,
+        "output_tokens": 641
+      },
+      "latency_ms": 1297.0873999875039,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 176162,
+      "cache_key": "7662b2fb3f755a6471d6ec2c9ab5e2f21c34717e57875d3aee54a1d0ca9d365a",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 455,
+        "output_tokens": 614
+      },
+      "latency_ms": 1358.8561000001391,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 379390,
+      "cache_key": "78ba2e20b0bb071631f36d0fa0bed1706ad90c759b36ee2e9091d62574033a82",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 420,
+        "output_tokens": 505
+      },
+      "latency_ms": 1287.886599995545,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 12217,
+      "cache_key": "78d1259a81fc124a5a9cca609e68ab25f5f058a126cd382c42f04a1eedbf1516",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 531,
+        "output_tokens": 539
+      },
+      "latency_ms": 1232.8735000046436,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 368060,
+      "cache_key": "7b6a98bf7cb57f3a34df9e9926592a4afcdbfd8b43984a509c47ce677b6f1eaf",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 543,
+        "output_tokens": 432
+      },
+      "latency_ms": 1174.7381999957724,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 279531,
+      "cache_key": "7ede65858c985f152e2d61509e597534a8a71453a6135775218f1f67fb020a9e",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1643.7512999982573,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 48997,
+      "cache_key": "80dc1291cf0e2f7309cf7410bc9441a8d63bb6b3f4c4c2194b52541872a304c4",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 563,
+        "output_tokens": 658
+      },
+      "latency_ms": 1367.8920000093058,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 89775,
+      "cache_key": "810cfba7521dfdee21ea7c14bb36bad785a17d342883229db402c6b70d83e805",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1435.630499999661,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 378637,
+      "cache_key": "894d559f8660323db3d21dd47a0311920ce0891f239cfe879100b410702cdbe7",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 549,
+        "output_tokens": 704
+      },
+      "latency_ms": 1329.2842000009841,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 253565,
+      "cache_key": "89a9ee1a34e0b0984d3c9a1185c99432998626c1e15a673c336a98dacfa9fc35",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 513,
+        "output_tokens": 516
+      },
+      "latency_ms": 1428.5061999980826,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 339703,
+      "cache_key": "8d223558850c64a489dd734b9eec5c4e71dcd2d70c7bb8b26946c9bdb144cf7e",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 654,
+        "output_tokens": 499
+      },
+      "latency_ms": 1095.911900003557,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 357564,
+      "cache_key": "8f88075f70f7a69a8d691ab08e060d42461298063abe1edee0b4d2ed3570378a",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 425,
+        "output_tokens": 490
+      },
+      "latency_ms": 1406.352699996205,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 312728,
+      "cache_key": "98c4226e26acb9fac782c49a122749fb5e73da96a63d9cefb623a9bc37f2d6d7",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 441,
+        "output_tokens": 585
+      },
+      "latency_ms": 1215.2444000093965,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 61303,
+      "cache_key": "9afab6326a722426f086f3f07820709983e6825b50de2c1277aec2568e007c4b",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 502,
+        "output_tokens": 776
+      },
+      "latency_ms": 1896.912500000326,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 358211,
+      "cache_key": "a3257cca1ebbc25ffecbbda357dcc79c2e726eead47b59f98b75dea7445a7c1e",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 500,
+        "output_tokens": 410
+      },
+      "latency_ms": 1643.3503000007477,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 332629,
+      "cache_key": "a417a8ae64698fafaeca63fdc26e5528b1ff695c294f1d7882efca5e2085d6cf",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 557,
+        "output_tokens": 399
+      },
+      "latency_ms": 1389.0046999877086,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 190070,
+      "cache_key": "a712fd40aba9285e2b893bc8b496a3a1474667dd7ac1d2a0e5f89732d4ffd4aa",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 553,
+        "output_tokens": 561
+      },
+      "latency_ms": 1224.7309999993377,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 290999,
+      "cache_key": "aa5cbb28c48d2d9d4d1a0a2478ffc3a2a4a06776dce620241421eb9fb19910df",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 405,
+        "output_tokens": 424
+      },
+      "latency_ms": 1021.9179999985499,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 48030,
+      "cache_key": "aa849e5086ce2f1b82900938823ca53edfc7b5dd63c7392a191944476a677aa3",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 2131.303800008027,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 69533,
+      "cache_key": "b363de7e25ef183e0a1fb29592e8e8304e41105700212d797a9eb2e3cb472ab2",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 565,
+        "output_tokens": 458
+      },
+      "latency_ms": 1125.7248999999945,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 133907,
+      "cache_key": "b3a237e0eab0ff12f165629faa46c1db2fe3d0b56d25e055974a1c6611f1d8cb",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 524,
+        "output_tokens": 423
+      },
+      "latency_ms": 1780.4919000000154,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 158666,
+      "cache_key": "b4757ae5cf3ba1e7c1b804f68ceed81e789203943ce0f67b36af691f11b4a29e",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1602.082600000358,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 356029,
+      "cache_key": "b7f4419060797f91cbd444d4ab71c472100ce053252aca01f81bdc14fa9a5d05",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 448,
+        "output_tokens": 745
+      },
+      "latency_ms": 1414.6629000024404,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 23762,
+      "cache_key": "b8b804ce9bdb2d841cac19124704a88844c723e44ecc3dcd42c96a79e9acbd2f",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 432,
+        "output_tokens": 605
+      },
+      "latency_ms": 1601.4280000235885,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 108457,
+      "cache_key": "b8c384f02f21772d2aefe7d0185ec76ce9cf3c359f3e98cc36662c79b6fd66f7",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 526,
+        "output_tokens": 354
+      },
+      "latency_ms": 1007.9052999999476,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 216305,
+      "cache_key": "bbbf9e788386de31fe505ec6a1bf59990195592c073dc4cc1bef186dffebbc01",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1421.306199998071,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 310318,
+      "cache_key": "bdd039509d55a30c2c136efc1a06929ba4a32bd57a78509b0f2cb88780bc2b2a",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 541,
+        "output_tokens": 415
+      },
+      "latency_ms": 770.7990000053542,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 5411,
+      "cache_key": "be1e7ba0ae04a6c721b5c35b85bfc6930232b253d003d7f055cbf6b22d5ed2f6",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 507,
+        "output_tokens": 421
+      },
+      "latency_ms": 1349.9240999808535,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 90240,
+      "cache_key": "c1136890beb8c9721480f3bd8f2f41a04a3b659dfcc82da11ea8b221a3441f13",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 428,
+        "output_tokens": 434
+      },
+      "latency_ms": 1313.0275000003166,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 315543,
+      "cache_key": "c4868e87cfad797955814874f6ffa198661544f1174d584a17da067f8414ed1b",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 508,
+        "output_tokens": 454
+      },
+      "latency_ms": 1162.2913000028348,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 369447,
+      "cache_key": "cb5d59602b3a0f9f334382b2a5ffd74cbe5e8fef061a4844b018e2c32fc0c0ac",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 557,
+        "output_tokens": 341
+      },
+      "latency_ms": 995.5613999991328,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 257040,
+      "cache_key": "cdc4174bd8148541610ce5d00cd99a642b1484db1507d34ffc4512c72954cee5",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 268
+      },
+      "latency_ms": 904.5151000027545,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 345279,
+      "cache_key": "ce4d861bdcc009fb6b857d3acbac4f28af2a373128b8dbb471699819c21d63b0",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1452.589500011527,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 390591,
+      "cache_key": "d5d5b4135c9af89a907deee1efe7d5b6449ce8c7b184d3a2685ff049f31bf270",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 553,
+        "output_tokens": 402
+      },
+      "latency_ms": 1161.6055000049528,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 272770,
+      "cache_key": "d76044b91b0993c2d0732f89645d2064e4d324dd56362f0225e41a5c5d48cab7",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1410.8082000020659,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 34853,
+      "cache_key": "d8b227d5d3ed2507ec539e033ac5732ded4e4f067243ffb620b87274a63d51ea",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 564,
+        "output_tokens": 416
+      },
+      "latency_ms": 1299.054500006605,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 187946,
+      "cache_key": "db0fa5f4e0f0ea02f012245bd786752f56149f96c7f1b13354f99a61686cede9",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 513,
+        "output_tokens": 638
+      },
+      "latency_ms": 1458.4251000001132,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 234255,
+      "cache_key": "dc702ebf3612218508a9b15fee3a0410ed3e695f823080dd12de527d235abb2b",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 396,
+        "output_tokens": 580
+      },
+      "latency_ms": 1224.0414999978384,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 112782,
+      "cache_key": "dce594692ea63bb0a2ceebec7a3e9ba51fb9cc2dfe0f55aac50e84d1cdcb634c",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1703.3648999999969,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 231243,
+      "cache_key": "dcf546ff822782669199ac8986cdc535609a153ce65eba074c1f81f92d4e08f4",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 521,
+        "output_tokens": 638
+      },
+      "latency_ms": 1006.5058000036515,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 124919,
+      "cache_key": "de651f02a3588ea330cbc1c3ec8999bd334da35595a9d9e672e67bed38db523a",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1628.1511000001956,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 227318,
+      "cache_key": "e2c62e25733b76276d8852c1712b7c46f41b7bbe066c7136c72f7ebd84f228e2",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 542,
+        "output_tokens": 416
+      },
+      "latency_ms": 1163.66890000063,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 389158,
+      "cache_key": "e4a7eb47216b92443bccecdac6f95f4cec2e086678620c64392202cd06d7a75b",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 521,
+        "output_tokens": 698
+      },
+      "latency_ms": 1425.4847999982303,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 272527,
+      "cache_key": "e5281ba2bc0b91c6757639c1a965720266c8dce5469304ed440b5b98c98e4ee0",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 529,
+        "output_tokens": 550
+      },
+      "latency_ms": 1372.8956000122707,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 236565,
+      "cache_key": "e59121d2013f8c8167b02c8943b15bebc79f63d2bb9ed5ba6a3c2218a298db76",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 541,
+        "output_tokens": 206
+      },
+      "latency_ms": 934.4757000071695,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 203248,
+      "cache_key": "e83d6cf1b055ef461f492ac2d994d1ae17a0f2adecd1a7148b7411eaef67e010",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 2355.5076000002373,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 355994,
+      "cache_key": "e9d201cee8b9a05532dbf5f319516e4b8cc906b61d218ac2b3d98f9a5f373205",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 407,
+        "output_tokens": 401
+      },
+      "latency_ms": 764.2846999951871,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 350629,
+      "cache_key": "eac87350687a9b5293b83b609a22a893847d1fd46679cff9d7cfda7a73fd3f3a",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1552.590399995097,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 138427,
+      "cache_key": "eb233c5f20cb56ac150606ae2ba74050dfa5bdf9c8f545fc6e0d0099a68dfa9b",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 430,
+        "output_tokens": 450
+      },
+      "latency_ms": 1310.4855000001407,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 316753,
+      "cache_key": "ec4d8a3b6b034c04127212fd6db1b9670d9a1251db9aa3013a41320657bcec28",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 676,
+        "output_tokens": 540
+      },
+      "latency_ms": 1186.1022999946726,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 334920,
+      "cache_key": "ee7915621cb6888d1bdf6d86282cdd4dd78f682cbabded09a4bf1f423b6c73a5",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 529,
+        "output_tokens": 533
+      },
+      "latency_ms": 1250.1077999913832,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 179601,
+      "cache_key": "eebdf1660df4c84a3a0af28a1b6729f7aa139bd58c3034ee4f869070f8b09a20",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 423,
+        "output_tokens": 652
+      },
+      "latency_ms": 1435.6282999997347,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 97879,
+      "cache_key": "f0cfca8aa7a017d45cce0604b64e9c4851b34b81db363013d7f5fe422902d2df",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1561.392000000069,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 179733,
+      "cache_key": "f0d28a138996c832af079092efe09704485e356b7ba1b8172437b4072d6e5488",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 647,
+        "output_tokens": 452
+      },
+      "latency_ms": 1225.7497999999032,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 143689,
+      "cache_key": "f21a445d799c7e3ec6846cc03e66f62321e77ee8f99e38da015816d3bf3e552a",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 505,
+        "output_tokens": 434
+      },
+      "latency_ms": 1397.8522000002158,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 17478,
+      "cache_key": "f32d868ba75fed79b0f90ee55b6d264fdba7a84673b89393318b53f708ecd62e",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1735.3620000067167,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 219512,
+      "cache_key": "f4e7d9307aa9f83bc5f8abd42b59ff12aa9abeb7a758c35fa8c25fb458679a44",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 498,
+        "output_tokens": 428
+      },
+      "latency_ms": 792.5164999978733,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 29196,
+      "cache_key": "f737c21436352c14269d6248524d17467b202f8d5a6da1e6e3ea50ee28734670",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1530.5236999993213,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 335331,
+      "cache_key": "f8023456b8b9a0258372f9aea2f5ddcc7527de8da2ee3af4e4b7e659a15e5560",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 523,
+        "output_tokens": 456
+      },
+      "latency_ms": 1227.9325999988941,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 142466,
+      "cache_key": "f8d817f9986c8c2dca805777da1b1f0a77aa69c112d665d88332626701fdfeaf",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 545,
+        "output_tokens": 534
+      },
+      "latency_ms": 1208.8324999999713,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 302563,
+      "cache_key": "f920c2611d8e5dbd37a5502c2ce386c0f09361314b39126a2e34e133be97a08c",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 559,
+        "output_tokens": 379
+      },
+      "latency_ms": 876.7569000046933,
+      "review_decision": false,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 119538,
+      "cache_key": "fa7d0f17917feedf6a641d9f17d60b70f43a9bfec25e192b56f59a72ff81de1e",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 571,
+        "output_tokens": 487
+      },
+      "latency_ms": 1109.455799999978,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    },
+    {
+      "itemid": 294807,
+      "cache_key": "fc08548140f88356c7aec302c59f39981c35142f7b4080b799f54ad01ac51952",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1414.192300013383,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 133814,
+      "cache_key": "fca5c5a3cd1f10fa79fc62464beef9f325f353178c1e8a8ed4484d98ed9549ec",
+      "status": "rejected_or_failed",
+      "http_status": 400,
+      "error_code": "json_validate_failed",
+      "usage": null,
+      "latency_ms": 1926.7565000000104,
+      "review_decision": null,
+      "reviewer": null
+    },
+    {
+      "itemid": 239020,
+      "cache_key": "fd6b690f4197d100e88200d6c44d46aba72244b61220e93065944df3df6ac014",
+      "status": "generated_pending_review",
+      "http_status": null,
+      "error_code": null,
+      "usage": {
+        "input_tokens": 516,
+        "output_tokens": 433
+      },
+      "latency_ms": 1137.8933999949368,
+      "review_decision": true,
+      "reviewer": "Codex assistant grounding review, not independent human rating"
+    }
+  ],
+  "cost": "Free account attested; no paid fallback. No independent billing statement collected.",
+  "limitations": [
+    "Schema pass is not factual consistency, hallucination rate or human relevance",
+    "Incomplete samples cannot support a full-sample quality estimate",
+    "Token totals exclude unavailable failure usage and are lower bounds",
+    "Assistant grounding review must not be represented as independent human ratings"
+  ]
+}
