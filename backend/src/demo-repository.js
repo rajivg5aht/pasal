@@ -13,6 +13,7 @@ export const DemoProduct = mongoose.model(
       image: String,
       attributes: [String],
       available: Boolean,
+      retired: { type: Boolean, default: false },
       stock: { type: Number, min: 0, default: 0 },
       provenance: { type: String, default: "synthetic_demo" },
     },
@@ -60,7 +61,7 @@ export class DemoRepository {
     sort = "name",
     includeInactive = false,
   } = {}) {
-    const filter = includeInactive ? {} : { available: true };
+    const filter = includeInactive ? {} : { available: true, retired: { $ne: true } };
     if (category) filter.category = category;
     if (query) {
       const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");

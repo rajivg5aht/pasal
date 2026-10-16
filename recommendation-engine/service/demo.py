@@ -60,6 +60,11 @@ def recommend_demo(request: DemoRequest, policy: PolicyConfig):
     seen = {mapping[i] for i in request.profile.seen_items if i in mapping} if active else set()
     categories = request.profile.selected_categories if active else []
     events = request.profile.event_count if active else 0
+    history_scope_adjusted = active and any(i not in mapping for i in request.profile.seen_items)
+    if history_scope_adjusted:
+        # Historical totals cannot be allocated to the current catalogue from
+        # distinct-item summaries. Use an explicit conservative lower bound.
+        events = len(seen)
     support = Counter()
     pairs = Counter()
     for profile in request.profiles:
@@ -115,5 +120,7 @@ def recommend_demo(request: DemoRequest, policy: PolicyConfig):
             'configuration_status':'Research-selected policy transferred to demo data; not validated on the demo population',
             'catalogue_sha256':hashlib.sha256(json.dumps([p.model_dump() for p in products],sort_keys=True).encode()).hexdigest(),
             'profile_count':len(request.profiles),'candidate_count':len(candidates),
-            'routing':{'history_event_count':events,'cf_confidence':confidence},
+            'routing':{'history_event_count':events,'cf_confidence':confidence,
+                       'history_scope_adjusted':history_scope_adjusted,
+                       'history_count_basis':'current_catalogue_distinct_item_lower_bound' if history_scope_adjusted else 'recorded_events'},
             'limitations':'Uses up to 5000 latest consented profiles and 20 recent distinct items per profile. No Retailrocket items or generated demo text.'}

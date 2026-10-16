@@ -54,7 +54,7 @@ export function demoRouter({
   router.get("/demo/recommendations", optionalUser, async (req, res) => {
     const profile = req.user ? await repository.profile(req.user._id) : null;
     const active = Boolean(profile?.personalization && profile.recommendationConsentVersion === 1);
-    const products = await repository.products({ includeInactive: true });
+    const products = (await repository.products({ includeInactive: true })).filter((p) => !p.retired);
     const recent = active ? profile.recentItems : [];
     const result = await recommendDemo({
       products: products.map((p) => ({
@@ -225,6 +225,9 @@ export function demoRouter({
     }),
   );
   router.put("/admin/products/:id", ...admin, async (req, res) => {
+    const existing = await repository.product(id.parse(req.params.id));
+    if (existing?.retired)
+      return res.status(409).json({ error: "Retired catalogue records are preserved for history and cannot be republished here" });
     const updated = await repository.update(
       id.parse(req.params.id),
       { ...product.parse(req.body), provenance: shoeImages[req.body.image] ? "sourced_photo_simulated_offer" : "synthetic_demo" },

@@ -38,3 +38,19 @@ tests passed after restarting the preserved local and isolated test MongoDB
 instances. Both new shoe records were inserted successfully. The initial attempts
 failed because those database processes were stopped; no data reset was used.
 No fresh browser walkthrough or remote-photo availability guarantee is claimed.
+
+## Legacy offer retirement
+
+On the user's request to remove non-shoe catalogue content, 16 legacy synthetic
+offers were backed up under ignored `tmp/catalogue-backups/` and marked retired
+and unavailable. They remain as historical records, not active shopping offers.
+The admin edit API cannot republish retired records. No order/profile/research
+records were deleted. The active catalogue currently contains the two starter
+shoe records and still requires expansion.
+
+Retired products are excluded from the recommendation payload. If a user's seen
+history contains items absent from the current catalogue, the demo service uses
+the count of known distinct items as a conservative history lower bound. Stored
+event totals cannot be allocated by product from the existing summary alone.
+The response exposes this adjustment; it is not applied to the research evaluator.
+Regression verification passed 91 Python tests and eight backend tests.

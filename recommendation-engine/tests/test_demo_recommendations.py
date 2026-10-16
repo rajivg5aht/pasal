@@ -16,6 +16,12 @@ def payload(profile=None, profiles=None):
     ],profiles=profiles or [],profile=profile or {},k=4)
 
 class DemoTests(unittest.TestCase):
+    def test_retired_history_does_not_inflate_current_catalogue_routing(self):
+        r=recommend_demo(payload({'personalization':True,'event_count':100,
+            'recent_items':['demo-retired','demo-a'],'seen_items':['demo-retired','demo-a']}),POLICY)
+        self.assertEqual(r['routing']['history_event_count'],1)
+        self.assertTrue(r['routing']['history_scope_adjusted'])
+        self.assertEqual(r['strategy'],'content')
     def test_no_data_fallback_is_honest_and_only_eligible(self):
         r=recommend_demo(payload(),POLICY)
         self.assertEqual(r['strategy'],'catalogue_fallback')
