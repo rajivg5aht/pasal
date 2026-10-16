@@ -94,3 +94,13 @@ Retain per-user rankings, failures, diversity coverage, exposure, aggregate resu
 and hashes. Do not tune after seeing outcomes. A failed interrupted run may leave
 partial evidence; preserve it and document any re-execution. Report absent human
 ratings as deferred, not as successful independent explanation evaluation.
+
+After a completed run, export measured tables with input/output verification:
+
+```powershell
+.venv\Scripts\python.exe recommendation-engine/evaluation/export_final_tables.py --report data/processed/final-evaluation-v1/report.json --frozen docs/final-evaluation-freeze-v1.json --output docs/dissertation/final-evaluation-tables-v1.md
+```
+
+The exporter refuses incomplete reports, mismatched freeze/output hashes and an
+existing destination. It separates primary and exposed secondary populations and
+does not infer compound hypothesis support from ranking significance alone.

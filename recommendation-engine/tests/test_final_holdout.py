@@ -13,6 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from evaluation.common import Case
 from evaluation.final_holdout import require_complete, require_paired_validation, run, select_cases, verify
 from evaluation.tune_baselines import CONFIGURATIONS
+from evaluation.export_final_tables import export
 from models.content.train_snapshot import fingerprint
 
 
@@ -98,6 +99,15 @@ class FinalHoldoutTests(unittest.TestCase):
                 rows = [json.loads(s) for s in (root/'result/untouched_intersection-per_user.jsonl').read_text().splitlines()]
                 self.assertEqual(len(rows), 14)
                 self.assertEqual(len({r['model'] for r in rows}), 7)
+                export(root/'result/report.json', frozen, root/'tables.md')
+                tables = (root/'tables.md').read_text(encoding='utf-8')
+                self.assertIn('untouched_intersection', tables)
+                self.assertIn('Holm-adjusted p', tables)
+                with self.assertRaises(FileExistsError):
+                    export(root/'result/report.json', frozen, root/'tables.md')
+                (root/'result/untouched_intersection-per_user.jsonl').write_text('tampered')
+                with self.assertRaisesRegex(ValueError, 'output hash mismatch'):
+                    export(root/'result/report.json', frozen, root/'altered.md')
                 with self.assertRaises(FileExistsError): run(frozen, root/'result')
                 (root/'train.csv').write_text('changed')
                 with self.assertRaisesRegex(ValueError, 'Frozen input changed'): verify(spec)
