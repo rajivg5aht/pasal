@@ -355,9 +355,9 @@ export default function Admin() {
                   : "Add demonstration product"}
               </h2>
               <p>
-                Every record is explicitly synthetic. Never enter Retailrocket
-                IDs or claim a verified brand. Choose a bundled illustration;
-                remote images and uploads are disabled.
+                Choose a synthetic illustration or an allowlisted sourced shoe photo.
+                Sourced photos require their exact documented product title. Prices
+                and inventory remain simulated; arbitrary image URLs are disabled.
               </p>
               <form className="shop-form admin-form" onSubmit={save}>
                 <label>

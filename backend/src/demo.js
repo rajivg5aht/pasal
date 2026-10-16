@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { randomUUID } from "node:crypto";
 import { z } from "zod";
+import { readFileSync } from "node:fs";
+const shoeImages = JSON.parse(readFileSync(new URL('../../catalogue/shoe-images.json', import.meta.url), 'utf8'));
 const id = z.string().regex(/^demo-[a-z0-9-]{1,60}$/);
 const images = [
   "bag",
@@ -11,6 +13,7 @@ const images = [
   "lamp",
   "basket",
   "tea",
+  ...Object.keys(shoeImages),
 ];
 const product = z
   .object({
@@ -23,7 +26,8 @@ const product = z
     attributes: z.array(z.string().trim().min(1).max(120)).max(8),
     available: z.boolean(),
   })
-  .strict();
+  .strict().refine((value) => !shoeImages[value.image] || value.title === shoeImages[value.image].title,
+    { message: "Sourced shoe photograph must retain its verified product title", path: ["title"] });
 
 export function demoRouter({
   repository,
@@ -216,14 +220,14 @@ export function demoRouter({
       product: await repository.create({
         ...product.parse(req.body),
         _id: "demo-" + randomUUID(),
-        provenance: "synthetic_demo",
+        provenance: shoeImages[req.body.image] ? "sourced_photo_simulated_offer" : "synthetic_demo",
       }),
     }),
   );
   router.put("/admin/products/:id", ...admin, async (req, res) => {
     const updated = await repository.update(
       id.parse(req.params.id),
-      product.parse(req.body),
+      { ...product.parse(req.body), provenance: shoeImages[req.body.image] ? "sourced_photo_simulated_offer" : "synthetic_demo" },
     );
     if (!updated)
       return res.status(404).json({ error: "Demo product not found" });

@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { api, type User } from "./api";
 import ProductArt from "./ProductArt";
+import shoeImages from "../../catalogue/shoe-images.json";
 import { Checkout, OrderHistory, OrderSummary, type Order } from "./Orders";
 type Product = {
   _id: string;
@@ -329,7 +330,7 @@ export default function DemoShop() {
         </button>
         <p className="demo-price">{money(p.priceNpr)}</p>
         <div className="card-foot">
-          <small>Synthetic demo</small>
+          <small>{p.image in shoeImages ? "Sourced shoe · Demo price" : "Synthetic demo"}</small>
           <button
             disabled={busy || !p.available || (p.stock ?? 0) <= (profile.cart.find((r) => r.productId === p._id)?.quantity || 0)}
             onClick={() =>
@@ -725,7 +726,7 @@ export default function DemoShop() {
           close={() => setModal("")}
         >
           <p>
-            Synthetic products only. Checkout creates a demonstration order,
+            Checkout creates a demonstration order,
             with no real charge or delivery.
           </p>
           {(modal === "cart"
@@ -896,8 +897,7 @@ export default function DemoShop() {
                 ))}
               </ul>
               <small>
-                Synthetic demo product and illustration. No verified brand or
-                origin. ID: {detail._id}
+                {detail.image in shoeImages ? "Sourced shoe photograph; illustrative NPR price and simulated inventory. No current local availability or brand affiliation is claimed." : "Synthetic demo product and illustration. No verified brand or origin."}
               </small>
               <button
                 className="primary"

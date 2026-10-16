@@ -1,3 +1,5 @@
+import { useState } from "react";
+import shoeImages from "../../catalogue/shoe-images.json";
 export default function ProductArt({
   kind,
   title,
@@ -5,6 +7,15 @@ export default function ProductArt({
   kind: string;
   title: string;
 }) {
+  const [failed, setFailed] = useState<string | null>(null);
+  const photo = shoeImages[kind as keyof typeof shoeImages];
+  if (photo) return <figure className="shoe-photo">
+    {failed === kind ? <p role="status">Product photograph unavailable</p> :
+      <img src={photo.url} alt={photo.title} loading="lazy" referrerPolicy="no-referrer"
+        onError={() => setFailed(kind)} style={{ width: "100%", height: "240px", objectFit: "contain" }} />}
+    <figcaption><a href={photo.source} target="_blank" rel="noreferrer">Photo source</a>
+      {" · "}<a href={photo.license} target="_blank" rel="noreferrer">{photo.credit}</a></figcaption>
+  </figure>;
   const shapes: Record<string, React.ReactNode> = {
     bag: (
       <>
