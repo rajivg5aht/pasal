@@ -79,8 +79,25 @@ const product = {
   image: "mug",
   attributes: ["Synthetic ceramic"],
   available: true,
+  stock: 12,
   provenance: "synthetic_demo",
 };
+it("prevents adding a zero-stock product from the catalogue", async () => {
+  const fetchMock = vi.fn(async (input: string) => ({
+    ok: input !== "/api/me",
+    status: input === "/api/me" ? 401 : 200,
+    json: async () => input === "/api/me" ? { error: "Sign in" }
+      : input === "/api/demo/categories" ? { categories: ["Home"] }
+      : input === "/api/demo/recommendations" ? { items: [], strategy: "catalogue_fallback" }
+      : { products: [{ ...product, stock: 0 }] },
+  }));
+  vi.stubGlobal("fetch", fetchMock);
+  render(<DemoShop />);
+  const button = await screen.findByRole("button", { name: "Out of stock" });
+  expect(button).toBeDisabled();
+  fireEvent.click(button);
+  expect(fetchMock.mock.calls.some(([url]) => url === "/api/demo/cart")).toBe(false);
+});
 beforeEach(() => {
   HTMLDialogElement.prototype.showModal = function () {
     this.setAttribute("open", "");

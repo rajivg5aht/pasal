@@ -237,6 +237,10 @@ export default function DemoShop() {
     });
   }
   async function cart(p: Product, quantity: number) {
+    if (quantity > 0 && (!p.available || quantity > (p.stock ?? 0))) {
+      setError("The requested quantity is not currently in stock. Refresh the catalogue before trying again.");
+      return;
+    }
     if (quantity > 10) {
       setError("You can keep up to 10 of each demo product in your cart.");
       return;
@@ -327,7 +331,7 @@ export default function DemoShop() {
         <div className="card-foot">
           <small>Synthetic demo</small>
           <button
-            disabled={busy}
+            disabled={busy || !p.available || (p.stock ?? 0) <= (profile.cart.find((r) => r.productId === p._id)?.quantity || 0)}
             onClick={() =>
               void cart(
                 p,
@@ -336,7 +340,7 @@ export default function DemoShop() {
               )
             }
           >
-            <ShoppingBag size={16} /> Add to cart
+            <ShoppingBag size={16} /> {(p.stock ?? 0) < 1 ? "Out of stock" : "Add to cart"}
           </button>
         </div>
       </div>
@@ -755,9 +759,9 @@ export default function DemoShop() {
                             aria-label={"Quantity for " + p.title}
                             type="number"
                             min={1}
-                            max={10}
+                            max={Math.min(10, p.stock ?? 0)}
                             value={line?.quantity || 1}
-                            disabled={busy || !p.available}
+                            disabled={busy || !p.available || (p.stock ?? 0) < 1}
                             onChange={(e) => {
                               const quantity = Number(e.target.value);
                               if (
@@ -897,7 +901,7 @@ export default function DemoShop() {
               </small>
               <button
                 className="primary"
-                disabled={busy || !detail.available}
+                disabled={busy || !detail.available || (detail.stock ?? 0) <= (profile.cart.find((r) => r.productId === detail._id)?.quantity || 0)}
                 onClick={() =>
                   void cart(
                     detail,
